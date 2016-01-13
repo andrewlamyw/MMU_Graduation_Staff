@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        // Set toggling drawer with App Icon
+        // Set toggling drawer with ActionBar Icon
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerToggle = new ActionBarDrawerToggle(
                 this,                         /* host Activity */
@@ -91,24 +91,29 @@ public class MainActivity extends AppCompatActivity {
 
             case Constants.TITLE_PROGRAMME:
                 ProgrammeFragment programmeFragment = new ProgrammeFragment();
-                getFragmentManager().beginTransaction().replace(R.id.fragment_container, programmeFragment).commit();
+                getFragmentManager().beginTransaction().replace(R.id.fragment_container, programmeFragment)
+                        .addToBackStack(Constants.TITLE_PROGRAMME).commit();
                 Toast.makeText(getApplicationContext(), "Loading", Toast.LENGTH_LONG).show();
                 break;
             case Constants.TITLE_PROFILE:
                 ProfileFragment profileFragment = new ProfileFragment();
-                getFragmentManager().beginTransaction().replace(R.id.fragment_container, profileFragment).commit();
+                getFragmentManager().beginTransaction().replace(R.id.fragment_container, profileFragment)
+                        .addToBackStack(Constants.TITLE_PROFILE).commit();
                 break;
             case Constants.TITLE_STUDENT:
                 StudentFragment studentFragment = new StudentFragment();
-                getFragmentManager().beginTransaction().replace(R.id.fragment_container, studentFragment).commit();
+                getFragmentManager().beginTransaction().replace(R.id.fragment_container, studentFragment)
+                        .addToBackStack(Constants.TITLE_STUDENT).commit();
                 break;
             case Constants.TITLE_GRADUATION:
                 GraduationFragment graduationFragment = new GraduationFragment();
-                getFragmentManager().beginTransaction().replace(R.id.fragment_container, graduationFragment).commit();
+                getFragmentManager().beginTransaction().replace(R.id.fragment_container, graduationFragment)
+                        .addToBackStack(Constants.TITLE_GRADUATION).commit();
                 break;
             case Constants.TITLE_CONVOCATION:
                 ConvocationFragment convocationFragment = new ConvocationFragment();
-                getFragmentManager().beginTransaction().replace(R.id.fragment_container, convocationFragment).commit();
+                getFragmentManager().beginTransaction().replace(R.id.fragment_container, convocationFragment)
+                        .addToBackStack(Constants.TITLE_CONVOCATION).commit();
                 break;
             case Constants.TITLE_LOGOUT:
                 mSession.logoutUser();
@@ -117,7 +122,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * Open and Close with ActionBar Icon
+     * Display previous fragment when device's back button is pressed
+     */
+    @Override
+    public void onBackPressed() {
+        if (getFragmentManager().getBackStackEntryCount() > 0) {
+            getFragmentManager().popBackStack();
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    /**
+     * Set toggling drawer with ActionBar Icon
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -130,9 +147,7 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    /**
-     * Open and Close with ActionBar Icon
-     */
+    /** Set toggling drawer with ActionBar Icon */
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
@@ -140,7 +155,7 @@ public class MainActivity extends AppCompatActivity {
         mDrawerToggle.syncState();
     }
 
-    /** Open and Close with ActionBar Icon */
+    /** Set toggling drawer with ActionBar Icon */
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
