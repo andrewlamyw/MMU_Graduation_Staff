@@ -14,7 +14,10 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
 import com.lamyatweng.mmugraduationstaff.Constants;
 import com.lamyatweng.mmugraduationstaff.R;
 
@@ -33,9 +36,25 @@ public class StudentAddDialogFragment extends DialogFragment {
 
         // Populate list of programmes from array into spinner
         final Spinner programmeSpinner = (Spinner) view.findViewById(R.id.programme_spinner);
-        ArrayAdapter<CharSequence> programmeAdapter = ArrayAdapter.createFromResource(getActivity(),
-                R.array.programme_array, android.R.layout.simple_spinner_item);
-        programmeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        Firebase.setAndroidContext(getActivity());
+        Firebase programmeRef = new Firebase(Constants.FIREBASE_PROGRAMMES_REF);
+        final ArrayAdapter<CharSequence> programmeAdapter = new ArrayAdapter<>(getActivity(), R.layout.multiline_spinner_item);
+        programmeRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String programmeName;
+                programmeAdapter.clear();
+                for (DataSnapshot courseSnapshot : dataSnapshot.getChildren()) {
+                    programmeName = courseSnapshot.child("name").getValue().toString();
+                    programmeAdapter.add(programmeName);
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+            }
+        });
+        programmeAdapter.setDropDownViewResource(R.layout.multiline_spinner_dropdown_item);
         programmeSpinner.setAdapter(programmeAdapter);
 
         // Populate list of status from array into spinner
