@@ -1,0 +1,63 @@
+<resources>
+    <string name="app_name">MMU Graduation Staff</string>
+
+    <!-- Title-->
+    <string name="title_home">Home</string>
+    <string name="title_profile">Profile</string>
+    <string name="title_student">Student</string>
+    <string name="title_graduation">Graduation</string>
+    <string name="title_settings">Settings</string>
+    <string name="title_help_feedback"><![CDATA[Help & feedback]]></string>
+    <string name="title_logout">Logout</string>
+    <string name="title_save">SAVE</string>
+    <string name="title_search">Search</string>
+    <string name="title_share">Share</string>
+    <string name="title_programme">Programme</string>
+
+    <!-- Others -->
+    <string name="drawer_open">Open drawer</string>
+    <string name="drawer_close">Close drawer</string>
+    <string name="title_convocation">Convocation</string>
+
+    <!-- Array -->
+    <string-array name="programme_array">
+        <item>Diploma in Accounting</item>
+        <item>Diploma in Business Administration</item>
+        <item>Diploma in Business Information Systems</item>
+        <item>Diploma in Electronic Engineering</item>
+    </string-array>
+    <string-array name="programme_level_array">
+        <item>Diploma</item>
+        <item>Bachelor\'s Degree</item>
+        <item>Master\'s Degree</item>
+        <item>Doctorate</item>
+    </string-array>
+    <string-array name="faculty_array">
+        <item>Centre for Diploma Programme</item>
+        <item>Faculty of Business</item>
+        <item>Faculty of Computing and Informatics</item>
+        <item>Faculty of Creative Multimedia</item>
+        <item>Faculty of Engineering</item>
+        <item>Faculty of Engineering and Technology</item>
+        <item>Faculty of Information Science and Technology</item>
+        <item>Faculty of Law</item>
+        <item>Faculty of Management</item>
+        <item>Graduate School of Management</item>
+    </string-array>
+    <string-array name="status_array">
+        <item>Active</item>
+        <item>Complete</item>
+        <item>Pending finance</item>
+        <item>Pending MUET</item>
+        <item>Pending approval</item>
+    </string-array>
+    <string-array name="muet_grading_array">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+    </string-array>
+</resources>
