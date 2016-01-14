@@ -2,7 +2,7 @@
     <string name="app_name">MMU Graduation Staff</string>
 
     <!-- Title-->
-    <string name="title_home">Home</string>
+    <string name="title_news">News</string>
     <string name="title_profile">Profile</string>
     <string name="title_student">Student</string>
     <string name="title_graduation">Graduation</string>
@@ -10,14 +10,16 @@
     <string name="title_help_feedback"><![CDATA[Help & feedback]]></string>
     <string name="title_logout">Logout</string>
     <string name="title_save">SAVE</string>
+    <string name="title_edit">EDIT</string>
     <string name="title_search">Search</string>
     <string name="title_share">Share</string>
     <string name="title_programme">Programme</string>
+    <string name="title_convocation">Convocation</string>
 
     <!-- Others -->
     <string name="drawer_open">Open drawer</string>
     <string name="drawer_close">Close drawer</string>
-    <string name="title_convocation">Convocation</string>
+    <string name="key_student_id">studentID</string>
 
     <!-- Array -->
     <string-array name="programme_array">

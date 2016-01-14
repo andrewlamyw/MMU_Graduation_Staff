@@ -2,7 +2,7 @@ package com.lamyatweng.mmugraduationstaff.Student;
 
 public class Student {
     String name;
-    String id;
+    int id;
     String programme;
     String status;
     String email;
@@ -15,7 +15,7 @@ public class Student {
         // empty default constructor, necessary for Firebase to be able to deserialize
     }
 
-    public Student(String name, String id, String programme, String status, String email,
+    public Student(String name, int id, String programme, String status, String email,
                    int balanceCreditHour, double cgpa, int muet, double financialDue) {
         this.name = name;
         this.id = id;
@@ -28,7 +28,7 @@ public class Student {
         this.financialDue = financialDue;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 

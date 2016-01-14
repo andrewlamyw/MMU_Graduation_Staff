@@ -71,7 +71,7 @@ public class StudentAddDialogFragment extends DialogFragment {
         muetAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         muetSpinner.setAdapter(muetAdapter);
 
-        // Set up Toolbar
+        // Set up Toolbar with back button
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
         toolbar.setTitle("New student");
         toolbar.setNavigationIcon(R.mipmap.ic_close_white_24dp);
@@ -96,9 +96,9 @@ public class StudentAddDialogFragment extends DialogFragment {
                 if (nameWrapper.getEditText() != null)
                     name = nameWrapper.getEditText().getText().toString();
 
-                String id = "";
+                int id = 0;
                 if (idWrapper.getEditText() != null)
-                    id = idWrapper.getEditText().getText().toString();
+                    id = Integer.parseInt(idWrapper.getEditText().getText().toString());
 
                 String email = "";
                 if (emailWrapper.getEditText() != null)

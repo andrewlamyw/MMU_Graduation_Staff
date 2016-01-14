@@ -43,6 +43,7 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Student student = dataSnapshot.getValue(Student.class);
+
                 name.setText(student.getName());
                 id.setText(student.getId());
                 programme.setText(student.getProgramme());

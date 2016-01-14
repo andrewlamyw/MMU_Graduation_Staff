@@ -30,7 +30,7 @@ public class StudentCustomAdapter extends ArrayAdapter<Student> {
         TextView studentStatus = (TextView) convertView.findViewById(R.id.studentStatus);
 
         studentName.setText(student.getName());
-        studentId.setText(student.getId());
+        studentId.setText(Integer.toString(student.getId()));
         studentCourse.setText(student.getProgramme());
         studentStatus.setText(student.getStatus());
 

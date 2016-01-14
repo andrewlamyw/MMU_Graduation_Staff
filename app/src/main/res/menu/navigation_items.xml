@@ -10,7 +10,7 @@
             android:id="@+id/drawer_home"
             android:checked="true"
             android:icon="@mipmap/ic_home_black_24dp"
-            android:title="@string/title_home" />
+            android:title="@string/title_news" />
 
         <item
             android:id="@+id/drawer_programme"

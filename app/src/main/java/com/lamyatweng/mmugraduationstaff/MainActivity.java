@@ -11,8 +11,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.firebase.client.Firebase;
 import com.lamyatweng.mmugraduationstaff.Programme.ProgrammeFragment;
 import com.lamyatweng.mmugraduationstaff.Student.StudentFragment;
 
@@ -24,9 +24,14 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.navigation_view);
+
+        // Set Firebase to prefetch data
+        Firebase.setAndroidContext(this);
+
+        new Firebase(Constants.FIREBASE_ROOT_REF).keepSynced(true);
+
 
         // Redirects to LoginActivity if user is not logged in
         mSession = new SessionManager(getApplicationContext());
@@ -75,6 +80,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // Set default fragment to display
+        NewsFragment newsFragment = new NewsFragment();
+        getFragmentManager().beginTransaction().replace(R.id.fragment_container, newsFragment).commit();
+
         // Set navigation header email TextView
         View view = navigationView.getHeaderView(0);
         TextView emailHeader = (TextView) view.findViewById(R.id.header_email);
@@ -88,48 +97,33 @@ public class MainActivity extends AppCompatActivity {
     public void displayFragment(MenuItem menuItem) {
 
         switch (menuItem.getTitle().toString()) {
-
+            case Constants.TITLE_NEWS:
+                NewsFragment newsFragment = new NewsFragment();
+                getFragmentManager().beginTransaction().replace(R.id.fragment_container, newsFragment).commit();
+                break;
             case Constants.TITLE_PROGRAMME:
                 ProgrammeFragment programmeFragment = new ProgrammeFragment();
-                getFragmentManager().beginTransaction().replace(R.id.fragment_container, programmeFragment)
-                        .addToBackStack(Constants.TITLE_PROGRAMME).commit();
-                Toast.makeText(getApplicationContext(), "Loading", Toast.LENGTH_LONG).show();
+                getFragmentManager().beginTransaction().replace(R.id.fragment_container, programmeFragment).commit();
                 break;
             case Constants.TITLE_PROFILE:
                 ProfileFragment profileFragment = new ProfileFragment();
-                getFragmentManager().beginTransaction().replace(R.id.fragment_container, profileFragment)
-                        .addToBackStack(Constants.TITLE_PROFILE).commit();
+                getFragmentManager().beginTransaction().replace(R.id.fragment_container, profileFragment).commit();
                 break;
             case Constants.TITLE_STUDENT:
                 StudentFragment studentFragment = new StudentFragment();
-                getFragmentManager().beginTransaction().replace(R.id.fragment_container, studentFragment)
-                        .addToBackStack(Constants.TITLE_STUDENT).commit();
+                getFragmentManager().beginTransaction().replace(R.id.fragment_container, studentFragment).commit();
                 break;
             case Constants.TITLE_GRADUATION:
                 GraduationFragment graduationFragment = new GraduationFragment();
-                getFragmentManager().beginTransaction().replace(R.id.fragment_container, graduationFragment)
-                        .addToBackStack(Constants.TITLE_GRADUATION).commit();
+                getFragmentManager().beginTransaction().replace(R.id.fragment_container, graduationFragment).commit();
                 break;
             case Constants.TITLE_CONVOCATION:
                 ConvocationFragment convocationFragment = new ConvocationFragment();
-                getFragmentManager().beginTransaction().replace(R.id.fragment_container, convocationFragment)
-                        .addToBackStack(Constants.TITLE_CONVOCATION).commit();
+                getFragmentManager().beginTransaction().replace(R.id.fragment_container, convocationFragment).commit();
                 break;
             case Constants.TITLE_LOGOUT:
                 mSession.logoutUser();
                 break;
-        }
-    }
-
-    /**
-     * Display previous fragment when device's back button is pressed
-     */
-    @Override
-    public void onBackPressed() {
-        if (getFragmentManager().getBackStackEntryCount() > 0) {
-            getFragmentManager().popBackStack();
-        } else {
-            super.onBackPressed();
         }
     }
 

@@ -24,6 +24,8 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        new Firebase(Constants.FIREBASE_STAFF_REF).keepSynced(true);
+
         final Activity activity = this;
         final SessionManager sessionManager = new SessionManager(getApplicationContext());
         final TextInputLayout usernameWrapper = (TextInputLayout) findViewById(R.id.wrapper_login_email);
