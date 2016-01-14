@@ -24,7 +24,7 @@ public class StudentFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
-        final View rootView = inflater.inflate(R.layout.fragment_student, container, false);
+        final View view = inflater.inflate(R.layout.fragment_student, container, false);
 
         // Populate list of students from Firebase into ListView
         final StudentCustomAdapter adapter = new StudentCustomAdapter(getActivity());
@@ -43,10 +43,10 @@ public class StudentFragment extends Fragment {
 
             @Override
             public void onCancelled(FirebaseError firebaseError) {
-                Snackbar.make(rootView, firebaseError.getMessage(), Snackbar.LENGTH_LONG).show();
+                Snackbar.make(view, firebaseError.getMessage(), Snackbar.LENGTH_LONG).show();
             }
         });
-        ListView studentListView = (ListView) rootView.findViewById(R.id.student_list_view);
+        ListView studentListView = (ListView) view.findViewById(R.id.student_list_view);
         studentListView.setAdapter(adapter);
 
         // Launch a dialog to display student information when user click on item in list view
@@ -56,16 +56,17 @@ public class StudentFragment extends Fragment {
                 Student student = (Student) parent.getItemAtPosition(position);
                 Bundle bundle = new Bundle();
                 if (student != null) {
-                    bundle.putString(getString(R.string.key_student_id), Integer.toString(student.getId()));
+                    bundle.putString(getString(R.string.key_student_id), student.getId());
                 }
                 StudentDetailsDialogFragment studentDetailsDialogFragment = new StudentDetailsDialogFragment();
                 studentDetailsDialogFragment.setArguments(bundle);
-                getFragmentManager().beginTransaction().add(studentDetailsDialogFragment, null).addToBackStack(null).commit();
+                getFragmentManager().beginTransaction().add(studentDetailsDialogFragment, null).
+                        addToBackStack(studentDetailsDialogFragment.getClass().getName()).commit();
             }
         });
 
         // Launch a dialog to add new student when user click floating action button
-        FloatingActionButton addStudentFab = (FloatingActionButton) rootView.findViewById(R.id.add_student_fab);
+        FloatingActionButton addStudentFab = (FloatingActionButton) view.findViewById(R.id.add_student_fab);
         addStudentFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -74,7 +75,7 @@ public class StudentFragment extends Fragment {
             }
         });
 
-        return rootView;
+        return view;
     }
 
     @Override

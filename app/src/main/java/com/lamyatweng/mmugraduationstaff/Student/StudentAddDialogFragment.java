@@ -28,7 +28,7 @@ public class StudentAddDialogFragment extends DialogFragment {
         final View view = inflater.inflate(R.layout.fragment_student_add, container, false);
 
         final TextInputLayout nameWrapper = (TextInputLayout) view.findViewById(R.id.wrapper_student_name);
-        final TextInputLayout idWrapper = (TextInputLayout) view.findViewById(R.id.wrapper_login_email);
+        final TextInputLayout idWrapper = (TextInputLayout) view.findViewById(R.id.wrapper_student_id);
         final TextInputLayout emailWrapper = (TextInputLayout) view.findViewById(R.id.wrapper_student_email);
         final TextInputLayout creditHourWrapper = (TextInputLayout) view.findViewById(R.id.wrapper_student_balanceCreditHour);
         final TextInputLayout cgpaWrapper = (TextInputLayout) view.findViewById(R.id.wrapper_student_cgpa);
@@ -71,7 +71,7 @@ public class StudentAddDialogFragment extends DialogFragment {
         muetAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         muetSpinner.setAdapter(muetAdapter);
 
-        // Set up Toolbar with back button
+        // Set Toolbar with back and save button
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
         toolbar.setTitle("New student");
         toolbar.setNavigationIcon(R.mipmap.ic_close_white_24dp);
@@ -82,6 +82,7 @@ public class StudentAddDialogFragment extends DialogFragment {
                 StudentAddDialogFragment.this.getDialog().cancel();
             }
         });
+        // Set save button click listener
         Firebase.setAndroidContext(getActivity());
         final Firebase studentRef = new Firebase(Constants.FIREBASE_STUDENTS_REF);
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
@@ -96,9 +97,9 @@ public class StudentAddDialogFragment extends DialogFragment {
                 if (nameWrapper.getEditText() != null)
                     name = nameWrapper.getEditText().getText().toString();
 
-                int id = 0;
+                String id = "";
                 if (idWrapper.getEditText() != null)
-                    id = Integer.parseInt(idWrapper.getEditText().getText().toString());
+                    id = idWrapper.getEditText().getText().toString();
 
                 String email = "";
                 if (emailWrapper.getEditText() != null)
@@ -121,14 +122,16 @@ public class StudentAddDialogFragment extends DialogFragment {
                 studentRef.push().setValue(newStudent);
                 Toast.makeText(getActivity(), Constants.TITLE_STUDENT + " added.", Toast.LENGTH_SHORT).show();
 
-                // Close dialog
+                // Hide keyboard and Close dialog
+
                 StudentAddDialogFragment.this.getDialog().cancel();
-                return false;
+                return true;
             }
         });
 
         return view;
     }
+
 
     /**
      * Set dialog theme

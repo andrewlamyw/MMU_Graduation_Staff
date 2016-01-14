@@ -28,7 +28,7 @@ public class LoginActivity extends AppCompatActivity {
 
         final Activity activity = this;
         final SessionManager sessionManager = new SessionManager(getApplicationContext());
-        final TextInputLayout usernameWrapper = (TextInputLayout) findViewById(R.id.wrapper_login_email);
+        final TextInputLayout usernameWrapper = (TextInputLayout) findViewById(R.id.wrapper_student_id);
         final TextInputLayout passwordWrapper = (TextInputLayout) findViewById(R.id.wrapper_login_password);
 
         Firebase.setAndroidContext(this);

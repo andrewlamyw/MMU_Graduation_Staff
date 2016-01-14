@@ -13,4 +13,8 @@ public class Constants {
     public static final String TITLE_GRADUATION = "Graduation";
     public static final String TITLE_CONVOCATION = "Convocation";
     public static final String TITLE_LOGOUT = "Logout";
+
+    public static final String MENU_SAVE = "Save";
+    public static final String MENU_EDIT = "Edit";
+    public static final String MENU_DELETE = "Delete";
 }
