@@ -29,13 +29,13 @@ public class ProgrammeAddDialogFragment extends DialogFragment {
         final Spinner programmeLevelSpinner = (Spinner) view.findViewById(R.id.spinner_level);
         final Spinner facultySpinner = (Spinner) view.findViewById(R.id.spinner_faculty);
 
-        // Populate levels from array for selection
+        // Populate levels from array
         ArrayAdapter<CharSequence> levelAdapter = ArrayAdapter.createFromResource(getActivity(),
                 R.array.programme_level_array, android.R.layout.simple_spinner_item);
         levelAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         programmeLevelSpinner.setAdapter(levelAdapter);
 
-        // Populate faculties from array for selection
+        // Populate faculties from array
         ArrayAdapter<CharSequence> facultyAdapter = ArrayAdapter.createFromResource(getActivity(),
                 R.array.faculty_array, android.R.layout.simple_spinner_item);
         facultyAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -46,6 +46,7 @@ public class ProgrammeAddDialogFragment extends DialogFragment {
         toolbar.setTitle("New " + Constants.TITLE_PROGRAMME);
         toolbar.setNavigationIcon(R.mipmap.ic_close_white_24dp);
         toolbar.inflateMenu(R.menu.programme_add);
+        // Close dialog
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -73,6 +74,7 @@ public class ProgrammeAddDialogFragment extends DialogFragment {
                         Toast.makeText(getActivity(), Constants.TITLE_PROGRAMME + " added.", Toast.LENGTH_LONG).show();
                         ProgrammeAddDialogFragment.this.getDialog().cancel();
                         return true;
+
                     default:
                         return false;
                 }

@@ -6,7 +6,7 @@ public class Programme {
     String level;
 
     public Programme() {
-        // empty default constructor, necessary for Firebase to be able to deserialize
+        // Required by Firebase to deserialize
     }
 
     public Programme(String name, String level, String faculty) {

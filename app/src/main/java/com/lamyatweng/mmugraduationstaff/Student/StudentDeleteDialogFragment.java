@@ -30,6 +30,7 @@ public class StudentDeleteDialogFragment extends DialogFragment {
                         Firebase studentRef = new Firebase(Constants.FIREBASE_STUDENTS_REF);
                         studentRef.child(studentKey).setValue(null);
                         Toast.makeText(getActivity(), "Student deleted", Toast.LENGTH_SHORT).show();
+                        // Close StudentDetailsDialogFragment because item is removed
                         getFragmentManager().popBackStackImmediate(StudentDetailsDialogFragment.class.getName(),
                                 FragmentManager.POP_BACK_STACK_INCLUSIVE);
                     }

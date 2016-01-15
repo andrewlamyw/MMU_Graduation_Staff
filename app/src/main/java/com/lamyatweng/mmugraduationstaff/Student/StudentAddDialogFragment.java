@@ -27,6 +27,7 @@ public class StudentAddDialogFragment extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_student_add, container, false);
 
+        // Get references of views
         final TextInputLayout nameWrapper = (TextInputLayout) view.findViewById(R.id.wrapper_student_name);
         final TextInputLayout idWrapper = (TextInputLayout) view.findViewById(R.id.wrapper_student_id);
         final TextInputLayout emailWrapper = (TextInputLayout) view.findViewById(R.id.wrapper_student_email);
@@ -34,7 +35,7 @@ public class StudentAddDialogFragment extends DialogFragment {
         final TextInputLayout cgpaWrapper = (TextInputLayout) view.findViewById(R.id.wrapper_student_cgpa);
         final TextInputLayout financialWrapper = (TextInputLayout) view.findViewById(R.id.wrapper_student_financialDue);
 
-        // Populate list of programmes from array into spinner
+        // Populate programmes from Firebase
         final Spinner programmeSpinner = (Spinner) view.findViewById(R.id.programme_spinner);
         Firebase.setAndroidContext(getActivity());
         Firebase programmeRef = new Firebase(Constants.FIREBASE_PROGRAMMES_REF);
@@ -49,7 +50,6 @@ public class StudentAddDialogFragment extends DialogFragment {
                     programmeAdapter.add(programmeName);
                 }
             }
-
             @Override
             public void onCancelled(FirebaseError firebaseError) {
             }
@@ -57,14 +57,14 @@ public class StudentAddDialogFragment extends DialogFragment {
         programmeAdapter.setDropDownViewResource(R.layout.multiline_spinner_dropdown_item);
         programmeSpinner.setAdapter(programmeAdapter);
 
-        // Populate list of status from array into spinner
+        // Populate statuses from array
         final Spinner statusSpinner = (Spinner) view.findViewById(R.id.status_spinner);
         ArrayAdapter<CharSequence> statusAdapter = ArrayAdapter.createFromResource(getActivity(),
                 R.array.status_array, android.R.layout.simple_spinner_item);
         statusAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         statusSpinner.setAdapter(statusAdapter);
 
-        // Populate list of muet grades from array into spinner
+        // Populate muet grades from array
         final Spinner muetSpinner = (Spinner) view.findViewById(R.id.muet_spinner);
         ArrayAdapter<CharSequence> muetAdapter = ArrayAdapter.createFromResource(getActivity(),
                 R.array.muet_grading_array, android.R.layout.simple_spinner_item);
@@ -73,7 +73,7 @@ public class StudentAddDialogFragment extends DialogFragment {
 
         // Set Toolbar with back and save button
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
-        toolbar.setTitle("New student");
+        toolbar.setTitle("New " + Constants.TITLE_STUDENT);
         toolbar.setNavigationIcon(R.mipmap.ic_close_white_24dp);
         toolbar.inflateMenu(R.menu.student_add);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -82,50 +82,37 @@ public class StudentAddDialogFragment extends DialogFragment {
                 StudentAddDialogFragment.this.getDialog().cancel();
             }
         });
-        // Set save button click listener
+        // Commit: add new student into Firebase
         Firebase.setAndroidContext(getActivity());
         final Firebase studentRef = new Firebase(Constants.FIREBASE_STUDENTS_REF);
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                // Get user inputs
-                String programme = programmeSpinner.getSelectedItem().toString();
-                String status = statusSpinner.getSelectedItem().toString();
-                int muet = Integer.parseInt(muetSpinner.getSelectedItem().toString());
+                switch (item.getTitle().toString()) {
+                    case Constants.MENU_SAVE:
+                        // Retrieve user inputs
+                        String programme = programmeSpinner.getSelectedItem().toString();
+                        String status = statusSpinner.getSelectedItem().toString();
+                        int muet = Integer.parseInt(muetSpinner.getSelectedItem().toString());
+                        String name = nameWrapper.getEditText().getText().toString();
+                        String id = idWrapper.getEditText().getText().toString();
+                        String email = emailWrapper.getEditText().getText().toString();
+                        int balanceCreditHour = Integer.parseInt(creditHourWrapper.getEditText().getText().toString());
+                        double cgpa = Double.parseDouble(cgpaWrapper.getEditText().getText().toString());
+                        double financialDue = Double.parseDouble(financialWrapper.getEditText().getText().toString());
 
-                String name = "";
-                if (nameWrapper.getEditText() != null)
-                    name = nameWrapper.getEditText().getText().toString();
+                        // Push into Firebase student list
+                        Student newStudent = new Student(name, id, programme, status, email, balanceCreditHour, cgpa, muet, financialDue);
+                        studentRef.push().setValue(newStudent);
 
-                String id = "";
-                if (idWrapper.getEditText() != null)
-                    id = idWrapper.getEditText().getText().toString();
+                        // Display message and close dialog
+                        Toast.makeText(getActivity(), Constants.TITLE_STUDENT + " added.", Toast.LENGTH_SHORT).show();
+                        StudentAddDialogFragment.this.getDialog().cancel();
+                        return true;
 
-                String email = "";
-                if (emailWrapper.getEditText() != null)
-                    email = emailWrapper.getEditText().getText().toString();
-
-                int balanceCreditHour = 0;
-                if (creditHourWrapper.getEditText() != null)
-                    balanceCreditHour = Integer.parseInt(creditHourWrapper.getEditText().getText().toString());
-
-                double cgpa = 0;
-                if (cgpaWrapper.getEditText() != null)
-                    cgpa = Double.parseDouble(cgpaWrapper.getEditText().getText().toString());
-
-                double financialDue = 0;
-                if (financialWrapper.getEditText() != null)
-                    financialDue = Double.parseDouble(financialWrapper.getEditText().getText().toString());
-
-                // Save into Firebase
-                Student newStudent = new Student(name, id, programme, status, email, balanceCreditHour, cgpa, muet, financialDue);
-                studentRef.push().setValue(newStudent);
-                Toast.makeText(getActivity(), Constants.TITLE_STUDENT + " added.", Toast.LENGTH_SHORT).show();
-
-                // Hide keyboard and Close dialog
-
-                StudentAddDialogFragment.this.getDialog().cancel();
-                return true;
+                    default:
+                        return false;
+                }
             }
         });
 

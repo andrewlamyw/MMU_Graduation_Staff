@@ -6,13 +6,13 @@ public class Student {
     String programme;
     String status;
     String email;
-    int balanceCreditHour;
-    double cgpa;
-    int muet;
     double financialDue;
+    double cgpa;
+    int balanceCreditHour;
+    int muet;
 
     public Student() {
-        // empty default constructor, necessary for Firebase to be able to deserialize
+        // Required by Firebase to deserialize
     }
 
     public Student(String name, String id, String programme, String status, String email,

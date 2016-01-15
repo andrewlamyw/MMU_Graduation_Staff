@@ -16,20 +16,23 @@ import android.widget.ListView;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
+import com.firebase.client.Query;
 import com.firebase.client.ValueEventListener;
 import com.lamyatweng.mmugraduationstaff.Constants;
 import com.lamyatweng.mmugraduationstaff.R;
 
 public class StudentFragment extends Fragment {
+    Bundle bundle = new Bundle();
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_student, container, false);
 
-        // Populate list of students from Firebase into ListView
+        // Populate students from Firebase into ListView
         final StudentCustomAdapter adapter = new StudentCustomAdapter(getActivity());
         Firebase.setAndroidContext(getActivity());
-        Firebase studentRef = new Firebase(Constants.FIREBASE_STUDENTS_REF);
+        final Firebase studentRef = new Firebase(Constants.FIREBASE_STUDENTS_REF);
         studentRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -40,7 +43,6 @@ public class StudentFragment extends Fragment {
                     adapter.add(student);
                 }
             }
-
             @Override
             public void onCancelled(FirebaseError firebaseError) {
                 Snackbar.make(view, firebaseError.getMessage(), Snackbar.LENGTH_LONG).show();
@@ -49,19 +51,42 @@ public class StudentFragment extends Fragment {
         ListView studentListView = (ListView) view.findViewById(R.id.student_list_view);
         studentListView.setAdapter(adapter);
 
-        // Launch a dialog to display student details when user clicks on item in list view
+        // Launch a dialog to display student details
         studentListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Student student = (Student) parent.getItemAtPosition(position);
-                Bundle bundle = new Bundle();
-                if (student != null) {
-                    bundle.putString(getString(R.string.key_student_id), student.getId());
+                final Student selectedStudent = (Student) parent.getItemAtPosition(position);
+
+                // Retrieve selected student key from Firebase and save in bundle
+                Query queryRef = studentRef.orderByChild("id").equalTo(selectedStudent.getId());
+                queryRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        for (DataSnapshot studentSnapshot : dataSnapshot.getChildren()) {
+                            Student firebaseStudent = studentSnapshot.getValue(Student.class);
+                            if (firebaseStudent.getName().equals(selectedStudent.getName())) {
+                                bundle.putString(getString(R.string.key_student_key), studentSnapshot.getKey());
+                                StudentDetailsDialogFragment studentDetailsDialogFragment = new StudentDetailsDialogFragment();
+                                studentDetailsDialogFragment.setArguments(bundle);
+                                getFragmentManager().beginTransaction().add(studentDetailsDialogFragment, null).
+                                        addToBackStack(studentDetailsDialogFragment.getClass().getName()).commit();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(FirebaseError firebaseError) {
+
+                    }
+                });
+
+                /*if (selectedStudent != null) {
+                    bundle.putString(getString(R.string.key_student_id), selectedStudent.getId());
                 }
                 StudentDetailsDialogFragment studentDetailsDialogFragment = new StudentDetailsDialogFragment();
                 studentDetailsDialogFragment.setArguments(bundle);
                 getFragmentManager().beginTransaction().add(studentDetailsDialogFragment, null).
-                        addToBackStack(studentDetailsDialogFragment.getClass().getName()).commit();
+                        addToBackStack(studentDetailsDialogFragment.getClass().getName()).commit();*/
             }
         });
 

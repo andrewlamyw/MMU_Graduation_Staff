@@ -22,39 +22,42 @@ import com.lamyatweng.mmugraduationstaff.Constants;
 import com.lamyatweng.mmugraduationstaff.R;
 
 public class ProgrammeEditDialogFragment extends DialogFragment {
+    Bundle mBundle = new Bundle();
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_programme_edit, container, false);
 
         // Retrieve programmeKey from previous fragment
-        Bundle bundle = getArguments();
-        final String programmeKey = bundle.getString(getString(R.string.key_programme_key));
+        mBundle = getArguments();
+        final String programmeKey = mBundle.getString(getString(R.string.key_programme_key));
 
         // Get references of views
         final TextInputLayout nameWrapper = (TextInputLayout) view.findViewById(R.id.wrapper_programme_name);
         final Spinner levelSpinner = (Spinner) view.findViewById(R.id.spinner_level);
         final Spinner facultySpinner = (Spinner) view.findViewById(R.id.spinner_faculty);
 
-        // Populate levels from array for selection
+        // Populate levels from array
         final ArrayAdapter<CharSequence> levelAdapter = ArrayAdapter.createFromResource(getActivity(),
                 R.array.programme_level_array, android.R.layout.simple_spinner_item);
         levelAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         levelSpinner.setAdapter(levelAdapter);
 
-        // Populate faculties from array for selection
+        // Populate faculties from array
         final ArrayAdapter<CharSequence> facultyAdapter = ArrayAdapter.createFromResource(getActivity(),
                 R.array.faculty_array, android.R.layout.simple_spinner_item);
         facultyAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         facultySpinner.setAdapter(facultyAdapter);
 
-        // Retrieve programme details from Firebase and display for editing
+        // Retrieve programme details from Firebase and display
         Firebase.setAndroidContext(getActivity());
         final Firebase programmeRef = new Firebase(Constants.FIREBASE_PROGRAMMES_REF);
         programmeRef.child(programmeKey).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Programme programme = dataSnapshot.getValue(Programme.class);
+                // Null checking is required for handling removed item from Firebase
                 if (programme != null) {
                     nameWrapper.getEditText().setText(programme.getName());
                     levelSpinner.setSelection(levelAdapter.getPosition(programme.getLevel()));
@@ -64,14 +67,14 @@ public class ProgrammeEditDialogFragment extends DialogFragment {
 
             @Override
             public void onCancelled(FirebaseError firebaseError) {
-
             }
         });
 
-        // Set up Toolbar
+        // Set up Toolbar with close and save button
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
         toolbar.setNavigationIcon(R.mipmap.ic_close_white_24dp);
         toolbar.inflateMenu(R.menu.programme_edit);
+        // Close dialog
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -90,13 +93,14 @@ public class ProgrammeEditDialogFragment extends DialogFragment {
                         final String faculty = facultySpinner.getSelectedItem().toString();
 
                         // Replace old values with new values in Firebase
-                        Programme programme = new Programme(name, level, faculty);
-                        programmeRef.child(programmeKey).setValue(programme);
+                        Programme updatedProgramme = new Programme(name, level, faculty);
+                        programmeRef.child(programmeKey).setValue(updatedProgramme);
 
                         // Display message and close dialog
                         Toast.makeText(getActivity(), Constants.TITLE_PROGRAMME + " updated.", Toast.LENGTH_LONG).show();
                         ProgrammeEditDialogFragment.this.getDialog().cancel();
                         return true;
+
                     default:
                         return false;
                 }

@@ -13,11 +13,9 @@ import com.lamyatweng.mmugraduationstaff.Constants;
 import com.lamyatweng.mmugraduationstaff.R;
 
 public class ProgrammeDeleteDialogFragment extends DialogFragment {
-
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-
-        // Retrieve ProgrammeKey passed from previous fragment
+        // Retrieve ProgrammeKey from previous fragment
         Bundle bundle = getArguments();
         final String programmeKey = bundle.getString(getString(R.string.key_programme_key));
 
@@ -29,7 +27,8 @@ public class ProgrammeDeleteDialogFragment extends DialogFragment {
                         Firebase.setAndroidContext(getActivity());
                         Firebase programmeRef = new Firebase(Constants.FIREBASE_PROGRAMMES_REF);
                         programmeRef.child(programmeKey).setValue(null);
-                        Toast.makeText(getActivity(), "Programme deleted", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "Programme deleted", Toast.LENGTH_LONG).show();
+                        // Close ProgrammeDetailsDialogFragment because item is removed
                         getFragmentManager().popBackStackImmediate(ProgrammeDetailsDialogFragment.class.getName(),
                                 FragmentManager.POP_BACK_STACK_INCLUSIVE);
                     }

@@ -48,8 +48,6 @@ public class ProgrammeFragment extends Fragment {
             case R.id.action_settings:
                 return true;
             default:
-                // If we got here, the user's action was not recognized.
-                // Invoke the superclass to handle it.
                 return super.onOptionsItemSelected(item);
         }
     }
@@ -58,7 +56,7 @@ public class ProgrammeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_programme, container, false);
 
-        // Populate list of programmes from Firebase into ListView
+        // Populate programmes from Firebase into ListView
         Firebase.setAndroidContext(getActivity());
         final Firebase programmeRef = new Firebase(Constants.FIREBASE_PROGRAMMES_REF);
         final ProgrammeCustomAdapter adapter = new ProgrammeCustomAdapter(getActivity());
@@ -81,7 +79,7 @@ public class ProgrammeFragment extends Fragment {
         ListView programmeListView = (ListView) rootView.findViewById(R.id.programme_list_view);
         programmeListView.setAdapter(adapter);
 
-        // Launch a dialog to display programme details when user clicks on item in list view
+        // Launch a dialog to display programme details
         programmeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -109,8 +107,6 @@ public class ProgrammeFragment extends Fragment {
 
                     }
                 });
-
-
             }
         });
 

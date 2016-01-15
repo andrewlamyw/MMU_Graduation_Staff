@@ -19,16 +19,18 @@ public class ProgrammeCustomAdapter extends ArrayAdapter<Programme> {
     public View getView(int position, View convertView, ViewGroup parent) {
         Programme programme = getItem(position);
 
-        // Check if an existing view is being reused, otherwise inflate the view
+        // Inflate view if view has not been created
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_programme, parent, false);
         }
 
+        // Get reference of views
         TextView programmeName = (TextView) convertView.findViewById(R.id.programmeName);
-        TextView programmeFaculty = (TextView) convertView.findViewById(R.id.programmeFaculty);
+        TextView faculty = (TextView) convertView.findViewById(R.id.faculty);
 
+        // Set text value of views
         programmeName.setText(programme.getName());
-        programmeFaculty.setText(programme.getFaculty());
+        faculty.setText(programme.getFaculty());
 
         return convertView;
     }

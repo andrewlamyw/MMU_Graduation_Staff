@@ -19,14 +19,16 @@ import com.lamyatweng.mmugraduationstaff.Constants;
 import com.lamyatweng.mmugraduationstaff.R;
 
 public class ProgrammeDetailsDialogFragment extends DialogFragment {
+    Bundle mBundle = new Bundle();
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_programme_details, container, false);
 
         // Retrieve programmeKey from previous fragment
-        Bundle bundle = getArguments();
-        final String programmeKey = bundle.getString(getString(R.string.key_programme_key));
+        mBundle = getArguments();
+        final String programmeKey = mBundle.getString(getString(R.string.key_programme_key));
 
         // Get references of views
         final TextInputLayout programmeNameWrapper = (TextInputLayout) view.findViewById(R.id.wrapper_programme_name);
@@ -39,6 +41,7 @@ public class ProgrammeDetailsDialogFragment extends DialogFragment {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Programme programme = dataSnapshot.getValue(Programme.class);
+                // Null checking is required for handling removed item from Firebase
                 if (programme != null) {
                     programmeNameWrapper.getEditText().setText(programme.getName());
                     educationalLevelWrapper.getEditText().setText(programme.getLevel());
@@ -56,6 +59,7 @@ public class ProgrammeDetailsDialogFragment extends DialogFragment {
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
         toolbar.setNavigationIcon(R.mipmap.ic_arrow_back_white_24dp);
         toolbar.inflateMenu(R.menu.programme_details);
+        // Close dialog
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -65,21 +69,22 @@ public class ProgrammeDetailsDialogFragment extends DialogFragment {
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                Bundle bundle = new Bundle();
-                bundle.putString(getString(R.string.key_programme_key), programmeKey);
                 switch (item.getTitle().toString()) {
                     case Constants.MENU_DELETE:
                         ProgrammeDeleteDialogFragment programmeDeleteDialogFragment = new ProgrammeDeleteDialogFragment();
-                        programmeDeleteDialogFragment.setArguments(bundle);
+                        programmeDeleteDialogFragment.setArguments(mBundle);
                         getFragmentManager().beginTransaction().add(programmeDeleteDialogFragment, null).addToBackStack(null).commit();
                         return true;
+
                     case Constants.MENU_EDIT:
                         ProgrammeEditDialogFragment programmeEditDialogFragment = new ProgrammeEditDialogFragment();
-                        programmeEditDialogFragment.setArguments(bundle);
+                        programmeEditDialogFragment.setArguments(mBundle);
                         getFragmentManager().beginTransaction().add(programmeEditDialogFragment, null).addToBackStack(null).commit();
                         return true;
+
+                    default:
+                        return false;
                 }
-                return false;
             }
         });
 

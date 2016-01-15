@@ -19,16 +19,18 @@ public class StudentCustomAdapter extends ArrayAdapter<Student> {
     public View getView(int position, View convertView, ViewGroup parent) {
         Student student = getItem(position);
 
-        // Check if an existing view is being reused, otherwise inflate the view
+        // Inflate view if view has not been created
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_student, parent, false);
         }
 
+        // Get reference of views
         TextView studentName = (TextView) convertView.findViewById(R.id.studentName);
         TextView studentId = (TextView) convertView.findViewById(R.id.studentId);
         TextView studentCourse = (TextView) convertView.findViewById(R.id.studentCourse);
         TextView studentStatus = (TextView) convertView.findViewById(R.id.studentStatus);
 
+        // Set text value of views
         studentName.setText(student.getName());
         studentId.setText(student.getId());
         studentCourse.setText(student.getProgramme());

@@ -14,26 +14,24 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
-import com.firebase.client.Query;
 import com.firebase.client.ValueEventListener;
 import com.lamyatweng.mmugraduationstaff.Constants;
 import com.lamyatweng.mmugraduationstaff.R;
 
 public class StudentEditDialogFragment extends DialogFragment {
-    String mStudentKey;
+    Bundle mBundle = new Bundle();
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_student_edit, container, false);
 
-        // Retrieve studentID from previous fragment
-        Bundle bundle = getArguments();
-        final String studentID = bundle.getString(getString(R.string.key_student_id));
+        // Retrieve studentKey from previous fragment
+        mBundle = getArguments();
+        final String studentKey = mBundle.getString(getString(R.string.key_student_key));
 
         // Get references of views
         final TextInputLayout nameWrapper = (TextInputLayout) view.findViewById(R.id.wrapper_student_name);
@@ -43,7 +41,7 @@ public class StudentEditDialogFragment extends DialogFragment {
         final TextInputLayout cgpaWrapper = (TextInputLayout) view.findViewById(R.id.wrapper_student_cgpa);
         final TextInputLayout financialWrapper = (TextInputLayout) view.findViewById(R.id.wrapper_student_financialDue);
 
-        // Populate programmes from Firebase for selection
+        // Populate programmes from Firebase
         final Spinner programmeSpinner = (Spinner) view.findViewById(R.id.programme_spinner);
         Firebase.setAndroidContext(getActivity());
         Firebase programmeRef = new Firebase(Constants.FIREBASE_PROGRAMMES_REF);
@@ -66,22 +64,47 @@ public class StudentEditDialogFragment extends DialogFragment {
         programmeAdapter.setDropDownViewResource(R.layout.multiline_spinner_dropdown_item);
         programmeSpinner.setAdapter(programmeAdapter);
 
-        // Populate statuses from array for selection
+        // Populate statuses from array
         final Spinner statusSpinner = (Spinner) view.findViewById(R.id.status_spinner);
         final ArrayAdapter<CharSequence> statusAdapter = ArrayAdapter.createFromResource(getActivity(),
                 R.array.status_array, android.R.layout.simple_spinner_item);
         statusAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         statusSpinner.setAdapter(statusAdapter);
 
-        // Populate muet grades from array for selection
+        // Populate muet grades from array
         final Spinner muetSpinner = (Spinner) view.findViewById(R.id.muet_spinner);
         final ArrayAdapter<CharSequence> muetAdapter = ArrayAdapter.createFromResource(getActivity(),
                 R.array.muet_grading_array, android.R.layout.simple_spinner_item);
         muetAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         muetSpinner.setAdapter(muetAdapter);
 
-        // Retrieve student details from Firebase and display for editing
-        Firebase.setAndroidContext(getActivity());
+        // Retrieve student details from Firebase and display
+        final Firebase studentRef = new Firebase(Constants.FIREBASE_STUDENTS_REF);
+        studentRef.child(studentKey).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Student student = dataSnapshot.getValue(Student.class);
+                // Required for handling item removed from Firebase
+                if (student != null) {
+                    nameWrapper.getEditText().setText(student.getName());
+                    idWrapper.getEditText().setText(student.getId());
+                    programmeSpinner.setSelection(programmeAdapter.getPosition(student.getProgramme()));
+                    statusSpinner.setSelection(statusAdapter.getPosition(student.getStatus()));
+                    emailWrapper.getEditText().setText(student.getEmail());
+                    creditHourWrapper.getEditText().setText(String.valueOf(student.getBalanceCreditHour()));
+                    cgpaWrapper.getEditText().setText(String.valueOf(student.getCgpa()));
+                    muetSpinner.setSelection(muetAdapter.getPosition(String.valueOf(student.getMuet())));
+                    financialWrapper.getEditText().setText(String.valueOf(student.getFinancialDue()));
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
+
+        /*Firebase.setAndroidContext(getActivity());
         final Firebase studentRef = new Firebase(Constants.FIREBASE_STUDENTS_REF);
         Query queryRef = studentRef.orderByChild("id").equalTo(studentID);
         queryRef.addChildEventListener(new ChildEventListener() {
@@ -127,12 +150,13 @@ public class StudentEditDialogFragment extends DialogFragment {
             @Override
             public void onCancelled(FirebaseError firebaseError) {
             }
-        });
+        });*/
 
         // Set Toolbar with close and save button
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
         toolbar.setNavigationIcon(R.mipmap.ic_close_white_24dp);
         toolbar.inflateMenu(R.menu.student_edit);
+        // Close dialog
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -158,12 +182,13 @@ public class StudentEditDialogFragment extends DialogFragment {
 
                         // Replace old values with new values in Firebase
                         Student updatedStudent = new Student(name, id, programme, status, email, balanceCreditHour, cgpa, muet, financialDue);
-                        studentRef.child(mStudentKey).setValue(updatedStudent);
+                        studentRef.child(studentKey).setValue(updatedStudent);
 
                         // Display message and close dialog
                         Toast.makeText(getActivity(), Constants.TITLE_STUDENT + " updated.", Toast.LENGTH_LONG).show();
                         StudentEditDialogFragment.this.getDialog().cancel();
                         return true;
+
                     default:
                         return false;
                 }
