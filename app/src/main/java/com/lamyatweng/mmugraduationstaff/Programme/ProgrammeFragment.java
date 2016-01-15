@@ -13,16 +13,20 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
+import com.firebase.client.Query;
 import com.firebase.client.ValueEventListener;
 import com.lamyatweng.mmugraduationstaff.Constants;
 import com.lamyatweng.mmugraduationstaff.R;
 
 public class ProgrammeFragment extends Fragment {
+    Bundle bundle = new Bundle();
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,23 +56,23 @@ public class ProgrammeFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         final ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_programme, container, false);
 
         // Populate list of programmes from Firebase into ListView
         Firebase.setAndroidContext(getActivity());
-        Firebase programmeRef = new Firebase(Constants.FIREBASE_PROGRAMMES_REF);
+        final Firebase programmeRef = new Firebase(Constants.FIREBASE_PROGRAMMES_REF);
         final ProgrammeCustomAdapter adapter = new ProgrammeCustomAdapter(getActivity());
         programmeRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Programme programme;
                 adapter.clear();
-                for (DataSnapshot courseSnapshot : dataSnapshot.getChildren()) {
-                    programme = courseSnapshot.getValue(Programme.class);
+                for (DataSnapshot programmeSnapshot : dataSnapshot.getChildren()) {
+                    programme = programmeSnapshot.getValue(Programme.class);
                     adapter.add(programme);
                 }
             }
+
             @Override
             public void onCancelled(FirebaseError firebaseError) {
                 Snackbar.make(rootView, firebaseError.getMessage(), Snackbar.LENGTH_LONG).show();
@@ -76,6 +80,39 @@ public class ProgrammeFragment extends Fragment {
         });
         ListView programmeListView = (ListView) rootView.findViewById(R.id.programme_list_view);
         programmeListView.setAdapter(adapter);
+
+        // Launch a dialog to display programme details when user clicks on item in list view
+        programmeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                final Programme selectedProgramme = (Programme) parent.getItemAtPosition(position);
+
+                // Retrieve selected programme key from Firebase and save in bundle
+                Query queryRef = programmeRef.orderByChild("name").equalTo(selectedProgramme.getName());
+                queryRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        for (DataSnapshot programmeSnapshot : dataSnapshot.getChildren()) {
+                            Programme firebaseProgramme = programmeSnapshot.getValue(Programme.class);
+                            if (firebaseProgramme.getFaculty().equals(selectedProgramme.getFaculty())) {
+                                bundle.putString(getString(R.string.key_programme_key), programmeSnapshot.getKey());
+                                ProgrammeDetailsDialogFragment programmeDetailsDialogFragment = new ProgrammeDetailsDialogFragment();
+                                programmeDetailsDialogFragment.setArguments(bundle);
+                                getFragmentManager().beginTransaction().add(programmeDetailsDialogFragment, null).
+                                        addToBackStack(programmeDetailsDialogFragment.getClass().getName()).commit();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(FirebaseError firebaseError) {
+
+                    }
+                });
+
+
+            }
+        });
 
         // Launch a dialog to add new programme
         FloatingActionButton addProgrammeFab = (FloatingActionButton) rootView.findViewById(R.id.add_programme_fab);

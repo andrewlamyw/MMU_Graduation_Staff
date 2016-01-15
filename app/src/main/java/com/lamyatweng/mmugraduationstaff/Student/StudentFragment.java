@@ -49,7 +49,7 @@ public class StudentFragment extends Fragment {
         ListView studentListView = (ListView) view.findViewById(R.id.student_list_view);
         studentListView.setAdapter(adapter);
 
-        // Launch a dialog to display student information when user click on item in list view
+        // Launch a dialog to display student details when user clicks on item in list view
         studentListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

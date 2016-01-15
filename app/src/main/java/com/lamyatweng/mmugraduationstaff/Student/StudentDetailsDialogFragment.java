@@ -41,7 +41,7 @@ public class StudentDetailsDialogFragment extends DialogFragment {
         final TextInputLayout muetWrapper = (TextInputLayout) view.findViewById(R.id.wrapper_muet);
         final TextInputLayout financialWrapper = (TextInputLayout) view.findViewById(R.id.wrapper_student_financialDue);
 
-        // Retrieve student information from Firebase
+        // Retrieve student details from Firebase
         Firebase.setAndroidContext(getActivity());
         Firebase studentRef = new Firebase(Constants.FIREBASE_STUDENTS_REF);
         Query queryRef = studentRef.orderByChild("id").equalTo(studentID);
@@ -90,10 +90,10 @@ public class StudentDetailsDialogFragment extends DialogFragment {
             }
         });
 
-        // Set up Toolbar with back and edit button
+        // Set up Toolbar with back, edit and delete button
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
         toolbar.setNavigationIcon(R.mipmap.ic_arrow_back_white_24dp);
-        toolbar.inflateMenu(R.menu.student_edit);
+        toolbar.inflateMenu(R.menu.student_details);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -109,26 +109,27 @@ public class StudentDetailsDialogFragment extends DialogFragment {
                     bundle.putString(getString(R.string.key_student_key), mStudentKey);
                 }
                 switch (item.getTitle().toString()) {
+                    case Constants.MENU_DELETE:
+                        StudentDeleteDialogFragment studentDeleteDialogFragment = new StudentDeleteDialogFragment();
+                        studentDeleteDialogFragment.setArguments(bundle);
+                        getFragmentManager().beginTransaction().add(studentDeleteDialogFragment, null).addToBackStack(null).commit();
+                        return true;
                     case Constants.MENU_EDIT:
                         StudentEditDialogFragment studentEditDialogFragment = new StudentEditDialogFragment();
                         studentEditDialogFragment.setArguments(bundle);
                         getFragmentManager().beginTransaction().add(studentEditDialogFragment, null).addToBackStack(null).commit();
                         return true;
-                    case Constants.MENU_DELETE:
-                        DeleteStudentDialogFragment deleteStudentDialogFragment = new DeleteStudentDialogFragment();
-                        deleteStudentDialogFragment.setArguments(bundle);
-                        getFragmentManager().beginTransaction().add(deleteStudentDialogFragment, null).addToBackStack(null).commit();
-                        return true;
                 }
                 return false;
             }
         });
+
         return view;
     }
 
 
     /**
-     * Set dialog theme
+     * Set dialog theme as full screen
      */
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {

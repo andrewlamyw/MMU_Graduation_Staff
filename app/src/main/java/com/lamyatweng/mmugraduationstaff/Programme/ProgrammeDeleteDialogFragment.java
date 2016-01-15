@@ -1,4 +1,4 @@
-package com.lamyatweng.mmugraduationstaff.Student;
+package com.lamyatweng.mmugraduationstaff.Programme;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -12,25 +12,25 @@ import com.firebase.client.Firebase;
 import com.lamyatweng.mmugraduationstaff.Constants;
 import com.lamyatweng.mmugraduationstaff.R;
 
-public class DeleteStudentDialogFragment extends DialogFragment {
+public class ProgrammeDeleteDialogFragment extends DialogFragment {
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
-        // Retrieve studentID passed from previous fragment
+        // Retrieve ProgrammeKey passed from previous fragment
         Bundle bundle = getArguments();
-        final String studentKey = bundle.getString(getString(R.string.key_student_key));
+        final String programmeKey = bundle.getString(getString(R.string.key_programme_key));
 
         // Use the Builder class for convenient dialog construction
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setMessage("Delete student?")
+        builder.setMessage("Delete programme?")
                 .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         Firebase.setAndroidContext(getActivity());
-                        Firebase studentRef = new Firebase(Constants.FIREBASE_STUDENTS_REF);
-                        studentRef.child(studentKey).setValue(null);
-                        Toast.makeText(getActivity(), "Student deleted", Toast.LENGTH_SHORT).show();
-                        getFragmentManager().popBackStackImmediate(StudentDetailsDialogFragment.class.getName(),
+                        Firebase programmeRef = new Firebase(Constants.FIREBASE_PROGRAMMES_REF);
+                        programmeRef.child(programmeKey).setValue(null);
+                        Toast.makeText(getActivity(), "Programme deleted", Toast.LENGTH_SHORT).show();
+                        getFragmentManager().popBackStackImmediate(ProgrammeDetailsDialogFragment.class.getName(),
                                 FragmentManager.POP_BACK_STACK_INCLUSIVE);
                     }
                 })
