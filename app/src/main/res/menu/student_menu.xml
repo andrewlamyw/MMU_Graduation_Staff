@@ -13,16 +13,12 @@
         android:id="@+id/action_filter"
         android:icon="@mipmap/ic_filter_list_white_24dp"
         android:title="@string/title_filter"
-        app:showAsAction="ifRoom" />
-
-    <item
-        android:id="@+id/action_share"
-        android:title="@string/title_share"
-        app:actionProviderClass="android.support.v7.widget.ShareActionProvider"
+        app:actionProviderClass="com.lamyatweng.mmugraduationstaff.Student.StudentFilterActionProvider"
         app:showAsAction="never" />
 
     <item
         android:id="@+id/action_settings"
         android:title="@string/title_settings"
         app:showAsAction="never" />
+
 </menu>

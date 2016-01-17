@@ -1,13 +1,15 @@
 package com.lamyatweng.mmugraduationstaff.Student;
 
 import android.app.Fragment;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -28,6 +30,7 @@ public class StudentFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_student, container, false);
+        this.setHasOptionsMenu(true);
 
         // Populate students from Firebase into ListView
         final StudentCustomAdapter adapter = new StudentCustomAdapter(getActivity());
@@ -79,14 +82,6 @@ public class StudentFragment extends Fragment {
 
                     }
                 });
-
-                /*if (selectedStudent != null) {
-                    bundle.putString(getString(R.string.key_student_id), selectedStudent.getId());
-                }
-                StudentDetailsDialogFragment studentDetailsDialogFragment = new StudentDetailsDialogFragment();
-                studentDetailsDialogFragment.setArguments(bundle);
-                getFragmentManager().beginTransaction().add(studentDetailsDialogFragment, null).
-                        addToBackStack(studentDetailsDialogFragment.getClass().getName()).commit();*/
             }
         });
 
@@ -103,6 +98,9 @@ public class StudentFragment extends Fragment {
         return view;
     }
 
+    /**
+     * Set ActionBar title
+     */
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -111,7 +109,33 @@ public class StudentFragment extends Fragment {
             actionBar.setTitle(Constants.TITLE_STUDENT);
     }
 
-    public interface OnStudentSelectedListener {
-        void onStudentSelected(Uri articleUri);
+    /**
+     * Set menu
+     */
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.student_menu, menu);
+    }
+
+    /**
+     * Set menu
+     */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_search:
+                return true;
+
+            case R.id.action_filter:
+
+                return true;
+
+            case R.id.action_settings:
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

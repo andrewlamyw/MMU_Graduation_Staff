@@ -26,6 +26,7 @@
     <string name="drawer_open">Open drawer</string>
     <string name="drawer_close">Close drawer</string>
     <string name="key_programme_key">programmeKey</string>
+    <string name="title_filter">Filter</string>
 
     <!-- Array -->
     <string-array name="programme_array">
