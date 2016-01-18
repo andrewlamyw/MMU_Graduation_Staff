@@ -1,4 +1,4 @@
-package com.lamyatweng.mmugraduationstaff;
+package com.lamyatweng.mmugraduationstaff.Convocation;
 
 import android.app.Fragment;
 import android.os.Bundle;
@@ -14,6 +14,8 @@ import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
+import com.lamyatweng.mmugraduationstaff.Constants;
+import com.lamyatweng.mmugraduationstaff.R;
 
 public class ConvocationFragment extends Fragment{
 

@@ -32,16 +32,20 @@ public class DatePickerFragment extends DialogFragment
     }
 
     public void onDateSet(DatePicker view, int year, int month, int day) {
-        // Do something with the date chosen by the user
+        // Retrieve studentKey from previous fragment
+        mBundle = getArguments();
+        int textViewId = mBundle.getInt(getString(R.string.key_datePicker_textView_id));
+        String fragmentClassName = mBundle.getString(getString(R.string.key_fragment_class_name));
+
+        // Create Date object based on date selection by user
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.YEAR, year);
         calendar.set(Calendar.MONTH, month);
         calendar.set(Calendar.DAY_OF_MONTH, day);
         Date date = calendar.getTime();
-        Fragment fragment = getActivity().getFragmentManager().findFragmentByTag(ConvocationAddDialogFragment.class.getName());
-        // Retrieve studentKey from previous fragment
-        mBundle = getArguments();
-        int textViewId = mBundle.getInt(getString(R.string.key_datePicker_textView_id));
+
+        // Update TextView with the date chosen by the user
+        Fragment fragment = getActivity().getFragmentManager().findFragmentByTag(fragmentClassName);
         TextView textView = (TextView) fragment.getView().findViewById(textViewId);
         textView.setText(DateFormat.getDateInstance().format(date));
 

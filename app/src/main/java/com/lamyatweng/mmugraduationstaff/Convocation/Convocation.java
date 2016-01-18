@@ -1,4 +1,4 @@
-package com.lamyatweng.mmugraduationstaff;
+package com.lamyatweng.mmugraduationstaff.Convocation;
 
 public class Convocation {
     String year;

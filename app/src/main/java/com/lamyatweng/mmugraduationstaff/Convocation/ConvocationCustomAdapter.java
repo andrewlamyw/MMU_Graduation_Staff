@@ -1,4 +1,4 @@
-package com.lamyatweng.mmugraduationstaff;
+package com.lamyatweng.mmugraduationstaff.Convocation;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -6,6 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+
+import com.lamyatweng.mmugraduationstaff.R;
 
 public class ConvocationCustomAdapter extends ArrayAdapter<Convocation> {
     public ConvocationCustomAdapter(Context context) {

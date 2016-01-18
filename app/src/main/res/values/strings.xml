@@ -28,6 +28,7 @@
     <!-- Others -->
     <string name="drawer_open">Open drawer</string>
     <string name="drawer_close">Close drawer</string>
+    <string name="key_fragment_class_name">fragmentClassName</string>
 
     <!-- Array -->
     <string-array name="programme_array">

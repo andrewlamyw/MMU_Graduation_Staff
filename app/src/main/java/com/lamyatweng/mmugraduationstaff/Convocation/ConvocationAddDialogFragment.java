@@ -1,4 +1,4 @@
-package com.lamyatweng.mmugraduationstaff;
+package com.lamyatweng.mmugraduationstaff.Convocation;
 
 import android.app.Dialog;
 import android.app.DialogFragment;
@@ -14,6 +14,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.client.Firebase;
+import com.lamyatweng.mmugraduationstaff.Constants;
+import com.lamyatweng.mmugraduationstaff.DatePickerFragment;
+import com.lamyatweng.mmugraduationstaff.R;
 
 public class ConvocationAddDialogFragment extends DialogFragment {
     Bundle bundle = new Bundle();
@@ -34,6 +37,7 @@ public class ConvocationAddDialogFragment extends DialogFragment {
             public void onClick(View v) {
                 DialogFragment newFragment = new DatePickerFragment();
                 bundle.putInt(getString(R.string.key_datePicker_textView_id), R.id.open_registration_date);
+                bundle.putString(getString(R.string.key_fragment_class_name), ConvocationAddDialogFragment.class.getName());
                 newFragment.setArguments(bundle);
                 newFragment.show(getFragmentManager(), "datePicker");
             }
