@@ -10,7 +10,6 @@ import android.widget.TextView;
 import com.lamyatweng.mmugraduationstaff.R;
 
 public class ProgrammeCustomAdapter extends ArrayAdapter<Programme> {
-
     public ProgrammeCustomAdapter(Context context) {
         super(context, 0);
     }

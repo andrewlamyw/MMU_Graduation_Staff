@@ -41,7 +41,7 @@ public class ProgrammeAddDialogFragment extends DialogFragment {
         facultyAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         facultySpinner.setAdapter(facultyAdapter);
 
-        // Set Toolbar with save button
+        // Set Toolbar with close and save button
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
         toolbar.setTitle("New " + Constants.TITLE_PROGRAMME);
         toolbar.setNavigationIcon(R.mipmap.ic_close_white_24dp);
@@ -53,6 +53,7 @@ public class ProgrammeAddDialogFragment extends DialogFragment {
                 ProgrammeAddDialogFragment.this.getDialog().cancel();
             }
         });
+
         // Commit: add new programme into Firebase
         Firebase.setAndroidContext(getActivity());
         final Firebase programmeRef = new Firebase(Constants.FIREBASE_PROGRAMMES_REF);

@@ -71,7 +71,7 @@ public class StudentAddDialogFragment extends DialogFragment {
         muetAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         muetSpinner.setAdapter(muetAdapter);
 
-        // Set Toolbar with back and save button
+        // Set Toolbar with close and save button
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
         toolbar.setTitle("New " + Constants.TITLE_STUDENT);
         toolbar.setNavigationIcon(R.mipmap.ic_close_white_24dp);
@@ -82,6 +82,7 @@ public class StudentAddDialogFragment extends DialogFragment {
                 StudentAddDialogFragment.this.getDialog().cancel();
             }
         });
+
         // Commit: add new student into Firebase
         Firebase.setAndroidContext(getActivity());
         final Firebase studentRef = new Firebase(Constants.FIREBASE_STUDENTS_REF);

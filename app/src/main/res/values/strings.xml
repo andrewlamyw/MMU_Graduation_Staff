@@ -16,17 +16,18 @@
     <string name="title_delete">Delete</string>
     <string name="title_search">Search</string>
     <string name="title_share">Share</string>
+    <string name="title_filter">Filter</string>
 
     <!-- Bundle keys -->
-    <string name="key_student_id">studentID</string>
     <string name="key_student_key">studentKey</string>
+    <string name="key_student_id">studentID</string>
+    <string name="key_programme_key">programmeKey</string>
     <string name="key_programme_name">programmeName</string>
+    <string name="key_datePicker_textView_id">datePickerTextViewId</string>
 
     <!-- Others -->
     <string name="drawer_open">Open drawer</string>
     <string name="drawer_close">Close drawer</string>
-    <string name="key_programme_key">programmeKey</string>
-    <string name="title_filter">Filter</string>
 
     <!-- Array -->
     <string-array name="programme_array">
