@@ -18,4 +18,6 @@ public class Constants {
     public static final String MENU_SAVE = "Save";
     public static final String MENU_EDIT = "Edit";
     public static final String MENU_DELETE = "Delete";
+
+    public final static String EXTRA_CONVOCATION_KEY = "com.lamyatweng.mmugraduationstaff.CONVOCATION_KEY";
 }

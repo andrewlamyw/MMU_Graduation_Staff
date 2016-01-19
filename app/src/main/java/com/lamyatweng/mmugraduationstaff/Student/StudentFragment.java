@@ -32,11 +32,12 @@ public class StudentFragment extends Fragment {
         final View view = inflater.inflate(R.layout.fragment_student, container, false);
         this.setHasOptionsMenu(true);
 
-        // Populate students from Firebase into ListView
+        // Populate students sort by name from Firebase into ListView
         final StudentCustomAdapter adapter = new StudentCustomAdapter(getActivity());
         Firebase.setAndroidContext(getActivity());
         final Firebase studentRef = new Firebase(Constants.FIREBASE_STUDENTS_REF);
-        studentRef.addValueEventListener(new ValueEventListener() {
+        Query studentQuery = studentRef.orderByChild("name");
+        studentQuery.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Student student;

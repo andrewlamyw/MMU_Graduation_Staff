@@ -3,7 +3,6 @@ package com.lamyatweng.mmugraduationstaff;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
-import android.app.Fragment;
 import android.os.Bundle;
 import android.widget.DatePicker;
 import android.widget.TextView;
@@ -14,7 +13,6 @@ import java.util.Date;
 
 public class DatePickerFragment extends DialogFragment
         implements DatePickerDialog.OnDateSetListener {
-
     Bundle mBundle = new Bundle();
 
     @Override
@@ -35,7 +33,6 @@ public class DatePickerFragment extends DialogFragment
         // Retrieve studentKey from previous fragment
         mBundle = getArguments();
         int textViewId = mBundle.getInt(getString(R.string.key_datePicker_textView_id));
-        String fragmentClassName = mBundle.getString(getString(R.string.key_fragment_class_name));
 
         // Create Date object based on date selection by user
         Calendar calendar = Calendar.getInstance();
@@ -45,9 +42,7 @@ public class DatePickerFragment extends DialogFragment
         Date date = calendar.getTime();
 
         // Update TextView with the date chosen by the user
-        Fragment fragment = getActivity().getFragmentManager().findFragmentByTag(fragmentClassName);
-        TextView textView = (TextView) fragment.getView().findViewById(textViewId);
+        TextView textView = (TextView) getActivity().findViewById(textViewId);
         textView.setText(DateFormat.getDateInstance().format(date));
-
     }
 }

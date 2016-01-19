@@ -1,4 +1,4 @@
-package com.lamyatweng.mmugraduationstaff.Programme;
+package com.lamyatweng.mmugraduationstaff.Convocation;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -12,24 +12,24 @@ import com.firebase.client.Firebase;
 import com.lamyatweng.mmugraduationstaff.Constants;
 import com.lamyatweng.mmugraduationstaff.R;
 
-public class ProgrammeDeleteDialogFragment extends DialogFragment {
+public class ConvocationDeleteDialogFragment extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         // Retrieve ProgrammeKey from previous fragment
         Bundle bundle = getArguments();
-        final String programmeKey = bundle.getString(getString(R.string.key_programme_key));
+        final String convocationKey = bundle.getString(getString(R.string.key_convocation_key));
 
         // Use the Builder class for convenient dialog construction
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setMessage("Delete programme?")
+        builder.setMessage("Delete convocation?")
                 .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         Firebase.setAndroidContext(getActivity());
-                        Firebase programmeRef = new Firebase(Constants.FIREBASE_PROGRAMMES_REF);
-                        programmeRef.child(programmeKey).setValue(null);
-                        Toast.makeText(getActivity(), "Programme deleted", Toast.LENGTH_LONG).show();
-                        // Close ProgrammeDetailsDialogFragment because item is removed
-                        getFragmentManager().popBackStackImmediate(ProgrammeDetailsDialogFragment.class.getName(),
+                        Firebase programmeRef = new Firebase(Constants.FIREBASE_CONVOCATION_REF);
+                        programmeRef.child(convocationKey).setValue(null);
+                        Toast.makeText(getActivity(), "Convocation deleted", Toast.LENGTH_LONG).show();
+                        // Close ConvocationDetailsDialogFragment because item is removed
+                        getFragmentManager().popBackStackImmediate(ConvocationDetailsDialogFragment.class.getName(),
                                 FragmentManager.POP_BACK_STACK_INCLUSIVE);
                     }
                 })

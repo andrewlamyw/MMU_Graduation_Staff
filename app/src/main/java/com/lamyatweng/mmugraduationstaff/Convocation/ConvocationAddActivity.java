@@ -1,15 +1,12 @@
 package com.lamyatweng.mmugraduationstaff.Convocation;
 
-import android.app.Dialog;
 import android.app.DialogFragment;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,27 +15,26 @@ import com.lamyatweng.mmugraduationstaff.Constants;
 import com.lamyatweng.mmugraduationstaff.DatePickerFragment;
 import com.lamyatweng.mmugraduationstaff.R;
 
-public class ConvocationAddDialogFragment extends DialogFragment {
-    Bundle bundle = new Bundle();
+public class ConvocationAddActivity extends AppCompatActivity {
+    Bundle mBundle = new Bundle();
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.fragment_convocation_add, container, false);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_convocation_add);
 
         // Get references of views
-        final TextInputLayout yearWrapper = (TextInputLayout) view.findViewById(R.id.wrapper_convocation_year);
-        final TextView openDateTextView = (TextView) view.findViewById(R.id.open_registration_date);
-        final TextView closeDateTextView = (TextView) view.findViewById(R.id.close_registration_date);
+        final TextInputLayout yearWrapper = (TextInputLayout) findViewById(R.id.wrapper_convocation_year);
+        final TextView openDateTextView = (TextView) findViewById(R.id.open_registration_date);
+        final TextView closeDateTextView = (TextView) findViewById(R.id.close_registration_date);
 
         // Open date picker and set text for open registration date
         openDateTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 DialogFragment newFragment = new DatePickerFragment();
-                bundle.putInt(getString(R.string.key_datePicker_textView_id), R.id.open_registration_date);
-                bundle.putString(getString(R.string.key_fragment_class_name), ConvocationAddDialogFragment.class.getName());
-                newFragment.setArguments(bundle);
+                mBundle.putInt(getString(R.string.key_datePicker_textView_id), R.id.open_registration_date);
+                newFragment.setArguments(mBundle);
                 newFragment.show(getFragmentManager(), "datePicker");
             }
         });
@@ -48,26 +44,26 @@ public class ConvocationAddDialogFragment extends DialogFragment {
             @Override
             public void onClick(View v) {
                 DialogFragment newFragment = new DatePickerFragment();
-                bundle.putInt(getString(R.string.key_datePicker_textView_id), R.id.close_registration_date);
-                newFragment.setArguments(bundle);
+                mBundle.putInt(getString(R.string.key_datePicker_textView_id), R.id.close_registration_date);
+                newFragment.setArguments(mBundle);
                 newFragment.show(getFragmentManager(), "datePicker");
             }
         });
 
         // Set Toolbar with close and save button
-        Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
-        toolbar.setTitle("New " + Constants.TITLE_STUDENT);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("New " + Constants.TITLE_CONVOCATION);
         toolbar.setNavigationIcon(R.mipmap.ic_close_white_24dp);
-        toolbar.inflateMenu(R.menu.student_add);
+        toolbar.inflateMenu(R.menu.convocation_add);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ConvocationAddDialogFragment.this.getDialog().cancel();
+                finish();
             }
         });
 
         // Commit: add new convocation into Firebase
-        Firebase.setAndroidContext(getActivity());
+        Firebase.setAndroidContext(this);
         final Firebase convocationRef = new Firebase(Constants.FIREBASE_CONVOCATION_REF);
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
@@ -84,8 +80,8 @@ public class ConvocationAddDialogFragment extends DialogFragment {
                         convocationRef.push().setValue(convocation);
 
                         // Display message and close dialog
-                        Toast.makeText(getActivity(), Constants.TITLE_CONVOCATION + " added.", Toast.LENGTH_LONG).show();
-                        ConvocationAddDialogFragment.this.getDialog().cancel();
+                        Toast.makeText(getApplicationContext(), Constants.TITLE_CONVOCATION + " added.", Toast.LENGTH_LONG).show();
+                        finish();
                         return true;
 
                     default:
@@ -93,15 +89,5 @@ public class ConvocationAddDialogFragment extends DialogFragment {
                 }
             }
         });
-
-        return view;
-    }
-
-    /**
-     * Set dialog theme
-     */
-    @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
-        return new Dialog(getActivity(), android.R.style.Theme_DeviceDefault_Light_DialogWhenLarge_NoActionBar);
     }
 }

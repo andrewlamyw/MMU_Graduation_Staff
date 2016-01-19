@@ -30,11 +30,12 @@ public class ProgrammeFragment extends Fragment {
         final ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_programme, container, false);
         this.setHasOptionsMenu(true);
 
-        // Populate programmes from Firebase into ListView
+        // Populate programmes sort by name from Firebase into ListView
         Firebase.setAndroidContext(getActivity());
-        final Firebase programmeRef = new Firebase(Constants.FIREBASE_PROGRAMMES_REF);
         final ProgrammeCustomAdapter adapter = new ProgrammeCustomAdapter(getActivity());
-        programmeRef.addValueEventListener(new ValueEventListener() {
+        final Firebase programmeRef = new Firebase(Constants.FIREBASE_PROGRAMMES_REF);
+        Query programmeQuery = programmeRef.orderByChild("name");
+        programmeQuery.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Programme programme;
