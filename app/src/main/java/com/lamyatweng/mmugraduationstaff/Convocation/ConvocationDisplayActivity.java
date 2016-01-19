@@ -17,6 +17,7 @@ import com.lamyatweng.mmugraduationstaff.R;
 
 public class ConvocationDisplayActivity extends AppCompatActivity {
     Bundle mBundle = new Bundle();
+    int year;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,8 +35,30 @@ public class ConvocationDisplayActivity extends AppCompatActivity {
         final TextInputLayout closeDateWrapper = (TextInputLayout) findViewById(R.id.wrapper_close_registration_date);
 
         // Retrieve convocation details from Firebase and display
-        Firebase convocationRef = new Firebase(Constants.FIREBASE_CONVOCATION_REF);
+        Firebase convocationRef = new Firebase(Constants.FIREBASE_CONVOCATIONS_REF);
         convocationRef.child(convocationKey).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Convocation convocation = dataSnapshot.getValue(Convocation.class);
+                // Null checking is required for handling removed item from Firebase
+                if (convocation != null) {
+                    yearWrapper.getEditText().setText(Integer.toString(convocation.getYear()));
+//                    year = convocation.getYear();
+                    openDateWrapper.getEditText().setText(convocation.getOpenRegistrationDate());
+                    closeDateWrapper.getEditText().setText(convocation.getCloseRegistrationDate());
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
+
+        // Retrieve session details from Firebase and display
+        /*Firebase sessionRef = new Firebase(Constants.FIREBASE_SESSIONS_REF);
+        Query sessionQuery = sessionRef.orderByChild("convocationYear").equalTo();
+        sessionRef.child(convocationKey).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Convocation convocation = dataSnapshot.getValue(Convocation.class);
@@ -51,7 +74,7 @@ public class ConvocationDisplayActivity extends AppCompatActivity {
             public void onCancelled(FirebaseError firebaseError) {
 
             }
-        });
+        });*/
 
         // Set up Toolbar with back, edit and delete button
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);

@@ -11,8 +11,9 @@ public class Student {
     int balanceCreditHour;
     int muet;
 
+    // Required default constructor for Firebase object mapping
+    @SuppressWarnings("unused")
     public Student() {
-        // Required by Firebase to deserialize
     }
 
     public Student(String name, String id, String programme, String status, String email,

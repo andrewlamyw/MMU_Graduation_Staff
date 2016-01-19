@@ -64,14 +64,14 @@ public class ConvocationAddActivity extends AppCompatActivity {
 
         // Commit: add new convocation into Firebase
         Firebase.setAndroidContext(this);
-        final Firebase convocationRef = new Firebase(Constants.FIREBASE_CONVOCATION_REF);
+        final Firebase convocationRef = new Firebase(Constants.FIREBASE_CONVOCATIONS_REF);
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getTitle().toString()) {
                     case Constants.MENU_SAVE:
                         // Retrieve user inputs
-                        String year = yearWrapper.getEditText().getText().toString();
+                        int year = Integer.parseInt(yearWrapper.getEditText().getText().toString());
                         String openDate = openDateTextView.getText().toString();
                         String closeDate = closeDateTextView.getText().toString();
 

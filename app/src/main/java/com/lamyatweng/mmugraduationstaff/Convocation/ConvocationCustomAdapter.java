@@ -29,7 +29,7 @@ public class ConvocationCustomAdapter extends ArrayAdapter<Convocation> {
         TextView close = (TextView) convertView.findViewById(R.id.close);
 
         // Set text value of views
-        year.setText(convocation.getYear());
+        year.setText(Integer.toString(convocation.getYear()));
         open.setText(convocation.getOpenRegistrationDate());
         close.setText(convocation.getCloseRegistrationDate());
 

@@ -5,8 +5,9 @@ public class Programme {
     String faculty;
     String level;
 
+    // Required default constructor for Firebase object mapping
+    @SuppressWarnings("unused")
     public Programme() {
-        // Required by Firebase to deserialize
     }
 
     public Programme(String name, String level, String faculty) {

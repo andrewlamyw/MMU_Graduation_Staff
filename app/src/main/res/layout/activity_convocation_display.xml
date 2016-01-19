@@ -30,7 +30,7 @@
                 android:id="@+id/wrapper_convocation_year"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp">
+                android:layout_marginBottom="16dp">
 
                 <EditText
                     android:layout_width="match_parent"
@@ -44,7 +44,7 @@
                 android:id="@+id/wrapper_open_registration_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp">
+                android:layout_marginBottom="16dp">
 
                 <EditText
                     android:layout_width="match_parent"
@@ -57,7 +57,7 @@
                 android:id="@+id/wrapper_close_registration_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp">
+                android:layout_marginBottom="16dp">
 
                 <EditText
                     android:layout_width="match_parent"
@@ -65,6 +65,16 @@
                     android:enabled="false"
                     android:hint="Close registration date" />
             </android.support.design.widget.TextInputLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sessions" />
+
+            <ListView
+                android:id="@+id/session_list_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

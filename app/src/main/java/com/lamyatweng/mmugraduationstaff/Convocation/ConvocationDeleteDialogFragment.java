@@ -24,7 +24,7 @@ public class ConvocationDeleteDialogFragment extends DialogFragment {
                 .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         Firebase.setAndroidContext(getActivity());
-                        Firebase programmeRef = new Firebase(Constants.FIREBASE_CONVOCATION_REF);
+                        Firebase programmeRef = new Firebase(Constants.FIREBASE_CONVOCATIONS_REF);
                         programmeRef.child(convocationKey).setValue(null);
                         Toast.makeText(getActivity(), "Convocation deleted", Toast.LENGTH_LONG).show();
                         getActivity().finish();

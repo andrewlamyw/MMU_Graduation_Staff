@@ -5,7 +5,8 @@ public class Constants {
     public static final String FIREBASE_ROOT_REF = "https://mmugraduation.firebaseio.com/";
     public static final String FIREBASE_STUDENTS_REF = "https://mmugraduation.firebaseio.com/students";
     public static final String FIREBASE_PROGRAMMES_REF = "https://mmugraduation.firebaseio.com/programmes";
-    public static final String FIREBASE_CONVOCATION_REF = "https://mmugraduation.firebaseio.com/convocations";
+    public static final String FIREBASE_CONVOCATIONS_REF = "https://mmugraduation.firebaseio.com/convocations";
+    public static final String FIREBASE_SESSIONS_REF = "https://mmugraduation.firebaseio.com/sessions";
 
     public static final String TITLE_NEWS = "News";
     public static final String TITLE_PROGRAMME = "Programme";

@@ -1,21 +1,22 @@
 package com.lamyatweng.mmugraduationstaff.Convocation;
 
 public class Convocation {
-    String year;
+    int year;
     String openRegistrationDate;
     String closeRegistrationDate;
 
+    // Required default constructor for Firebase object mapping
+    @SuppressWarnings("unused")
     public Convocation() {
-        // Required by Firebase to deserialize
     }
 
-    public Convocation(String year, String openRegistrationDate, String closeRegistrationDate) {
+    public Convocation(int year, String openRegistrationDate, String closeRegistrationDate) {
         this.year = year;
         this.openRegistrationDate = openRegistrationDate;
         this.closeRegistrationDate = closeRegistrationDate;
     }
 
-    public String getYear() {
+    public int getYear() {
         return year;
     }
 

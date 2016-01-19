@@ -59,14 +59,14 @@ public class ConvocationEditActivity extends AppCompatActivity {
         });
 
         // Retrieve convocation details from Firebase and display
-        final Firebase convocationRef = new Firebase(Constants.FIREBASE_CONVOCATION_REF);
+        final Firebase convocationRef = new Firebase(Constants.FIREBASE_CONVOCATIONS_REF);
         convocationRef.child(convocationKey).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Convocation convocation = dataSnapshot.getValue(Convocation.class);
                 // Null checking is required for handling removed item from Firebase
                 if (convocation != null) {
-                    yearWrapper.getEditText().setText(convocation.getYear());
+                    yearWrapper.getEditText().setText(Integer.toString(convocation.getYear()));
                     openDateTextView.setText(convocation.getOpenRegistrationDate());
                     closeDateTextView.setText(convocation.getCloseRegistrationDate());
                 }
@@ -96,7 +96,7 @@ public class ConvocationEditActivity extends AppCompatActivity {
                 switch (item.getTitle().toString()) {
                     case Constants.MENU_SAVE:
                         // Retrieve user inputs
-                        final String year = yearWrapper.getEditText().getText().toString();
+                        final int year = Integer.parseInt(yearWrapper.getEditText().getText().toString());
                         final String open = openDateTextView.getText().toString();
                         final String close = closeDateTextView.getText().toString();
 
