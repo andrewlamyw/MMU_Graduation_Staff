@@ -20,7 +20,8 @@
         </activity>
         <activity android:name=".LoginActivity" />
         <activity android:name=".Convocation.ConvocationEditActivity" />
-        <activity android:name=".Convocation.ConvocationAddActivity"></activity>
+        <activity android:name=".Convocation.ConvocationAddActivity" />
+        <activity android:name=".Convocation.ConvocationDisplayActivity"></activity>
     </application>
 
 </manifest>

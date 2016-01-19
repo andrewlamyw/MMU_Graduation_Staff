@@ -65,11 +65,15 @@ public class ConvocationFragment extends Fragment{
                         for (DataSnapshot convocationSnapshot : dataSnapshot.getChildren()) {
                             Convocation firebaseConvocation = convocationSnapshot.getValue(Convocation.class);
                             if (firebaseConvocation.getOpenRegistrationDate().equals(selectedConvocation.getOpenRegistrationDate())) {
-                                bundle.putString(getString(R.string.key_convocation_key), convocationSnapshot.getKey());
-                                ConvocationDetailsDialogFragment convocationDetailsDialogFragment = new ConvocationDetailsDialogFragment();
-                                convocationDetailsDialogFragment.setArguments(bundle);
-                                getFragmentManager().beginTransaction().add(convocationDetailsDialogFragment, null).
-                                        addToBackStack(convocationDetailsDialogFragment.getClass().getName()).commit();
+//                                bundle.putString(getString(R.string.key_convocation_key), convocationSnapshot.getKey());
+//                                ConvocationDetailsDialogFragment convocationDetailsDialogFragment = new ConvocationDetailsDialogFragment();
+//                                convocationDetailsDialogFragment.setArguments(bundle);
+//                                getFragmentManager().beginTransaction().add(convocationDetailsDialogFragment, null).
+//                                        addToBackStack(convocationDetailsDialogFragment.getClass().getName()).commit();
+
+                                Intent intent = new Intent(getActivity(), ConvocationDisplayActivity.class);
+                                intent.putExtra(Constants.EXTRA_CONVOCATION_KEY, convocationSnapshot.getKey());
+                                startActivity(intent);
                             }
                         }
                     }

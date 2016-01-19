@@ -3,7 +3,6 @@ package com.lamyatweng.mmugraduationstaff.Convocation;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
-import android.app.FragmentManager;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.widget.Toast;
@@ -28,9 +27,7 @@ public class ConvocationDeleteDialogFragment extends DialogFragment {
                         Firebase programmeRef = new Firebase(Constants.FIREBASE_CONVOCATION_REF);
                         programmeRef.child(convocationKey).setValue(null);
                         Toast.makeText(getActivity(), "Convocation deleted", Toast.LENGTH_LONG).show();
-                        // Close ConvocationDetailsDialogFragment because item is removed
-                        getFragmentManager().popBackStackImmediate(ConvocationDetailsDialogFragment.class.getName(),
-                                FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                        getActivity().finish();
                     }
                 })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
