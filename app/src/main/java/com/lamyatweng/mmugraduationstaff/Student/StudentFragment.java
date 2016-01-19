@@ -70,10 +70,10 @@ public class StudentFragment extends Fragment {
                             Student firebaseStudent = studentSnapshot.getValue(Student.class);
                             if (firebaseStudent.getName().equals(selectedStudent.getName())) {
                                 bundle.putString(getString(R.string.key_student_key), studentSnapshot.getKey());
-                                StudentDetailsDialogFragment studentDetailsDialogFragment = new StudentDetailsDialogFragment();
-                                studentDetailsDialogFragment.setArguments(bundle);
-                                getFragmentManager().beginTransaction().add(studentDetailsDialogFragment, null).
-                                        addToBackStack(studentDetailsDialogFragment.getClass().getName()).commit();
+                                StudentDisplayDialogFragment studentDisplayDialogFragment = new StudentDisplayDialogFragment();
+                                studentDisplayDialogFragment.setArguments(bundle);
+                                getFragmentManager().beginTransaction().add(studentDisplayDialogFragment, null).
+                                        addToBackStack(studentDisplayDialogFragment.getClass().getName()).commit();
                             }
                         }
                     }

@@ -1,8 +1,7 @@
-package com.lamyatweng.mmugraduationstaff.Convocation;
+package com.lamyatweng.mmugraduationstaff.Programme;
 
 import android.app.Dialog;
 import android.app.DialogFragment;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
@@ -19,34 +18,34 @@ import com.firebase.client.ValueEventListener;
 import com.lamyatweng.mmugraduationstaff.Constants;
 import com.lamyatweng.mmugraduationstaff.R;
 
-public class ConvocationDetailsDialogFragment extends DialogFragment {
+public class ProgrammeDisplayDialogFragment extends DialogFragment {
     Bundle mBundle = new Bundle();
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.fragment_convocation_details, container, false);
+        final View view = inflater.inflate(R.layout.fragment_programme_display, container, false);
 
         // Retrieve programmeKey from previous fragment
         mBundle = getArguments();
-        final String convocationKey = mBundle.getString(getString(R.string.key_convocation_key));
+        final String programmeKey = mBundle.getString(getString(R.string.key_programme_key));
 
         // Get references of views
-        final TextInputLayout yearWrapper = (TextInputLayout) view.findViewById(R.id.wrapper_convocation_year);
-        final TextInputLayout openDateWrapper = (TextInputLayout) view.findViewById(R.id.wrapper_open_registration_date);
-        final TextInputLayout closeDateWrapper = (TextInputLayout) view.findViewById(R.id.wrapper_close_registration_date);
+        final TextInputLayout programmeNameWrapper = (TextInputLayout) view.findViewById(R.id.wrapper_programme_name);
+        final TextInputLayout educationalLevelWrapper = (TextInputLayout) view.findViewById(R.id.wrapper_educational_level);
+        final TextInputLayout facultyWrapper = (TextInputLayout) view.findViewById(R.id.wrapper_faculty);
 
-        // Retrieve convocation details from Firebase and display
-        Firebase convocationRef = new Firebase(Constants.FIREBASE_CONVOCATION_REF);
-        convocationRef.child(convocationKey).addValueEventListener(new ValueEventListener() {
+        // Retrieve programme details from Firebase and display
+        Firebase programmeRef = new Firebase(Constants.FIREBASE_PROGRAMMES_REF);
+        programmeRef.child(programmeKey).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Convocation convocation = dataSnapshot.getValue(Convocation.class);
+                Programme programme = dataSnapshot.getValue(Programme.class);
                 // Null checking is required for handling removed item from Firebase
-                if (convocation != null) {
-                    yearWrapper.getEditText().setText(convocation.getYear());
-                    openDateWrapper.getEditText().setText(convocation.getOpenRegistrationDate());
-                    closeDateWrapper.getEditText().setText(convocation.getCloseRegistrationDate());
+                if (programme != null) {
+                    programmeNameWrapper.getEditText().setText(programme.getName());
+                    educationalLevelWrapper.getEditText().setText(programme.getLevel());
+                    facultyWrapper.getEditText().setText(programme.getFaculty());
                 }
             }
 
@@ -59,12 +58,12 @@ public class ConvocationDetailsDialogFragment extends DialogFragment {
         // Set up Toolbar with back, edit and delete button
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
         toolbar.setNavigationIcon(R.mipmap.ic_arrow_back_white_24dp);
-        toolbar.inflateMenu(R.menu.convocation_details);
+        toolbar.inflateMenu(R.menu.programme_details);
         // Close dialog
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ConvocationDetailsDialogFragment.this.getDialog().cancel();
+                ProgrammeDisplayDialogFragment.this.getDialog().cancel();
             }
         });
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
@@ -72,15 +71,15 @@ public class ConvocationDetailsDialogFragment extends DialogFragment {
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getTitle().toString()) {
                     case Constants.MENU_DELETE:
-                        ConvocationDeleteDialogFragment convocationDeleteDialogFragment = new ConvocationDeleteDialogFragment();
-                        convocationDeleteDialogFragment.setArguments(mBundle);
-                        getFragmentManager().beginTransaction().add(convocationDeleteDialogFragment, null).addToBackStack(null).commit();
+                        ProgrammeDeleteDialogFragment programmeDeleteDialogFragment = new ProgrammeDeleteDialogFragment();
+                        programmeDeleteDialogFragment.setArguments(mBundle);
+                        getFragmentManager().beginTransaction().add(programmeDeleteDialogFragment, null).addToBackStack(null).commit();
                         return true;
 
                     case Constants.MENU_EDIT:
-                        Intent intent = new Intent(getActivity(), ConvocationEditActivity.class);
-                        intent.putExtra(Constants.EXTRA_CONVOCATION_KEY, convocationKey);
-                        startActivity(intent);
+                        ProgrammeEditDialogFragment programmeEditDialogFragment = new ProgrammeEditDialogFragment();
+                        programmeEditDialogFragment.setArguments(mBundle);
+                        getFragmentManager().beginTransaction().add(programmeEditDialogFragment, null).addToBackStack(null).commit();
                         return true;
 
                     default:

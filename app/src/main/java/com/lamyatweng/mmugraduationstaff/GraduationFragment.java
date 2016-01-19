@@ -17,7 +17,7 @@ import com.firebase.client.Query;
 import com.firebase.client.ValueEventListener;
 import com.lamyatweng.mmugraduationstaff.Student.Student;
 import com.lamyatweng.mmugraduationstaff.Student.StudentCustomAdapter;
-import com.lamyatweng.mmugraduationstaff.Student.StudentDetailsDialogFragment;
+import com.lamyatweng.mmugraduationstaff.Student.StudentDisplayDialogFragment;
 
 public class GraduationFragment extends Fragment {
     Bundle bundle = new Bundle();
@@ -65,10 +65,10 @@ public class GraduationFragment extends Fragment {
                             Student firebaseStudent = studentSnapshot.getValue(Student.class);
                             if (firebaseStudent.getName().equals(selectedStudent.getName())) {
                                 bundle.putString(getString(R.string.key_student_key), studentSnapshot.getKey());
-                                StudentDetailsDialogFragment studentDetailsDialogFragment = new StudentDetailsDialogFragment();
-                                studentDetailsDialogFragment.setArguments(bundle);
-                                getFragmentManager().beginTransaction().add(studentDetailsDialogFragment, null).
-                                        addToBackStack(studentDetailsDialogFragment.getClass().getName()).commit();
+                                StudentDisplayDialogFragment studentDisplayDialogFragment = new StudentDisplayDialogFragment();
+                                studentDisplayDialogFragment.setArguments(bundle);
+                                getFragmentManager().beginTransaction().add(studentDisplayDialogFragment, null).
+                                        addToBackStack(studentDisplayDialogFragment.getClass().getName()).commit();
                             }
                         }
                     }

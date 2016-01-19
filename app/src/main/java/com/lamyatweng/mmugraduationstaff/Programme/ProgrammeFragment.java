@@ -69,10 +69,10 @@ public class ProgrammeFragment extends Fragment {
                             Programme firebaseProgramme = programmeSnapshot.getValue(Programme.class);
                             if (firebaseProgramme.getFaculty().equals(selectedProgramme.getFaculty())) {
                                 bundle.putString(getString(R.string.key_programme_key), programmeSnapshot.getKey());
-                                ProgrammeDetailsDialogFragment programmeDetailsDialogFragment = new ProgrammeDetailsDialogFragment();
-                                programmeDetailsDialogFragment.setArguments(bundle);
-                                getFragmentManager().beginTransaction().add(programmeDetailsDialogFragment, null).
-                                        addToBackStack(programmeDetailsDialogFragment.getClass().getName()).commit();
+                                ProgrammeDisplayDialogFragment programmeDisplayDialogFragment = new ProgrammeDisplayDialogFragment();
+                                programmeDisplayDialogFragment.setArguments(bundle);
+                                getFragmentManager().beginTransaction().add(programmeDisplayDialogFragment, null).
+                                        addToBackStack(programmeDisplayDialogFragment.getClass().getName()).commit();
                             }
                         }
                     }

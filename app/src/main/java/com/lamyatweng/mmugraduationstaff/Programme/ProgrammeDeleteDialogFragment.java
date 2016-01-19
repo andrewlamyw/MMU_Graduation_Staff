@@ -28,8 +28,8 @@ public class ProgrammeDeleteDialogFragment extends DialogFragment {
                         Firebase programmeRef = new Firebase(Constants.FIREBASE_PROGRAMMES_REF);
                         programmeRef.child(programmeKey).setValue(null);
                         Toast.makeText(getActivity(), "Programme deleted", Toast.LENGTH_LONG).show();
-                        // Close ProgrammeDetailsDialogFragment because item is removed
-                        getFragmentManager().popBackStackImmediate(ProgrammeDetailsDialogFragment.class.getName(),
+                        // Close ProgrammeDisplayDialogFragment because item is removed
+                        getFragmentManager().popBackStackImmediate(ProgrammeDisplayDialogFragment.class.getName(),
                                 FragmentManager.POP_BACK_STACK_INCLUSIVE);
                     }
                 })

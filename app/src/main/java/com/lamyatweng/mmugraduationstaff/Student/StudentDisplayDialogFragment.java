@@ -18,13 +18,13 @@ import com.firebase.client.ValueEventListener;
 import com.lamyatweng.mmugraduationstaff.Constants;
 import com.lamyatweng.mmugraduationstaff.R;
 
-public class StudentDetailsDialogFragment extends DialogFragment {
+public class StudentDisplayDialogFragment extends DialogFragment {
     Bundle mBundle = new Bundle();
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.fragment_student_details, container, false);
+        final View view = inflater.inflate(R.layout.fragment_student_display, container, false);
 
         // Retrieve studentKey from previous fragment
         mBundle = getArguments();
@@ -120,7 +120,7 @@ public class StudentDetailsDialogFragment extends DialogFragment {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                StudentDetailsDialogFragment.this.getDialog().cancel();
+                StudentDisplayDialogFragment.this.getDialog().cancel();
             }
         });
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
