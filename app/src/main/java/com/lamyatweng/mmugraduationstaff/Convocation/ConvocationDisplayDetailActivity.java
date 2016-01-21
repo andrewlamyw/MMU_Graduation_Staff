@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
@@ -14,10 +15,11 @@ import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 import com.lamyatweng.mmugraduationstaff.Constants;
 import com.lamyatweng.mmugraduationstaff.R;
+import com.lamyatweng.mmugraduationstaff.Session.SessionListActivity;
 
-public class ConvocationDisplayActivity extends AppCompatActivity {
+public class ConvocationDisplayDetailActivity extends AppCompatActivity {
     Bundle mBundle = new Bundle();
-    int year;
+    int mYear;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +35,7 @@ public class ConvocationDisplayActivity extends AppCompatActivity {
         final TextInputLayout yearWrapper = (TextInputLayout) findViewById(R.id.wrapper_convocation_year);
         final TextInputLayout openDateWrapper = (TextInputLayout) findViewById(R.id.wrapper_open_registration_date);
         final TextInputLayout closeDateWrapper = (TextInputLayout) findViewById(R.id.wrapper_close_registration_date);
+        Button viewSessions = (Button) findViewById(R.id.button_view_sessions);
 
         // Retrieve convocation details from Firebase and display
         Firebase convocationRef = new Firebase(Constants.FIREBASE_CONVOCATIONS_REF);
@@ -43,9 +46,9 @@ public class ConvocationDisplayActivity extends AppCompatActivity {
                 // Null checking is required for handling removed item from Firebase
                 if (convocation != null) {
                     yearWrapper.getEditText().setText(Integer.toString(convocation.getYear()));
-//                    year = convocation.getYear();
                     openDateWrapper.getEditText().setText(convocation.getOpenRegistrationDate());
                     closeDateWrapper.getEditText().setText(convocation.getCloseRegistrationDate());
+                    mYear = convocation.getYear();
                 }
             }
 
@@ -55,38 +58,29 @@ public class ConvocationDisplayActivity extends AppCompatActivity {
             }
         });
 
-        // Retrieve session details from Firebase and display
-        /*Firebase sessionRef = new Firebase(Constants.FIREBASE_SESSIONS_REF);
-        Query sessionQuery = sessionRef.orderByChild("convocationYear").equalTo();
-        sessionRef.child(convocationKey).addValueEventListener(new ValueEventListener() {
+        // Launch a new activity when user click view sessions button
+        viewSessions.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                Convocation convocation = dataSnapshot.getValue(Convocation.class);
-                // Null checking is required for handling removed item from Firebase
-                if (convocation != null) {
-                    yearWrapper.getEditText().setText(convocation.getYear());
-                    openDateWrapper.getEditText().setText(convocation.getOpenRegistrationDate());
-                    closeDateWrapper.getEditText().setText(convocation.getCloseRegistrationDate());
-                }
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), SessionListActivity.class);
+                intent.putExtra(Constants.EXTRA_CONVOCATION_YEAR, mYear);
+                startActivity(intent);
             }
-
-            @Override
-            public void onCancelled(FirebaseError firebaseError) {
-
-            }
-        });*/
+        });
 
         // Set up Toolbar with back, edit and delete button
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle(Constants.TITLE_CONVOCATION + " Detail");
+        // Close activity
         toolbar.setNavigationIcon(R.mipmap.ic_arrow_back_white_24dp);
-        toolbar.inflateMenu(R.menu.convocation_details);
-        // Close dialog
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
+        // Set up menu
+        toolbar.inflateMenu(R.menu.convocation_details);
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {

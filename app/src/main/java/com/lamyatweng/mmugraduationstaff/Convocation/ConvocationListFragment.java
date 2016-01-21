@@ -20,9 +20,7 @@ import com.firebase.client.ValueEventListener;
 import com.lamyatweng.mmugraduationstaff.Constants;
 import com.lamyatweng.mmugraduationstaff.R;
 
-public class ConvocationFragment extends Fragment{
-    Bundle bundle = new Bundle();
-
+public class ConvocationListFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
@@ -65,7 +63,7 @@ public class ConvocationFragment extends Fragment{
                         for (DataSnapshot convocationSnapshot : dataSnapshot.getChildren()) {
                             Convocation firebaseConvocation = convocationSnapshot.getValue(Convocation.class);
                             if (firebaseConvocation.getOpenRegistrationDate().equals(selectedConvocation.getOpenRegistrationDate())) {
-                                Intent intent = new Intent(getActivity(), ConvocationDisplayActivity.class);
+                                Intent intent = new Intent(getActivity(), ConvocationDisplayDetailActivity.class);
                                 intent.putExtra(Constants.EXTRA_CONVOCATION_KEY, convocationSnapshot.getKey());
                                 startActivity(intent);
                             }
@@ -101,6 +99,6 @@ public class ConvocationFragment extends Fragment{
         super.onActivityCreated(savedInstanceState);
         android.support.v7.app.ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
         if (actionBar != null)
-            actionBar.setTitle(Constants.TITLE_CONVOCATION);
+            actionBar.setTitle(Constants.TITLE_CONVOCATION + "s");
     }
 }

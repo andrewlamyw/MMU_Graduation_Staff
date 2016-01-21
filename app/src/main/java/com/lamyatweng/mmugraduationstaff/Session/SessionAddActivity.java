@@ -1,0 +1,127 @@
+package com.lamyatweng.mmugraduationstaff.Session;
+
+import android.app.DialogFragment;
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.firebase.client.Firebase;
+import com.lamyatweng.mmugraduationstaff.Constants;
+import com.lamyatweng.mmugraduationstaff.DatePickerFragment;
+import com.lamyatweng.mmugraduationstaff.R;
+import com.lamyatweng.mmugraduationstaff.TimePickerFragment;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class SessionAddActivity extends AppCompatActivity {
+    Bundle mBundle = new Bundle();
+    int mConvocationYear;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_session_add);
+
+        // Receive convocation year from the Intent
+        Intent intent = getIntent();
+        mConvocationYear = intent.getIntExtra(Constants.EXTRA_CONVOCATION_YEAR, 0);
+
+        // Get references of views
+        final TextInputLayout sessionNumberWrapper = (TextInputLayout) findViewById(R.id.wrapper_session_number);
+        final TextView dateTextView = (TextView) findViewById(R.id.session_date);
+        final TextView startTimeTextView = (TextView) findViewById(R.id.session_start_time);
+        final TextView endTimeTextView = (TextView) findViewById(R.id.session_end_time);
+        final TextInputLayout rowSizeWrapper = (TextInputLayout) findViewById(R.id.wrapper_row_size);
+        final TextInputLayout columnSizeWrapper = (TextInputLayout) findViewById(R.id.wrapper_column_size);
+
+        // Open date picker and set text for sesseion date
+        dateTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DialogFragment newFragment = new DatePickerFragment();
+                mBundle.putInt(getString(R.string.key_datePicker_textView_id), R.id.session_date);
+                newFragment.setArguments(mBundle);
+                newFragment.show(getFragmentManager(), "datePicker");
+            }
+        });
+
+        // Open time picker and set text for start time
+        startTimeTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DialogFragment newFragment = new TimePickerFragment();
+                mBundle.putInt(getString(R.string.key_timePicker_textView_id), R.id.session_start_time);
+                newFragment.setArguments(mBundle);
+                newFragment.show(getFragmentManager(), "timePicker");
+            }
+        });
+
+        // Open time picker and set text for end time
+        endTimeTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DialogFragment newFragment = new TimePickerFragment();
+                mBundle.putInt(getString(R.string.key_timePicker_textView_id), R.id.session_end_time);
+                newFragment.setArguments(mBundle);
+                newFragment.show(getFragmentManager(), "timePicker");
+            }
+        });
+
+        // Set Toolbar with close and save button
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("New " + Constants.TITLE_SESSION);
+        toolbar.setNavigationIcon(R.mipmap.ic_close_white_24dp);
+        toolbar.inflateMenu(R.menu.session_add);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+        // Commit: add new session into Firebase
+        final Firebase sessionRef = new Firebase(Constants.FIREBASE_SESSIONS_REF);
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getTitle().toString()) {
+                    case Constants.MENU_SAVE:
+                        // Retrieve user inputs
+                        int convocationYear = mConvocationYear;
+                        int sessionNumber = Integer.parseInt(sessionNumberWrapper.getEditText().getText().toString());
+                        String date = dateTextView.getText().toString();
+                        String startTime = startTimeTextView.getText().toString();
+                        String endTime = endTimeTextView.getText().toString();
+                        int rowSize = Integer.parseInt(rowSizeWrapper.getEditText().getText().toString());
+                        int columnSize = Integer.parseInt(columnSizeWrapper.getEditText().getText().toString());
+                        int id;
+                        if (sessionNumber < 10) {
+                            id = Integer.parseInt(Integer.toString(convocationYear) + "0" + Integer.toString(sessionNumber));
+                        } else {
+                            id = Integer.parseInt(Integer.toString(convocationYear) + Integer.toString(sessionNumber));
+                        }
+                        Map<String, Boolean> programmes = new HashMap<>();
+
+                        // Push into Firebase programme list
+                        ConvocationSession session = new ConvocationSession(columnSize, convocationYear, date, endTime, id, programmes, rowSize, sessionNumber, startTime);
+                        sessionRef.push().setValue(session);
+
+                        // Display message and close dialog
+                        Toast.makeText(getApplicationContext(), Constants.TITLE_SESSION + " added.", Toast.LENGTH_LONG).show();
+                        finish();
+                        return true;
+
+                    default:
+                        return false;
+                }
+            }
+        });
+    }
+}

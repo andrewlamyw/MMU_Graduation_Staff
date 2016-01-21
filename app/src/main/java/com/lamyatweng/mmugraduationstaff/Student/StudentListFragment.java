@@ -23,7 +23,7 @@ import com.firebase.client.ValueEventListener;
 import com.lamyatweng.mmugraduationstaff.Constants;
 import com.lamyatweng.mmugraduationstaff.R;
 
-public class StudentFragment extends Fragment {
+public class StudentListFragment extends Fragment {
     Bundle bundle = new Bundle();
 
     @Nullable
@@ -70,10 +70,10 @@ public class StudentFragment extends Fragment {
                             Student firebaseStudent = studentSnapshot.getValue(Student.class);
                             if (firebaseStudent.getName().equals(selectedStudent.getName())) {
                                 bundle.putString(getString(R.string.key_student_key), studentSnapshot.getKey());
-                                StudentDisplayDialogFragment studentDisplayDialogFragment = new StudentDisplayDialogFragment();
-                                studentDisplayDialogFragment.setArguments(bundle);
-                                getFragmentManager().beginTransaction().add(studentDisplayDialogFragment, null).
-                                        addToBackStack(studentDisplayDialogFragment.getClass().getName()).commit();
+                                StudentDisplayDetailDialogFragment studentDisplayDetailDialogFragment = new StudentDisplayDetailDialogFragment();
+                                studentDisplayDetailDialogFragment.setArguments(bundle);
+                                getFragmentManager().beginTransaction().add(studentDisplayDetailDialogFragment, null).
+                                        addToBackStack(studentDisplayDetailDialogFragment.getClass().getName()).commit();
                             }
                         }
                     }
@@ -107,7 +107,7 @@ public class StudentFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         android.support.v7.app.ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
         if (actionBar != null)
-            actionBar.setTitle(Constants.TITLE_STUDENT);
+            actionBar.setTitle(Constants.TITLE_STUDENT + "s");
     }
 
     /**

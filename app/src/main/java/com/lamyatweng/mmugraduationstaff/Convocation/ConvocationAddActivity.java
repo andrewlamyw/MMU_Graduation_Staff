@@ -63,7 +63,6 @@ public class ConvocationAddActivity extends AppCompatActivity {
         });
 
         // Commit: add new convocation into Firebase
-        Firebase.setAndroidContext(this);
         final Firebase convocationRef = new Firebase(Constants.FIREBASE_CONVOCATIONS_REF);
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override

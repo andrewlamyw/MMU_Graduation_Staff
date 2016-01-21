@@ -22,7 +22,7 @@ import com.firebase.client.ValueEventListener;
 import com.lamyatweng.mmugraduationstaff.Constants;
 import com.lamyatweng.mmugraduationstaff.R;
 
-public class ProgrammeFragment extends Fragment {
+public class ProgrammeListFragment extends Fragment {
     Bundle bundle = new Bundle();
 
     @Override
@@ -69,10 +69,10 @@ public class ProgrammeFragment extends Fragment {
                             Programme firebaseProgramme = programmeSnapshot.getValue(Programme.class);
                             if (firebaseProgramme.getFaculty().equals(selectedProgramme.getFaculty())) {
                                 bundle.putString(getString(R.string.key_programme_key), programmeSnapshot.getKey());
-                                ProgrammeDisplayDialogFragment programmeDisplayDialogFragment = new ProgrammeDisplayDialogFragment();
-                                programmeDisplayDialogFragment.setArguments(bundle);
-                                getFragmentManager().beginTransaction().add(programmeDisplayDialogFragment, null).
-                                        addToBackStack(programmeDisplayDialogFragment.getClass().getName()).commit();
+                                ProgrammeDisplayDetailDialogFragment programmeDisplayDetailDialogFragment = new ProgrammeDisplayDetailDialogFragment();
+                                programmeDisplayDetailDialogFragment.setArguments(bundle);
+                                getFragmentManager().beginTransaction().add(programmeDisplayDetailDialogFragment, null).
+                                        addToBackStack(programmeDisplayDetailDialogFragment.getClass().getName()).commit();
                             }
                         }
                     }
@@ -106,7 +106,7 @@ public class ProgrammeFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         android.support.v7.app.ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
         if (actionBar != null)
-            actionBar.setTitle(Constants.TITLE_PROGRAMME);
+            actionBar.setTitle(Constants.TITLE_PROGRAMME + "s");
     }
 
     /**

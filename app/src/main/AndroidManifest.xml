@@ -21,7 +21,14 @@
         <activity android:name=".LoginActivity" />
         <activity android:name=".Convocation.ConvocationEditActivity" />
         <activity android:name=".Convocation.ConvocationAddActivity" />
-        <activity android:name=".Convocation.ConvocationDisplayActivity"></activity>
+        <activity android:name=".Convocation.ConvocationDisplayDetailActivity" />
+        <activity android:name=".Session.SessionDisplayDetailActivity" />
+        <activity android:name=".Session.SessionListActivity" />
+        <activity android:name=".Session.SessionProgrammeListActivity" />
+        <activity android:name=".Session.SessionEditActivity" />
+        <activity android:name=".Session.SessionAddActivity" />
+        <activity android:name=".Session.SessionProgrammeAddActivity" />
+        <activity android:name=".Seat.SeatDisplayActivity"></activity>
     </application>
 
 </manifest>

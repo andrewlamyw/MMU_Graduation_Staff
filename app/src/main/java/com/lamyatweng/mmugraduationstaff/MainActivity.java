@@ -13,9 +13,9 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.firebase.client.Firebase;
-import com.lamyatweng.mmugraduationstaff.Convocation.ConvocationFragment;
-import com.lamyatweng.mmugraduationstaff.Programme.ProgrammeFragment;
-import com.lamyatweng.mmugraduationstaff.Student.StudentFragment;
+import com.lamyatweng.mmugraduationstaff.Convocation.ConvocationListFragment;
+import com.lamyatweng.mmugraduationstaff.Programme.ProgrammeListFragment;
+import com.lamyatweng.mmugraduationstaff.Student.StudentListFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -103,24 +103,24 @@ public class MainActivity extends AppCompatActivity {
                 getFragmentManager().beginTransaction().replace(R.id.fragment_container, newsFragment).commit();
                 break;
             case Constants.TITLE_PROGRAMME:
-                ProgrammeFragment programmeFragment = new ProgrammeFragment();
-                getFragmentManager().beginTransaction().replace(R.id.fragment_container, programmeFragment).commit();
+                ProgrammeListFragment programmeListFragment = new ProgrammeListFragment();
+                getFragmentManager().beginTransaction().replace(R.id.fragment_container, programmeListFragment).commit();
                 break;
             case Constants.TITLE_PROFILE:
                 ProfileFragment profileFragment = new ProfileFragment();
                 getFragmentManager().beginTransaction().replace(R.id.fragment_container, profileFragment).commit();
                 break;
             case Constants.TITLE_STUDENT:
-                StudentFragment studentFragment = new StudentFragment();
-                getFragmentManager().beginTransaction().replace(R.id.fragment_container, studentFragment).commit();
+                StudentListFragment studentListFragment = new StudentListFragment();
+                getFragmentManager().beginTransaction().replace(R.id.fragment_container, studentListFragment).commit();
                 break;
             case Constants.TITLE_GRADUATION:
                 GraduationFragment graduationFragment = new GraduationFragment();
                 getFragmentManager().beginTransaction().replace(R.id.fragment_container, graduationFragment).commit();
                 break;
             case Constants.TITLE_CONVOCATION:
-                ConvocationFragment convocationFragment = new ConvocationFragment();
-                getFragmentManager().beginTransaction().replace(R.id.fragment_container, convocationFragment).commit();
+                ConvocationListFragment convocationListFragment = new ConvocationListFragment();
+                getFragmentManager().beginTransaction().replace(R.id.fragment_container, convocationListFragment).commit();
                 break;
             case Constants.TITLE_LOGOUT:
                 mSession.logoutUser();

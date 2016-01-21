@@ -18,7 +18,7 @@ import com.firebase.client.ValueEventListener;
 import com.lamyatweng.mmugraduationstaff.Constants;
 import com.lamyatweng.mmugraduationstaff.R;
 
-public class ProgrammeDisplayDialogFragment extends DialogFragment {
+public class ProgrammeDisplayDetailDialogFragment extends DialogFragment {
     Bundle mBundle = new Bundle();
 
     @Nullable
@@ -63,7 +63,7 @@ public class ProgrammeDisplayDialogFragment extends DialogFragment {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ProgrammeDisplayDialogFragment.this.getDialog().cancel();
+                ProgrammeDisplayDetailDialogFragment.this.getDialog().cancel();
             }
         });
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {

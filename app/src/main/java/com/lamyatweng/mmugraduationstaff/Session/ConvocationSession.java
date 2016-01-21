@@ -1,24 +1,24 @@
-package com.lamyatweng.mmugraduationstaff;
+package com.lamyatweng.mmugraduationstaff.Session;
 
-import java.util.List;
 import java.util.Map;
 
-public class Session {
+public class ConvocationSession {
     int columnSize;
     int convocationYear;
     String date;
     String endTime;
-    String id;
-    List<Map<String, Boolean>> programmes;
+    int id;
+    Map<String, Boolean> programmes;
     int rowSize;
+    int sessionNumber;
     String startTime;
 
     // Required default constructor for Firebase object mapping
     @SuppressWarnings("unused")
-    public Session() {
+    public ConvocationSession() {
     }
 
-    public Session(int columnSize, int convocationYear, String date, String endTime, String id, List<Map<String, Boolean>> programmes, int rowSize, String startTime) {
+    public ConvocationSession(int columnSize, int convocationYear, String date, String endTime, int id, Map<String, Boolean> programmes, int rowSize, int sessionNumber, String startTime) {
         this.columnSize = columnSize;
         this.convocationYear = convocationYear;
         this.date = date;
@@ -26,6 +26,7 @@ public class Session {
         this.id = id;
         this.programmes = programmes;
         this.rowSize = rowSize;
+        this.sessionNumber = sessionNumber;
         this.startTime = startTime;
     }
 
@@ -45,16 +46,20 @@ public class Session {
         return endTime;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public List<Map<String, Boolean>> getProgrammes() {
+    public Map<String, Boolean> getProgrammes() {
         return programmes;
     }
 
     public int getRowSize() {
         return rowSize;
+    }
+
+    public int getSessionNumber() {
+        return sessionNumber;
     }
 
     public String getStartTime() {
