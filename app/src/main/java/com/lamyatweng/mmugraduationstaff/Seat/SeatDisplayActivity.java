@@ -9,9 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.GridView;
-import android.widget.LinearLayout;
 
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
@@ -55,8 +53,6 @@ public class SeatDisplayActivity extends AppCompatActivity {
         mConvocationYear = intent.getIntExtra(Constants.EXTRA_SESSION_CONVOCATION_YEAR, 0);
 
         // Get references of views
-        final LinearLayout linearLayoutButtonCreate = (LinearLayout) findViewById(R.id.linear_layout_button_create);
-        final LinearLayout linearLayoutEditDelete = (LinearLayout) findViewById(R.id.linear_layout_edit_delete);
         final GridView gridView = (GridView) findViewById(R.id.grid_view);
 
         // Retrieve session details from Firebase and display
@@ -98,25 +94,13 @@ public class SeatDisplayActivity extends AppCompatActivity {
                     if (!found)
                         found = true;
                 }
-                if (found) {
-                    linearLayoutButtonCreate.setVisibility(View.GONE);
-                } else {
-                    linearLayoutEditDelete.setVisibility(View.GONE);
+                if (!found) {
                     createSeatingArrangement();
                 }
             }
 
             @Override
             public void onCancelled(FirebaseError firebaseError) {
-
-            }
-        });
-
-        // Open a new activity to create seating arrangement
-        final Button createSeatButton = (Button) findViewById(R.id.button_create_seat);
-        createSeatButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
             }
         });
@@ -155,7 +139,6 @@ public class SeatDisplayActivity extends AppCompatActivity {
                     twoDigitColumn = Integer.toString(column);
 
                 id = Integer.parseInt(Integer.toString(mSessionId) + twoDigitRow + twoDigitColumn);
-
 
                 seat = new Seat(id, twoDigitRow, twoDigitColumn, status, mSessionId, studentId);
                 mSeatRef.push().setValue(seat);
