@@ -24,7 +24,11 @@ import com.lamyatweng.mmugraduationstaff.Session.ConvocationSession;
 
 public class SeatDisplayActivity extends AppCompatActivity {
     int mSessionId;
+    int mNumberOfRows;
+    int mNumberOfColumns;
+    int mConvocationYear;
     SeatAdapter mAdapter;
+    Firebase mSeatRef;
 
     public static int convertDpToPixels(float dp, Context context) {
         Resources resources = context.getResources();
@@ -46,9 +50,11 @@ public class SeatDisplayActivity extends AppCompatActivity {
         Intent intent = getIntent();
         final String sessionKey = intent.getStringExtra(Constants.EXTRA_SESSION_KEY);
         mSessionId = intent.getIntExtra(Constants.EXTRA_SESSION_ID, 0);
+        mNumberOfColumns = intent.getIntExtra(Constants.EXTRA_SESSION_COLUMN_SIZE, 0);
+        mNumberOfRows = intent.getIntExtra(Constants.EXTRA_SESSION_ROW_SIZE, 0);
+        mConvocationYear = intent.getIntExtra(Constants.EXTRA_SESSION_CONVOCATION_YEAR, 0);
 
         // Get references of views
-        final Button createSeatButton = (Button) findViewById(R.id.button_create_seat);
         final LinearLayout linearLayoutButtonCreate = (LinearLayout) findViewById(R.id.linear_layout_button_create);
         final LinearLayout linearLayoutEditDelete = (LinearLayout) findViewById(R.id.linear_layout_edit_delete);
         final GridView gridView = (GridView) findViewById(R.id.grid_view);
@@ -62,6 +68,9 @@ public class SeatDisplayActivity extends AppCompatActivity {
                 // Null checking is required for handling removed item from Firebase
                 if (session != null) {
                     mSessionId = session.getId();
+                    mNumberOfRows = session.getRowSize();
+                    mNumberOfColumns = session.getColumnSize();
+                    mConvocationYear = session.getConvocationYear();
 
                     gridView.setNumColumns(session.getColumnSize());
                     gridView.setAdapter(mAdapter);
@@ -77,8 +86,8 @@ public class SeatDisplayActivity extends AppCompatActivity {
         });
 
         // Retrieve seating arrangement from Firebase and display
-        Firebase seatRef = new Firebase(Constants.FIREBASE_SEATS_REF);
-        Query seatQuery = seatRef.orderByChild("sessionID").equalTo(mSessionId);
+        mSeatRef = new Firebase(Constants.FIREBASE_SEATS_REF);
+        Query seatQuery = mSeatRef.orderByChild("sessionID").equalTo(mSessionId);
         seatQuery.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -93,11 +102,21 @@ public class SeatDisplayActivity extends AppCompatActivity {
                     linearLayoutButtonCreate.setVisibility(View.GONE);
                 } else {
                     linearLayoutEditDelete.setVisibility(View.GONE);
+                    createSeatingArrangement();
                 }
             }
 
             @Override
             public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
+
+        // Open a new activity to create seating arrangement
+        final Button createSeatButton = (Button) findViewById(R.id.button_create_seat);
+        createSeatButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
             }
         });
@@ -113,5 +132,34 @@ public class SeatDisplayActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    private void createSeatingArrangement() {
+        Seat seat;
+        int id;
+        String twoDigitRow;
+        String twoDigitColumn;
+        String status = "available";
+        String studentId = " ";
+        for (int row = 1; row <= mNumberOfRows; row++) {
+            for (int column = 1; column <= mNumberOfColumns; column++) {
+
+                if (row < 10)
+                    twoDigitRow = "0" + Integer.toString(row);
+                else
+                    twoDigitRow = Integer.toString(row);
+
+                if (column < 10)
+                    twoDigitColumn = "0" + Integer.toString(column);
+                else
+                    twoDigitColumn = Integer.toString(column);
+
+                id = Integer.parseInt(Integer.toString(mSessionId) + twoDigitRow + twoDigitColumn);
+
+
+                seat = new Seat(id, twoDigitRow, twoDigitColumn, status, mSessionId, studentId);
+                mSeatRef.push().setValue(seat);
+            }
+        }
     }
 }

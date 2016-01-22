@@ -2,17 +2,17 @@ package com.lamyatweng.mmugraduationstaff.Seat;
 
 public class Seat {
 
-    String id;
+    int id;
     String row;
     String column;
     String status;
-    String sessionID;
+    int sessionID;
     String studentID;
 
     public Seat() {
     }
 
-    public Seat(String id, String row, String column, String status, String sessionID, String studentID) {
+    public Seat(int id, String row, String column, String status, int sessionID, String studentID) {
         this.id = id;
         this.row = row;
         this.column = column;
@@ -21,7 +21,7 @@ public class Seat {
         this.studentID = studentID;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
@@ -37,7 +37,7 @@ public class Seat {
         return status;
     }
 
-    public String getSessionID() {
+    public int getSessionID() {
         return sessionID;
     }
 

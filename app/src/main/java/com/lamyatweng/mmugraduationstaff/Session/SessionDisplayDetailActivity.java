@@ -20,6 +20,9 @@ import com.lamyatweng.mmugraduationstaff.Seat.SeatDisplayActivity;
 public class SessionDisplayDetailActivity extends AppCompatActivity {
     Bundle mBundle = new Bundle();
     int mSessionId;
+    int mRowSize;
+    int mColumnSize;
+    int mConvocationYear;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +61,9 @@ public class SessionDisplayDetailActivity extends AppCompatActivity {
                     columnSize.getEditText().setText(Integer.toString(session.getColumnSize()));
 
                     mSessionId = session.getId();
+                    mRowSize = session.getRowSize();
+                    mColumnSize = session.getColumnSize();
+                    mConvocationYear = session.getConvocationYear();
                 }
             }
 
@@ -85,6 +91,9 @@ public class SessionDisplayDetailActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), SeatDisplayActivity.class);
                 intent.putExtra(Constants.EXTRA_SESSION_KEY, sessionKey);
                 intent.putExtra(Constants.EXTRA_SESSION_ID, mSessionId);
+                intent.putExtra(Constants.EXTRA_SESSION_COLUMN_SIZE, mColumnSize);
+                intent.putExtra(Constants.EXTRA_SESSION_ROW_SIZE, mRowSize);
+                intent.putExtra(Constants.EXTRA_SESSION_CONVOCATION_YEAR, mConvocationYear);
                 startActivity(intent);
             }
         });
