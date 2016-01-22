@@ -14,19 +14,18 @@ import com.lamyatweng.mmugraduationstaff.R;
 public class SessionDeleteDialogFragment extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        // Retrieve ProgrammeKey from previous fragment
+        // Retrieve session key from previous activity
         Bundle bundle = getArguments();
-        final String convocationKey = bundle.getString(getString(R.string.key_convocation_key));
+        final String sessionKey = bundle.getString(getString(R.string.key_session_key));
 
         // Use the Builder class for convenient dialog construction
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setMessage("Delete convocation?")
+        builder.setMessage("Delete session?")
                 .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        Firebase.setAndroidContext(getActivity());
-                        Firebase programmeRef = new Firebase(Constants.FIREBASE_CONVOCATIONS_REF);
-                        programmeRef.child(convocationKey).setValue(null);
-                        Toast.makeText(getActivity(), "Convocation deleted", Toast.LENGTH_LONG).show();
+                        Firebase sessionRef = new Firebase(Constants.FIREBASE_SESSIONS_REF);
+                        sessionRef.child(sessionKey).setValue(null);
+                        Toast.makeText(getActivity(), Constants.TITLE_SESSION + " deleted", Toast.LENGTH_LONG).show();
                         getActivity().finish();
                     }
                 })

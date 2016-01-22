@@ -68,7 +68,7 @@ public class ConvocationDisplayDetailActivity extends AppCompatActivity {
             }
         });
 
-        // Set up Toolbar with back, edit and delete button
+        // Set Toolbar back button
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(Constants.TITLE_CONVOCATION + " Detail");
         // Close activity
@@ -79,7 +79,7 @@ public class ConvocationDisplayDetailActivity extends AppCompatActivity {
                 finish();
             }
         });
-        // Set up menu
+        // Set menu edit and delete button
         toolbar.inflateMenu(R.menu.convocation_details);
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override

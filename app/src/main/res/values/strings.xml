@@ -28,11 +28,12 @@
     <string name="key_timePicker_textView_id">timePickerTextViewId</string>
     <string name="key_fragment_class_name">fragmentClassName</string>
     <string name="key_convocation_key">convocationKey</string>
+    <string name="key_session_key">sessionKey</string>
+    <string name="key_session_id">sessionId</string>
 
     <!-- Others -->
     <string name="drawer_open">Open drawer</string>
     <string name="drawer_close">Close drawer</string>
-    <string name="key_session_key">sessionKey</string>
 
     <!-- Array -->
     <string-array name="programme_array">
@@ -59,12 +60,17 @@
         <item>Faculty of Management</item>
         <item>Graduate School of Management</item>
     </string-array>
-    <string-array name="status_array">
+    <string-array name="student_status_array">
         <item>Active</item>
         <item>Complete</item>
         <item>Pending finance</item>
         <item>Pending MUET</item>
         <item>Pending approval</item>
+    </string-array>
+    <string-array name="seat_status_array">
+        <item>available</item>
+        <item>occupied</item>
+        <item>disabled</item>
     </string-array>
     <string-array name="muet_grading_array">
         <item>0</item>

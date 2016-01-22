@@ -64,10 +64,10 @@ public class StudentEditDialogFragment extends DialogFragment {
         programmeAdapter.setDropDownViewResource(R.layout.multiline_spinner_dropdown_item);
         programmeSpinner.setAdapter(programmeAdapter);
 
-        // Populate statuses from array
+        // Populate student statuses from array
         final Spinner statusSpinner = (Spinner) view.findViewById(R.id.status_spinner);
         final ArrayAdapter<CharSequence> statusAdapter = ArrayAdapter.createFromResource(getActivity(),
-                R.array.status_array, android.R.layout.simple_spinner_item);
+                R.array.student_status_array, android.R.layout.simple_spinner_item);
         statusAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         statusSpinner.setAdapter(statusAdapter);
 

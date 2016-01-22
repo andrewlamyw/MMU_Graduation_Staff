@@ -9,11 +9,15 @@
         android:id="@+id/text_view_row"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:paddingLeft="2dp"
+        android:paddingRight="2dp"
         android:textColor="@android:color/white" />
 
     <TextView
         android:id="@+id/text_view_column"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:paddingLeft="2dp"
+        android:paddingRight="2dp"
         android:textColor="@android:color/white" />
 </LinearLayout>

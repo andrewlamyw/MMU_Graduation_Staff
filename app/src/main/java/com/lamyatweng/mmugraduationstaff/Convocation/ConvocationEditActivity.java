@@ -81,7 +81,6 @@ public class ConvocationEditActivity extends AppCompatActivity {
         // Set up Toolbar with close and save button
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setNavigationIcon(R.mipmap.ic_close_white_24dp);
-        toolbar.inflateMenu(R.menu.convocation_edit);
         // Close dialog
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,6 +89,7 @@ public class ConvocationEditActivity extends AppCompatActivity {
             }
         });
         // Commit: update programme information into Firebase
+        toolbar.inflateMenu(R.menu.convocation_edit);
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {

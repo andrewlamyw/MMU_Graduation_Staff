@@ -60,7 +60,7 @@ public class StudentAddDialogFragment extends DialogFragment {
         // Populate statuses from array
         final Spinner statusSpinner = (Spinner) view.findViewById(R.id.status_spinner);
         ArrayAdapter<CharSequence> statusAdapter = ArrayAdapter.createFromResource(getActivity(),
-                R.array.status_array, android.R.layout.simple_spinner_item);
+                R.array.student_status_array, android.R.layout.simple_spinner_item);
         statusAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         statusSpinner.setAdapter(statusAdapter);
 

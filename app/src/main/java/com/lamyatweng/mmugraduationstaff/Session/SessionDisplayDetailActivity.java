@@ -15,7 +15,7 @@ import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 import com.lamyatweng.mmugraduationstaff.Constants;
 import com.lamyatweng.mmugraduationstaff.R;
-import com.lamyatweng.mmugraduationstaff.Seat.SeatDisplayActivity;
+import com.lamyatweng.mmugraduationstaff.Seat.SeatDisplayArrangementActivity;
 
 public class SessionDisplayDetailActivity extends AppCompatActivity {
     Bundle mBundle = new Bundle();
@@ -32,6 +32,7 @@ public class SessionDisplayDetailActivity extends AppCompatActivity {
         // Receive convocation key from the Intent
         Intent intent = getIntent();
         final String sessionKey = intent.getStringExtra(Constants.EXTRA_SESSION_KEY);
+        mBundle.putString(getString(R.string.key_session_key), intent.getStringExtra(Constants.EXTRA_SESSION_KEY));
 
         // Get references of views
         final TextInputLayout convocationYear = (TextInputLayout) findViewById(R.id.wrapper_convocation_year);
@@ -88,7 +89,7 @@ public class SessionDisplayDetailActivity extends AppCompatActivity {
         viewSeating.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), SeatDisplayActivity.class);
+                Intent intent = new Intent(getApplicationContext(), SeatDisplayArrangementActivity.class);
                 intent.putExtra(Constants.EXTRA_SESSION_KEY, sessionKey);
                 intent.putExtra(Constants.EXTRA_SESSION_ID, mSessionId);
                 intent.putExtra(Constants.EXTRA_SESSION_COLUMN_SIZE, mColumnSize);

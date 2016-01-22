@@ -7,8 +7,10 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.GridView;
 
 import com.firebase.client.DataSnapshot;
@@ -20,13 +22,14 @@ import com.lamyatweng.mmugraduationstaff.Constants;
 import com.lamyatweng.mmugraduationstaff.R;
 import com.lamyatweng.mmugraduationstaff.Session.ConvocationSession;
 
-public class SeatDisplayActivity extends AppCompatActivity {
+public class SeatDisplayArrangementActivity extends AppCompatActivity {
     int mSessionId;
     int mNumberOfRows;
     int mNumberOfColumns;
     int mConvocationYear;
     SeatAdapter mAdapter;
     Firebase mSeatRef;
+    Bundle mBundle = new Bundle();
 
     public static int convertDpToPixels(float dp, Context context) {
         Resources resources = context.getResources();
@@ -51,6 +54,7 @@ public class SeatDisplayActivity extends AppCompatActivity {
         mNumberOfColumns = intent.getIntExtra(Constants.EXTRA_SESSION_COLUMN_SIZE, 0);
         mNumberOfRows = intent.getIntExtra(Constants.EXTRA_SESSION_ROW_SIZE, 0);
         mConvocationYear = intent.getIntExtra(Constants.EXTRA_SESSION_CONVOCATION_YEAR, 0);
+        mBundle.putInt(getString(R.string.key_session_id), intent.getIntExtra(Constants.EXTRA_SESSION_ID, 0));
 
         // Get references of views
         final GridView gridView = (GridView) findViewById(R.id.grid_view);
@@ -71,7 +75,7 @@ public class SeatDisplayActivity extends AppCompatActivity {
                     gridView.setNumColumns(session.getColumnSize());
                     gridView.setAdapter(mAdapter);
                     ViewGroup.LayoutParams layoutParams = gridView.getLayoutParams();
-                    layoutParams.width = convertDpToPixels(session.getColumnSize() * 20, getApplicationContext());
+                    layoutParams.width = convertDpToPixels(session.getColumnSize() * 23, getApplicationContext());
                     gridView.setLayoutParams(layoutParams);
                 }
             }
@@ -105,7 +109,33 @@ public class SeatDisplayActivity extends AppCompatActivity {
             }
         });
 
-        // Set up Toolbar with back, edit and delete button
+        // Open a new activity to display seat detail
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                final Seat selectedSeat = (Seat) parent.getItemAtPosition(position);
+                Query seatQuery = mSeatRef.orderByChild("id").equalTo(selectedSeat.getId());
+                seatQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        for (DataSnapshot seatSnapshot : dataSnapshot.getChildren()) {
+                            Seat firebaseSeat = seatSnapshot.getValue(Seat.class);
+                            if (firebaseSeat.getSessionID() == selectedSeat.getSessionID()) {
+                                Intent intent = new Intent(getApplicationContext(), SeatEditActivity.class);
+                                intent.putExtra(Constants.EXTRA_SEAT_KEY, seatSnapshot.getKey());
+                                startActivity(intent);
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(FirebaseError firebaseError) {
+                    }
+                });
+            }
+        });
+
+        // Set up Toolbar with back button
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(Constants.TITLE_SEAT);
         // Close activity
@@ -116,8 +146,26 @@ public class SeatDisplayActivity extends AppCompatActivity {
                 finish();
             }
         });
+        // Set up menu
+        toolbar.inflateMenu(R.menu.seat_details);
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getTitle().toString()) {
+                    case Constants.MENU_DELETE:
+                        SeatDeleteDialogFragment seatDeleteDialogFragment = new SeatDeleteDialogFragment();
+                        seatDeleteDialogFragment.setArguments(mBundle);
+                        getFragmentManager().beginTransaction().add(seatDeleteDialogFragment, null).addToBackStack(null).commit();
+                        return true;
+
+                    default:
+                        return false;
+                }
+            }
+        });
     }
 
+    // Create new seats and add to Firebase based on number of columns and rows in session
     private void createSeatingArrangement() {
         Seat seat;
         int id;

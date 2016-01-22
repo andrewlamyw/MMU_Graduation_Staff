@@ -10,7 +10,7 @@
         android:layout_height="0dp"
         android:background="@android:color/transparent"
         android:focusable="true"
-        android:focusableInTouchMode="true"></LinearLayout>
+        android:focusableInTouchMode="true" />
 
     <include
         android:id="@+id/toolbar"
@@ -22,7 +22,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="16dp">
 
@@ -32,7 +32,6 @@
                 android:layout_height="wrap_content">
 
                 <EditText
-                    android:id="@+id/input_student_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Student name"
@@ -47,7 +46,6 @@
                 android:paddingTop="16dp">
 
                 <EditText
-                    android:id="@+id/input_email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Student id"
@@ -88,7 +86,6 @@
                 android:paddingTop="16dp">
 
                 <EditText
-                    android:id="@+id/input_student_email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Email"
@@ -103,7 +100,6 @@
                 android:paddingTop="16dp">
 
                 <EditText
-                    android:id="@+id/input_student_balanceCreditHour"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Balance credit hour"
@@ -118,7 +114,6 @@
                 android:paddingTop="16dp">
 
                 <EditText
-                    android:id="@+id/input_student_cgpa"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Cgpa"
@@ -146,7 +141,6 @@
                 android:paddingTop="16dp">
 
                 <EditText
-                    android:id="@+id/input_student_financialDue"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Financial due (RM)"

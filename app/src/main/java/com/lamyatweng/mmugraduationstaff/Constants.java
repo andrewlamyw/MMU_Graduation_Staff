@@ -30,4 +30,6 @@ public class Constants {
     public final static String EXTRA_SESSION_COLUMN_SIZE = "com.lamyatweng.mmugraduationstaff.SESSION_COLUMN_SIZE";
     public final static String EXTRA_SESSION_ROW_SIZE = "com.lamyatweng.mmugraduationstaff.SESSION_ROW_SIZE";
     public final static String EXTRA_SESSION_CONVOCATION_YEAR = "com.lamyatweng.mmugraduationstaff.SESSION_CONVOCATION_YEAR";
+    public final static String EXTRA_SEAT_ID = "com.lamyatweng.mmugraduationstaff.SEAT_ID";
+    public final static String EXTRA_SEAT_KEY = "com.lamyatweng.mmugraduationstaff.SEAT_KEY";
 }
