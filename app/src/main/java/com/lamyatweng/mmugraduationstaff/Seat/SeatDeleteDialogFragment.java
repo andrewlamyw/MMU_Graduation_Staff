@@ -27,9 +27,10 @@ public class SeatDeleteDialogFragment extends DialogFragment {
         builder.setMessage("Delete seating arrangement?")
                 .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
+                        SeatDisplayArrangementActivity.removeEventListener();
                         final Firebase seatRef = new Firebase(Constants.FIREBASE_SEATS_REF);
                         Query seatQuery = seatRef.orderByChild("sessionID").equalTo(sessionId);
-                        seatQuery.addValueEventListener(new ValueEventListener() {
+                        seatQuery.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
                                 for (DataSnapshot seatSnapshot : dataSnapshot.getChildren()) {

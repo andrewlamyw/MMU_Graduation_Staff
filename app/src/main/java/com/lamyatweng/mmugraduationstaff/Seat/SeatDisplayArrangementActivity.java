@@ -23,12 +23,13 @@ import com.lamyatweng.mmugraduationstaff.R;
 import com.lamyatweng.mmugraduationstaff.Session.ConvocationSession;
 
 public class SeatDisplayArrangementActivity extends AppCompatActivity {
+    static Firebase mSeatRef;
+    static ValueEventListener mSeatListener;
     int mSessionId;
     int mNumberOfRows;
     int mNumberOfColumns;
     int mConvocationYear;
     SeatAdapter mAdapter;
-    Firebase mSeatRef;
     Bundle mBundle = new Bundle();
 
     public static int convertDpToPixels(float dp, Context context) {
@@ -38,6 +39,10 @@ public class SeatDisplayArrangementActivity extends AppCompatActivity {
                 dp,
                 resources.getDisplayMetrics()
         );
+    }
+
+    public static void removeEventListener() {
+        mSeatRef.removeEventListener(mSeatListener);
     }
 
     @Override
@@ -88,7 +93,7 @@ public class SeatDisplayArrangementActivity extends AppCompatActivity {
         // Retrieve seating arrangement from Firebase and display
         mSeatRef = new Firebase(Constants.FIREBASE_SEATS_REF);
         Query seatQuery = mSeatRef.orderByChild("sessionID").equalTo(mSessionId);
-        seatQuery.addValueEventListener(new ValueEventListener() {
+        mSeatListener = seatQuery.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Boolean found = false;
@@ -153,6 +158,7 @@ public class SeatDisplayArrangementActivity extends AppCompatActivity {
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getTitle().toString()) {
                     case Constants.MENU_DELETE:
+
                         SeatDeleteDialogFragment seatDeleteDialogFragment = new SeatDeleteDialogFragment();
                         seatDeleteDialogFragment.setArguments(mBundle);
                         getFragmentManager().beginTransaction().add(seatDeleteDialogFragment, null).addToBackStack(null).commit();
