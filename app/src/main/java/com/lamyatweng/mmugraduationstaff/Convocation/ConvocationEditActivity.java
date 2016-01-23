@@ -59,7 +59,7 @@ public class ConvocationEditActivity extends AppCompatActivity {
         });
 
         // Retrieve convocation details from Firebase and display
-        final Firebase convocationRef = new Firebase(Constants.FIREBASE_CONVOCATIONS_REF);
+        final Firebase convocationRef = new Firebase(Constants.FIREBASE_STRING_CONVOCATIONS_REF);
         convocationRef.child(convocationKey).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

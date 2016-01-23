@@ -24,7 +24,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        new Firebase(Constants.FIREBASE_STAFF_REF).keepSynced(true);
+        new Firebase(Constants.FIREBASE_STRING_STAFF_REF).keepSynced(true);
 
         final Activity activity = this;
         final SessionManager sessionManager = new SessionManager(getApplicationContext());
@@ -32,7 +32,7 @@ public class LoginActivity extends AppCompatActivity {
         final TextInputLayout passwordWrapper = (TextInputLayout) findViewById(R.id.wrapper_login_password);
 
         Firebase.setAndroidContext(this);
-        final Firebase staffRef = new Firebase(Constants.FIREBASE_STAFF_REF);
+        final Firebase staffRef = new Firebase(Constants.FIREBASE_STRING_STAFF_REF);
         Button loginButton = (Button) findViewById(R.id.button_login);
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override

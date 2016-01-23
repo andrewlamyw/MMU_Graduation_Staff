@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
@@ -15,7 +16,7 @@ import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 import com.lamyatweng.mmugraduationstaff.Constants;
 import com.lamyatweng.mmugraduationstaff.R;
-import com.lamyatweng.mmugraduationstaff.Seat.SeatDisplayArrangementActivity;
+import com.lamyatweng.mmugraduationstaff.Seat.SeatDisplayArrangementActivity1;
 
 public class SessionDisplayDetailActivity extends AppCompatActivity {
     Bundle mBundle = new Bundle();
@@ -23,11 +24,15 @@ public class SessionDisplayDetailActivity extends AppCompatActivity {
     int mRowSize;
     int mColumnSize;
     int mConvocationYear;
+    Boolean mDoneLoadSession;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_session_display);
+
+        // Initialize local variables
+        mDoneLoadSession = false;
 
         // Receive convocation key from the Intent
         Intent intent = getIntent();
@@ -35,36 +40,37 @@ public class SessionDisplayDetailActivity extends AppCompatActivity {
         mBundle.putString(getString(R.string.key_session_key), intent.getStringExtra(Constants.EXTRA_SESSION_KEY));
 
         // Get references of views
-        final TextInputLayout convocationYear = (TextInputLayout) findViewById(R.id.wrapper_convocation_year);
-        final TextInputLayout sessionNumber = (TextInputLayout) findViewById(R.id.wrapper_session_number);
-        final TextInputLayout sessionId = (TextInputLayout) findViewById(R.id.wrapper_session_id);
-        final TextInputLayout date = (TextInputLayout) findViewById(R.id.wrapper_session_date);
-        final TextInputLayout startTime = (TextInputLayout) findViewById(R.id.wrapper_session_start_time);
-        final TextInputLayout endTime = (TextInputLayout) findViewById(R.id.wrapper_session_end_time);
-        final TextInputLayout rowSize = (TextInputLayout) findViewById(R.id.wrapper_session_row_size);
-        final TextInputLayout columnSize = (TextInputLayout) findViewById(R.id.wrapper_session_column_size);
+        final TextInputLayout convocationYearWrapper = (TextInputLayout) findViewById(R.id.wrapper_convocation_year);
+        final TextInputLayout sessionNumberWrapper = (TextInputLayout) findViewById(R.id.wrapper_session_number);
+        final TextInputLayout sessionIdWrapper = (TextInputLayout) findViewById(R.id.wrapper_session_id);
+        final TextInputLayout dateWrapper = (TextInputLayout) findViewById(R.id.wrapper_session_date);
+        final TextInputLayout startTimeWrapper = (TextInputLayout) findViewById(R.id.wrapper_session_start_time);
+        final TextInputLayout endTimeWrapper = (TextInputLayout) findViewById(R.id.wrapper_session_end_time);
+        final TextInputLayout rowSizeWrapper = (TextInputLayout) findViewById(R.id.wrapper_session_row_size);
+        final TextInputLayout columnSizeWrapper = (TextInputLayout) findViewById(R.id.wrapper_session_column_size);
 
         // Retrieve session details from Firebase and display
-        Firebase sessionRef = new Firebase(Constants.FIREBASE_SESSIONS_REF);
+        Firebase sessionRef = new Firebase(Constants.FIREBASE_STRING_SESSIONS_REF);
         sessionRef.child(sessionKey).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 ConvocationSession session = dataSnapshot.getValue(ConvocationSession.class);
                 // Null checking is required for handling removed item from Firebase
                 if (session != null) {
-                    convocationYear.getEditText().setText(Integer.toString(session.getConvocationYear()));
-                    sessionNumber.getEditText().setText(Integer.toString(session.getSessionNumber()));
-                    sessionId.getEditText().setText(Integer.toString(session.getId()));
-                    date.getEditText().setText(session.getDate());
-                    startTime.getEditText().setText(session.getStartTime());
-                    endTime.getEditText().setText(session.getEndTime());
-                    rowSize.getEditText().setText(Integer.toString(session.getRowSize()));
-                    columnSize.getEditText().setText(Integer.toString(session.getColumnSize()));
+                    convocationYearWrapper.getEditText().setText(Integer.toString(session.getConvocationYear()));
+                    sessionNumberWrapper.getEditText().setText(Integer.toString(session.getSessionNumber()));
+                    sessionIdWrapper.getEditText().setText(Integer.toString(session.getId()));
+                    dateWrapper.getEditText().setText(session.getDate());
+                    startTimeWrapper.getEditText().setText(session.getStartTime());
+                    endTimeWrapper.getEditText().setText(session.getEndTime());
+                    rowSizeWrapper.getEditText().setText(Integer.toString(session.getRowSize()));
+                    columnSizeWrapper.getEditText().setText(Integer.toString(session.getColumnSize()));
 
                     mSessionId = session.getId();
                     mRowSize = session.getRowSize();
                     mColumnSize = session.getColumnSize();
                     mConvocationYear = session.getConvocationYear();
+                    mDoneLoadSession = true;
                 }
             }
 
@@ -84,18 +90,28 @@ public class SessionDisplayDetailActivity extends AppCompatActivity {
             }
         });
 
-        // Open a new activity to display seating arrangement in the session
+        // Open seating arrangement button
         Button viewSeating = (Button) findViewById(R.id.button_view_seating);
         viewSeating.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), SeatDisplayArrangementActivity.class);
+                /*Intent intent = new Intent(getApplicationContext(), SeatDisplayArrangementActivity.class);
                 intent.putExtra(Constants.EXTRA_SESSION_KEY, sessionKey);
                 intent.putExtra(Constants.EXTRA_SESSION_ID, mSessionId);
                 intent.putExtra(Constants.EXTRA_SESSION_COLUMN_SIZE, mColumnSize);
                 intent.putExtra(Constants.EXTRA_SESSION_ROW_SIZE, mRowSize);
                 intent.putExtra(Constants.EXTRA_SESSION_CONVOCATION_YEAR, mConvocationYear);
-                startActivity(intent);
+                startActivity(intent);*/
+
+                if (mDoneLoadSession) {
+                    Intent intent = new Intent(getApplicationContext(), SeatDisplayArrangementActivity1.class);
+                    intent.putExtra(Constants.EXTRA_SESSION_ID, mSessionId);
+                    intent.putExtra(Constants.EXTRA_SESSION_COLUMN_SIZE, mColumnSize);
+                    intent.putExtra(Constants.EXTRA_SESSION_KEY, sessionKey);
+                    startActivity(intent);
+                } else
+                    Toast.makeText(getApplicationContext(), "Connection failed, try again later.", Toast.LENGTH_SHORT).show();
+
             }
         });
 

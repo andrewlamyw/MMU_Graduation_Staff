@@ -64,8 +64,8 @@ public class SeatDisplayArrangementActivity extends AppCompatActivity {
         // Get references of views
         final GridView gridView = (GridView) findViewById(R.id.grid_view);
 
-        // Retrieve session details from Firebase and display
-        Firebase sessionRef = new Firebase(Constants.FIREBASE_SESSIONS_REF);
+        // Get session details from Firebase and display
+        Firebase sessionRef = new Firebase(Constants.FIREBASE_STRING_SESSIONS_REF);
         sessionRef.child(sessionKey).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -90,8 +90,8 @@ public class SeatDisplayArrangementActivity extends AppCompatActivity {
             }
         });
 
-        // Retrieve seating arrangement from Firebase and display
-        mSeatRef = new Firebase(Constants.FIREBASE_SEATS_REF);
+        // Get seating arrangement from Firebase and display
+        mSeatRef = new Firebase(Constants.FIREBASE_STRING_SEATS_REF);
         Query seatQuery = mSeatRef.orderByChild("sessionID").equalTo(mSessionId);
         mSeatListener = seatQuery.addValueEventListener(new ValueEventListener() {
             @Override
@@ -142,7 +142,7 @@ public class SeatDisplayArrangementActivity extends AppCompatActivity {
 
         // Set up Toolbar with back button
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle(Constants.TITLE_SEAT);
+        toolbar.setTitle(Constants.TITLE_SEAT + " Arrangement");
         // Close activity
         toolbar.setNavigationIcon(R.mipmap.ic_arrow_back_white_24dp);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -152,13 +152,12 @@ public class SeatDisplayArrangementActivity extends AppCompatActivity {
             }
         });
         // Set up menu
-        toolbar.inflateMenu(R.menu.seat_details);
+        toolbar.inflateMenu(R.menu.seat_arrangement);
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getTitle().toString()) {
                     case Constants.MENU_DELETE:
-
                         SeatDeleteDialogFragment seatDeleteDialogFragment = new SeatDeleteDialogFragment();
                         seatDeleteDialogFragment.setArguments(mBundle);
                         getFragmentManager().beginTransaction().add(seatDeleteDialogFragment, null).addToBackStack(null).commit();

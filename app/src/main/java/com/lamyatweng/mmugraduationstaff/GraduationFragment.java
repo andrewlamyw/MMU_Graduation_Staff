@@ -30,7 +30,7 @@ public class GraduationFragment extends Fragment {
         // Populate students from Firebase into ListView
         final StudentCustomAdapter adapter = new StudentCustomAdapter(getActivity());
         Firebase.setAndroidContext(getActivity());
-        final Firebase studentRef = new Firebase(Constants.FIREBASE_STUDENTS_REF);
+        final Firebase studentRef = new Firebase(Constants.FIREBASE_STRING_STUDENTS_REF);
         Query query = studentRef.orderByChild("status").equalTo("Pending approval");
         query.addValueEventListener(new ValueEventListener() {
             @Override

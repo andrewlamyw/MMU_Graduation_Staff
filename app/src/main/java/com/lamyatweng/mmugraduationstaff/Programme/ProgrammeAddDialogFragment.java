@@ -56,7 +56,7 @@ public class ProgrammeAddDialogFragment extends DialogFragment {
 
         // Commit: add new programme into Firebase
         Firebase.setAndroidContext(getActivity());
-        final Firebase programmeRef = new Firebase(Constants.FIREBASE_PROGRAMMES_REF);
+        final Firebase programmeRef = new Firebase(Constants.FIREBASE_STRING_PROGRAMMES_REF);
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {

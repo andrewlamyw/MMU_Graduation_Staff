@@ -38,7 +38,7 @@ public class SessionProgrammeListActivity extends AppCompatActivity {
         final ListView programmeList = (ListView) findViewById(R.id.session_programme_list_view);
 
         // Retrieve session details from Firebase and display
-        Firebase sessionRef = new Firebase(Constants.FIREBASE_SESSIONS_REF);
+        Firebase sessionRef = new Firebase(Constants.FIREBASE_STRING_SESSIONS_REF);
         sessionRef.child(sessionKey).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

@@ -41,7 +41,7 @@ public class SessionAddActivity extends AppCompatActivity {
         final TextInputLayout rowSizeWrapper = (TextInputLayout) findViewById(R.id.wrapper_row_size);
         final TextInputLayout columnSizeWrapper = (TextInputLayout) findViewById(R.id.wrapper_column_size);
 
-        // Open date picker and set text for sesseion date
+        // Open date picker and set text for session date
         dateTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -74,11 +74,10 @@ public class SessionAddActivity extends AppCompatActivity {
             }
         });
 
-        // Set Toolbar with close and save button
+        // Set Toolbar name and close button
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("New " + Constants.TITLE_SESSION);
         toolbar.setNavigationIcon(R.mipmap.ic_close_white_24dp);
-        toolbar.inflateMenu(R.menu.session_add);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -86,8 +85,8 @@ public class SessionAddActivity extends AppCompatActivity {
             }
         });
 
-        // Commit: add new session into Firebase
-        final Firebase sessionRef = new Firebase(Constants.FIREBASE_SESSIONS_REF);
+        // Set menu save button to add new session into Firebase
+        toolbar.inflateMenu(R.menu.session_add);
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
@@ -111,6 +110,7 @@ public class SessionAddActivity extends AppCompatActivity {
 
                         // Push into Firebase programme list
                         ConvocationSession session = new ConvocationSession(columnSize, convocationYear, date, endTime, id, programmes, rowSize, sessionNumber, startTime);
+                        Firebase sessionRef = new Firebase(Constants.FIREBASE_STRING_SESSIONS_REF);
                         sessionRef.push().setValue(session);
 
                         // Display message and close dialog

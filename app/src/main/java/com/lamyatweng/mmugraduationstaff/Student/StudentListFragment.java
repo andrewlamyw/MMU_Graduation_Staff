@@ -35,7 +35,7 @@ public class StudentListFragment extends Fragment {
         // Populate students sort by name from Firebase into ListView
         final StudentCustomAdapter adapter = new StudentCustomAdapter(getActivity());
         Firebase.setAndroidContext(getActivity());
-        final Firebase studentRef = new Firebase(Constants.FIREBASE_STUDENTS_REF);
+        final Firebase studentRef = new Firebase(Constants.FIREBASE_STRING_STUDENTS_REF);
         Query studentQuery = studentRef.orderByChild("name");
         studentQuery.addValueEventListener(new ValueEventListener() {
             @Override

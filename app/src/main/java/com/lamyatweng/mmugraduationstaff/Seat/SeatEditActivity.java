@@ -44,7 +44,7 @@ public class SeatEditActivity extends AppCompatActivity {
         seatStatusSpinner.setAdapter(seatStatusAdapter);
 
         // Retrieve seat details from Firebase and display
-        final Firebase seatRef = new Firebase(Constants.FIREBASE_SEATS_REF);
+        final Firebase seatRef = new Firebase(Constants.FIREBASE_STRING_SEATS_REF);
         seatRef.child(seatKey).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

@@ -30,7 +30,8 @@
         <activity android:name=".Session.SessionProgrammeAddActivity" />
         <activity android:name=".Seat.SeatDisplayArrangementActivity" />
         <activity android:name=".Seat.SeatDisplayDetailActivity" />
-        <activity android:name=".Seat.SeatEditActivity"></activity>
+        <activity android:name=".Seat.SeatEditActivity" />
+        <activity android:name=".Seat.SeatDisplayArrangementActivity1"></activity>
     </application>
 
 </manifest>

@@ -34,6 +34,7 @@
     <!-- Others -->
     <string name="drawer_open">Open drawer</string>
     <string name="drawer_close">Close drawer</string>
+    <string name="title_add">Add</string>
 
     <!-- Array -->
     <string-array name="programme_array">
@@ -68,9 +69,9 @@
         <item>Pending approval</item>
     </string-array>
     <string-array name="seat_status_array">
-        <item>available</item>
-        <item>occupied</item>
-        <item>disabled</item>
+        <item>Available</item>
+        <item>Occupied</item>
+        <item>Disabled</item>
     </string-array>
     <string-array name="muet_grading_array">
         <item>0</item>

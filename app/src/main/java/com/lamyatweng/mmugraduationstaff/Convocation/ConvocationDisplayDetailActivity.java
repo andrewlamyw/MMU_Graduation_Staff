@@ -38,7 +38,7 @@ public class ConvocationDisplayDetailActivity extends AppCompatActivity {
         Button viewSessions = (Button) findViewById(R.id.button_view_sessions);
 
         // Retrieve convocation details from Firebase and display
-        Firebase convocationRef = new Firebase(Constants.FIREBASE_CONVOCATIONS_REF);
+        Firebase convocationRef = new Firebase(Constants.FIREBASE_STRING_CONVOCATIONS_REF);
         convocationRef.child(convocationKey).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

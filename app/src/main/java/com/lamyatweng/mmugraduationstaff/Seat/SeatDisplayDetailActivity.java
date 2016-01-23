@@ -20,7 +20,7 @@ public class SeatDisplayDetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_seat_display_detail);
+        setContentView(R.layout.activity_seat_display_arrangement_detail);
 
         // Receive seat key from the Intent
         Intent intent = getIntent();
@@ -35,7 +35,7 @@ public class SeatDisplayDetailActivity extends AppCompatActivity {
         final TextInputLayout studentIdWrapper = (TextInputLayout) findViewById(R.id.wrapper_student_id);
 
         // Retrieve seat details from Firebase and display
-        Firebase seatRef = new Firebase(Constants.FIREBASE_SEATS_REF);
+        Firebase seatRef = new Firebase(Constants.FIREBASE_STRING_SEATS_REF);
         seatRef.child(seatKey).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -69,7 +69,7 @@ public class SeatDisplayDetailActivity extends AppCompatActivity {
             }
         });
         // Set menu edit button
-        toolbar.inflateMenu(R.menu.seat_details);
+        toolbar.inflateMenu(R.menu.seat_arrangement);
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {

@@ -42,7 +42,7 @@ public class StudentDisplayDetailDialogFragment extends DialogFragment {
         final TextInputLayout financialWrapper = (TextInputLayout) view.findViewById(R.id.wrapper_student_financialDue);
 
         // Retrieve programme details from Firebase and display
-        Firebase studentRef = new Firebase(Constants.FIREBASE_STUDENTS_REF);
+        Firebase studentRef = new Firebase(Constants.FIREBASE_STRING_STUDENTS_REF);
         studentRef.child(studentKey).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

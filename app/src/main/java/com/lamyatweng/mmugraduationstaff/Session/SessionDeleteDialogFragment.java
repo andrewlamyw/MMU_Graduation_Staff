@@ -23,7 +23,7 @@ public class SessionDeleteDialogFragment extends DialogFragment {
         builder.setMessage("Delete session?")
                 .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        Firebase sessionRef = new Firebase(Constants.FIREBASE_SESSIONS_REF);
+                        Firebase sessionRef = new Firebase(Constants.FIREBASE_STRING_SESSIONS_REF);
                         sessionRef.child(sessionKey).setValue(null);
                         Toast.makeText(getActivity(), Constants.TITLE_SESSION + " deleted", Toast.LENGTH_LONG).show();
                         getActivity().finish();

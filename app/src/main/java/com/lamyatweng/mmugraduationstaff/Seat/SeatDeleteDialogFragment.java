@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import com.firebase.client.DataSnapshot;
-import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.Query;
 import com.firebase.client.ValueEventListener;
@@ -27,14 +26,13 @@ public class SeatDeleteDialogFragment extends DialogFragment {
         builder.setMessage("Delete seating arrangement?")
                 .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        SeatDisplayArrangementActivity.removeEventListener();
-                        final Firebase seatRef = new Firebase(Constants.FIREBASE_SEATS_REF);
-                        Query seatQuery = seatRef.orderByChild("sessionID").equalTo(sessionId);
+//                        SeatDisplayArrangementActivity.removeEventListener();
+                        Query seatQuery = Constants.FIREBASE_REF_SEATS.orderByChild("sessionID").equalTo(sessionId);
                         seatQuery.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
                                 for (DataSnapshot seatSnapshot : dataSnapshot.getChildren()) {
-                                    seatRef.child(seatSnapshot.getKey()).setValue(null);
+                                    Constants.FIREBASE_REF_SEATS.child(seatSnapshot.getKey()).setValue(null);
                                 }
                             }
 
@@ -45,7 +43,6 @@ public class SeatDeleteDialogFragment extends DialogFragment {
                         });
 
                         Toast.makeText(getActivity(), Constants.TITLE_SEAT + "s deleted", Toast.LENGTH_LONG).show();
-                        getActivity().finish();
                     }
                 })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {

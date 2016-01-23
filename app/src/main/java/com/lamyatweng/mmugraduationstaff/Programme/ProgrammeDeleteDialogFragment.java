@@ -25,7 +25,7 @@ public class ProgrammeDeleteDialogFragment extends DialogFragment {
                 .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         Firebase.setAndroidContext(getActivity());
-                        Firebase programmeRef = new Firebase(Constants.FIREBASE_PROGRAMMES_REF);
+                        Firebase programmeRef = new Firebase(Constants.FIREBASE_STRING_PROGRAMMES_REF);
                         programmeRef.child(programmeKey).setValue(null);
                         Toast.makeText(getActivity(), "Programme deleted", Toast.LENGTH_LONG).show();
                         // Close ProgrammeDisplayDetailDialogFragment because item is removed

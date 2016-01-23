@@ -52,7 +52,7 @@ public class ProgrammeEditDialogFragment extends DialogFragment {
 
         // Retrieve programme details from Firebase and display
         Firebase.setAndroidContext(getActivity());
-        final Firebase programmeRef = new Firebase(Constants.FIREBASE_PROGRAMMES_REF);
+        final Firebase programmeRef = new Firebase(Constants.FIREBASE_STRING_PROGRAMMES_REF);
         programmeRef.child(programmeKey).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

@@ -63,7 +63,7 @@ public class ConvocationAddActivity extends AppCompatActivity {
         });
 
         // Commit: add new convocation into Firebase
-        final Firebase convocationRef = new Firebase(Constants.FIREBASE_CONVOCATIONS_REF);
+        final Firebase convocationRef = new Firebase(Constants.FIREBASE_STRING_CONVOCATIONS_REF);
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {

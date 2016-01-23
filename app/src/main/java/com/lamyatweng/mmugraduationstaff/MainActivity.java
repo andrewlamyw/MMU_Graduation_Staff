@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
         // Set Firebase to prefetch data
         Firebase.setAndroidContext(this);
 
-        new Firebase(Constants.FIREBASE_ROOT_REF).keepSynced(true);
+        new Firebase(Constants.FIREBASE_STRING_ROOT_REF).keepSynced(true);
 
 
         // Redirects to LoginActivity if user is not logged in

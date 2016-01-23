@@ -36,7 +36,7 @@ public class ProgrammeDisplayDetailDialogFragment extends DialogFragment {
         final TextInputLayout facultyWrapper = (TextInputLayout) view.findViewById(R.id.wrapper_faculty);
 
         // Retrieve programme details from Firebase and display
-        Firebase programmeRef = new Firebase(Constants.FIREBASE_PROGRAMMES_REF);
+        Firebase programmeRef = new Firebase(Constants.FIREBASE_STRING_PROGRAMMES_REF);
         programmeRef.child(programmeKey).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

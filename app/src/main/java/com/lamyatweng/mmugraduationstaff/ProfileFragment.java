@@ -37,7 +37,7 @@ public class ProfileFragment extends Fragment {
 
         // Retrieve student information from Firebase
         Firebase.setAndroidContext(getActivity());
-        Firebase studentRef = new Firebase(Constants.FIREBASE_STUDENTS_REF);
+        Firebase studentRef = new Firebase(Constants.FIREBASE_STRING_STUDENTS_REF);
         Query queryRef = studentRef.orderByChild("email").equalTo(userEmail);
         queryRef.addChildEventListener(new ChildEventListener() {
             @Override

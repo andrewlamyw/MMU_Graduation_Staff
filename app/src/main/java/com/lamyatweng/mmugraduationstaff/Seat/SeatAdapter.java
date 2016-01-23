@@ -48,13 +48,13 @@ public class SeatAdapter extends ArrayAdapter<Seat> {
             viewHolder.textViewColumn.setText(seat.getColumn());
 
             switch (seat.getStatus()) {
-                case "available":
+                case "Available":
                     viewHolder.itemSeatContainer.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.seatAvailable));
                     break;
-                case "occupied":
+                case "Occupied":
                     viewHolder.itemSeatContainer.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.seatOccupied));
                     break;
-                case "disabled":
+                case "Disabled":
                     viewHolder.itemSeatContainer.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.seatDisabled));
                     break;
             }

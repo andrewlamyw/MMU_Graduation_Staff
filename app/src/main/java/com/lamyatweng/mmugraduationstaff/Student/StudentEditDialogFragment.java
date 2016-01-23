@@ -44,7 +44,7 @@ public class StudentEditDialogFragment extends DialogFragment {
         // Populate programmes from Firebase
         final Spinner programmeSpinner = (Spinner) view.findViewById(R.id.programme_spinner);
         Firebase.setAndroidContext(getActivity());
-        Firebase programmeRef = new Firebase(Constants.FIREBASE_PROGRAMMES_REF);
+        Firebase programmeRef = new Firebase(Constants.FIREBASE_STRING_PROGRAMMES_REF);
         final ArrayAdapter<CharSequence> programmeAdapter = new ArrayAdapter<>(getActivity(), R.layout.multiline_spinner_item);
         programmeRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -79,7 +79,7 @@ public class StudentEditDialogFragment extends DialogFragment {
         muetSpinner.setAdapter(muetAdapter);
 
         // Retrieve student details from Firebase and display
-        final Firebase studentRef = new Firebase(Constants.FIREBASE_STUDENTS_REF);
+        final Firebase studentRef = new Firebase(Constants.FIREBASE_STRING_STUDENTS_REF);
         studentRef.child(studentKey).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -103,54 +103,6 @@ public class StudentEditDialogFragment extends DialogFragment {
 
             }
         });
-
-        /*Firebase.setAndroidContext(getActivity());
-        final Firebase studentRef = new Firebase(Constants.FIREBASE_STUDENTS_REF);
-        Query queryRef = studentRef.orderByChild("id").equalTo(studentID);
-        queryRef.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                mStudentKey = dataSnapshot.getKey();
-                Student student = dataSnapshot.getValue(Student.class);
-
-                nameWrapper.getEditText().setText(student.getName());
-                idWrapper.getEditText().setText(student.getId());
-                programmeSpinner.setSelection(programmeAdapter.getPosition(student.getProgramme()));
-                statusSpinner.setSelection(statusAdapter.getPosition(student.getStatus()));
-                emailWrapper.getEditText().setText(student.getEmail());
-                creditHourWrapper.getEditText().setText(String.valueOf(student.getBalanceCreditHour()));
-                cgpaWrapper.getEditText().setText(String.valueOf(student.getCgpa()));
-                muetSpinner.setSelection(muetAdapter.getPosition(String.valueOf(student.getMuet())));
-                financialWrapper.getEditText().setText(String.valueOf(student.getFinancialDue()));
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-                Student student = dataSnapshot.getValue(Student.class);
-
-                nameWrapper.getEditText().setText(student.getName());
-                idWrapper.getEditText().setText(student.getId());
-                programmeSpinner.setSelection(programmeAdapter.getPosition(student.getProgramme()));
-                statusSpinner.setSelection(statusAdapter.getPosition(student.getStatus()));
-                emailWrapper.getEditText().setText(student.getEmail());
-                creditHourWrapper.getEditText().setText(String.valueOf(student.getBalanceCreditHour()));
-                cgpaWrapper.getEditText().setText(String.valueOf(student.getCgpa()));
-                muetSpinner.setSelection(muetAdapter.getPosition(String.valueOf(student.getMuet())));
-                financialWrapper.getEditText().setText(String.valueOf(student.getFinancialDue()));
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-            }
-
-            @Override
-            public void onCancelled(FirebaseError firebaseError) {
-            }
-        });*/
 
         // Set Toolbar with close and save button
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);

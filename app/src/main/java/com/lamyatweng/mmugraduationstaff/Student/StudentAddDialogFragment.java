@@ -38,7 +38,7 @@ public class StudentAddDialogFragment extends DialogFragment {
         // Populate programmes from Firebase
         final Spinner programmeSpinner = (Spinner) view.findViewById(R.id.programme_spinner);
         Firebase.setAndroidContext(getActivity());
-        Firebase programmeRef = new Firebase(Constants.FIREBASE_PROGRAMMES_REF);
+        Firebase programmeRef = new Firebase(Constants.FIREBASE_STRING_PROGRAMMES_REF);
         final ArrayAdapter<CharSequence> programmeAdapter = new ArrayAdapter<>(getActivity(), R.layout.multiline_spinner_item);
         programmeRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -85,7 +85,7 @@ public class StudentAddDialogFragment extends DialogFragment {
 
         // Commit: add new student into Firebase
         Firebase.setAndroidContext(getActivity());
-        final Firebase studentRef = new Firebase(Constants.FIREBASE_STUDENTS_REF);
+        final Firebase studentRef = new Firebase(Constants.FIREBASE_STRING_STUDENTS_REF);
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {

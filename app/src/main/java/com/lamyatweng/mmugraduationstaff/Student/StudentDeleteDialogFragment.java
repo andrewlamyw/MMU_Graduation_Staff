@@ -27,7 +27,7 @@ public class StudentDeleteDialogFragment extends DialogFragment {
                 .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         Firebase.setAndroidContext(getActivity());
-                        Firebase studentRef = new Firebase(Constants.FIREBASE_STUDENTS_REF);
+                        Firebase studentRef = new Firebase(Constants.FIREBASE_STRING_STUDENTS_REF);
                         studentRef.child(studentKey).setValue(null);
                         Toast.makeText(getActivity(), "Student deleted", Toast.LENGTH_SHORT).show();
                         // Close StudentDisplayDetailDialogFragment because item is removed
