@@ -21,11 +21,13 @@ import com.firebase.client.ValueEventListener;
 import com.lamyatweng.mmugraduationstaff.Constants;
 import com.lamyatweng.mmugraduationstaff.R;
 
-public class SeatDisplayArrangementActivity1 extends AppCompatActivity {
-    final int GRID_COLUMN_WIDTH_IN_DP = 23;
+public class SeatDisplayArrangementActivity1 extends AppCompatActivity
+        implements SeatAddDialogFragment.OnCreateSeatDialogButtonClicked {
+    final int GRID_COLUMN_WIDTH_IN_DP = 24;
     Query mSeatQuery;
     ValueEventListener mSeatListener;
     SeatAdapter mSeatAdapter;
+    GridView mGridView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,8 +43,9 @@ public class SeatDisplayArrangementActivity1 extends AppCompatActivity {
         // Initialise variables for displaying seats in GridView
         mSeatQuery = Constants.FIREBASE_REF_SEATS.orderByChild("sessionID").equalTo(sessionId);
         mSeatAdapter = new SeatAdapter(this);
-        GridView gridView = (GridView) findViewById(R.id.grid_view);
-        initialiseGridView(gridView, mSeatAdapter, numberOfColumns);
+        mGridView = (GridView) findViewById(R.id.grid_view);
+        mGridView.setAdapter(mSeatAdapter);
+        updateGridViewWidth(mGridView, numberOfColumns);
 
         // Set toolbar title
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -99,12 +102,13 @@ public class SeatDisplayArrangementActivity1 extends AppCompatActivity {
                                 } else {
                                     Log.i(getClass().getName(), "add button clicked, dataSnapshot is null");
 //                                    Toast.makeText(getApplicationContext(), "Creating", Toast.LENGTH_LONG).show();
-                                    SeatSetSizeDialogFragment dialogFragment = new SeatSetSizeDialogFragment();
+                                    SeatAddDialogFragment dialogFragment = new SeatAddDialogFragment();
                                     Bundle bundle = new Bundle();
                                     bundle.putString(getString(R.string.key_session_key), sessionKey);
                                     bundle.putInt(getString(R.string.key_session_id), sessionId);
                                     dialogFragment.setArguments(bundle);
                                     getFragmentManager().beginTransaction().add(dialogFragment, null).commit();
+
                                 }
                             }
 
@@ -113,9 +117,6 @@ public class SeatDisplayArrangementActivity1 extends AppCompatActivity {
 
                             }
                         });
-
-                        // if there is, then prompt user this action will replace existing seats
-                        // if there is not, then add new seats
                         return true;
 
                     default:
@@ -156,8 +157,7 @@ public class SeatDisplayArrangementActivity1 extends AppCompatActivity {
     /**
      * Set gridView adapter, number of columns, and grid total width
      */
-    private void initialiseGridView(GridView gridView, SeatAdapter seatAdapter, int numberOfColumns) {
-        gridView.setAdapter(seatAdapter);
+    private void updateGridViewWidth(GridView gridView, int numberOfColumns) {
         gridView.setNumColumns(numberOfColumns);
         ViewGroup.LayoutParams layoutParams = gridView.getLayoutParams();
         layoutParams.width = convertDpToPixels(numberOfColumns * GRID_COLUMN_WIDTH_IN_DP, getApplicationContext());
@@ -174,5 +174,10 @@ public class SeatDisplayArrangementActivity1 extends AppCompatActivity {
                 dp,
                 resources.getDisplayMetrics()
         );
+    }
+
+    @Override
+    public void onCreateSeatDialogButtonClicked(int numberOfColumns) {
+        updateGridViewWidth(mGridView, numberOfColumns);
     }
 }

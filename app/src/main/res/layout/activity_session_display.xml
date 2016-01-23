@@ -43,8 +43,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:enabled="false"
-                    android:hint="Convocation year"
-                    android:textSize="34sp" />
+                    android:hint="Convocation year" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout

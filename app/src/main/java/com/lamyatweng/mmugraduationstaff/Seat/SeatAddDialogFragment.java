@@ -1,5 +1,6 @@
 package com.lamyatweng.mmugraduationstaff.Seat;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
@@ -12,7 +13,22 @@ import android.widget.Toast;
 import com.lamyatweng.mmugraduationstaff.Constants;
 import com.lamyatweng.mmugraduationstaff.R;
 
-public class SeatSetSizeDialogFragment extends DialogFragment {
+public class SeatAddDialogFragment extends DialogFragment {
+    OnCreateSeatDialogButtonClicked mListener;
+
+    /**
+     * To ensure that the host activity implements the interface
+     */
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        try {
+            mListener = (OnCreateSeatDialogButtonClicked) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString() + " must implement OnCreateSeatDialogButtonClicked");
+        }
+    }
+
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         // Get session key from previous Activity
@@ -37,9 +53,10 @@ public class SeatSetSizeDialogFragment extends DialogFragment {
                 Constants.FIREBASE_REF_SESSIONS.child(sessionKey).child(Constants.FIREBASE_ATTR_SESSIONS_ROWSIZE).setValue(row);
                 Constants.FIREBASE_REF_SESSIONS.child(sessionKey).child(Constants.FIREBASE_ATTR_SESSIONS_COLUMNSIZE).setValue(column);
 
-
                 createNewSeats(row, column, sessionId);
-                Toast.makeText(getActivity(), "Create seats complete", Toast.LENGTH_LONG).show();
+                // Send the event and number of column to the host activity
+                mListener.onCreateSeatDialogButtonClicked(column);
+                Toast.makeText(getActivity(), "Seat arrangement is ready", Toast.LENGTH_LONG).show();
             }
         });
         builder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
@@ -76,5 +93,12 @@ public class SeatSetSizeDialogFragment extends DialogFragment {
                 Constants.FIREBASE_REF_SEATS.push().setValue(newSeat);
             }
         }
+    }
+
+    /**
+     * Communicating with the Activity
+     */
+    public interface OnCreateSeatDialogButtonClicked {
+        void onCreateSeatDialogButtonClicked(int numberOfColumns);
     }
 }

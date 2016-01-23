@@ -29,17 +29,15 @@ public class SessionAddActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_session_add);
 
-        // Receive convocation year from the Intent
+        // Receive convocation year from previous activity
         Intent intent = getIntent();
-        mConvocationYear = intent.getIntExtra(Constants.EXTRA_CONVOCATION_YEAR, 0);
+        mConvocationYear = intent.getIntExtra(Constants.EXTRA_CONVOCATION_YEAR, -1);
 
         // Get references of views
         final TextInputLayout sessionNumberWrapper = (TextInputLayout) findViewById(R.id.wrapper_session_number);
         final TextView dateTextView = (TextView) findViewById(R.id.session_date);
         final TextView startTimeTextView = (TextView) findViewById(R.id.session_start_time);
         final TextView endTimeTextView = (TextView) findViewById(R.id.session_end_time);
-        final TextInputLayout rowSizeWrapper = (TextInputLayout) findViewById(R.id.wrapper_row_size);
-        final TextInputLayout columnSizeWrapper = (TextInputLayout) findViewById(R.id.wrapper_column_size);
 
         // Open date picker and set text for session date
         dateTextView.setOnClickListener(new View.OnClickListener() {
@@ -98,8 +96,8 @@ public class SessionAddActivity extends AppCompatActivity {
                         String date = dateTextView.getText().toString();
                         String startTime = startTimeTextView.getText().toString();
                         String endTime = endTimeTextView.getText().toString();
-                        int rowSize = Integer.parseInt(rowSizeWrapper.getEditText().getText().toString());
-                        int columnSize = Integer.parseInt(columnSizeWrapper.getEditText().getText().toString());
+                        int rowSize = 0;
+                        int columnSize = 0;
                         int id;
                         if (sessionNumber < 10) {
                             id = Integer.parseInt(Integer.toString(convocationYear) + "0" + Integer.toString(sessionNumber));
