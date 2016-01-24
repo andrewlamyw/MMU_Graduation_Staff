@@ -18,8 +18,7 @@ import com.lamyatweng.mmugraduationstaff.R;
 import com.lamyatweng.mmugraduationstaff.Session.SessionListActivity;
 
 public class ConvocationDisplayDetailActivity extends AppCompatActivity {
-    Bundle mBundle = new Bundle();
-    int mYear;
+    int mConvocationYear;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +28,6 @@ public class ConvocationDisplayDetailActivity extends AppCompatActivity {
         // Receive convocation key from the Intent
         Intent intent = getIntent();
         final String convocationKey = intent.getStringExtra(Constants.EXTRA_CONVOCATION_KEY);
-        mBundle.putString(getString(R.string.key_convocation_key), convocationKey);
 
         // Get references of views
         final TextInputLayout yearWrapper = (TextInputLayout) findViewById(R.id.wrapper_convocation_year);
@@ -48,7 +46,7 @@ public class ConvocationDisplayDetailActivity extends AppCompatActivity {
                     yearWrapper.getEditText().setText(Integer.toString(convocation.getYear()));
                     openDateWrapper.getEditText().setText(convocation.getOpenRegistrationDate());
                     closeDateWrapper.getEditText().setText(convocation.getCloseRegistrationDate());
-                    mYear = convocation.getYear();
+                    mConvocationYear = convocation.getYear();
                 }
             }
 
@@ -63,7 +61,7 @@ public class ConvocationDisplayDetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), SessionListActivity.class);
-                intent.putExtra(Constants.EXTRA_CONVOCATION_YEAR, mYear);
+                intent.putExtra(Constants.EXTRA_CONVOCATION_YEAR, mConvocationYear);
                 startActivity(intent);
             }
         });
@@ -87,7 +85,10 @@ public class ConvocationDisplayDetailActivity extends AppCompatActivity {
                 switch (item.getTitle().toString()) {
                     case Constants.MENU_DELETE:
                         ConvocationDeleteDialogFragment convocationDeleteDialogFragment = new ConvocationDeleteDialogFragment();
-                        convocationDeleteDialogFragment.setArguments(mBundle);
+                        Bundle bundle = new Bundle();
+                        bundle.putString(Constants.EXTRA_CONVOCATION_KEY, convocationKey);
+                        bundle.putInt(Constants.EXTRA_CONVOCATION_YEAR, mConvocationYear);
+                        convocationDeleteDialogFragment.setArguments(bundle);
                         getFragmentManager().beginTransaction().add(convocationDeleteDialogFragment, null).addToBackStack(null).commit();
                         return true;
 

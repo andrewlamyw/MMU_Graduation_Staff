@@ -23,8 +23,9 @@ public interface Constants {
     String FIREBASE_ATTR_SEATS_ID = "id";
     String FIREBASE_ATTR_SESSIONS_ID = "id";
     String FIREBASE_ATTR_SESSIONS_ROWSIZE = "rowSize";
-    String FIREBASE_ATTR_SESSIONS_COLUMNSIZE = "columnSize";
+    String FIREBASE_ATTR_SESSIONS_CONVOCATIONYEAR = "convocationYear";
 
+    String FIREBASE_ATTR_SESSIONS_COLUMNSIZE = "columnSize";
     String TITLE_NEWS = "News";
     String TITLE_PROGRAMME = "Programme";
     String TITLE_PROFILE = "Profile";
@@ -33,13 +34,13 @@ public interface Constants {
     String TITLE_CONVOCATION = "Convocation";
     String TITLE_SEAT = "Seat";
     String TITLE_SESSION = "Session";
-    String TITLE_LOGOUT = "Logout";
 
+    String TITLE_LOGOUT = "Logout";
     String MENU_ADD = "Add";
     String MENU_SAVE = "Save";
     String MENU_EDIT = "Edit";
-    String MENU_DELETE = "Delete";
 
+    String MENU_DELETE = "Delete";
     String EXTRA_CONVOCATION_KEY = "com.lamyatweng.mmugraduationstaff.CONVOCATION_KEY";
     String EXTRA_CONVOCATION_YEAR = "com.lamyatweng.mmugraduationstaff.CONVOCATION_YEAR";
     String EXTRA_SESSION_KEY = "com.lamyatweng.mmugraduationstaff.SESSION_KEY";
