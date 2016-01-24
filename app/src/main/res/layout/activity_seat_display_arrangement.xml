@@ -44,30 +44,40 @@
             android:textColor="@android:color/white" />
     </LinearLayout>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="4dp"
-        android:background="@android:color/darker_gray"
-        android:gravity="center"
-        android:text="Stage"
-        android:textColor="@android:color/white" />
-
     <HorizontalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:background="@android:color/darker_gray"
+                android:gravity="center"
+                android:text="Stage"
+                android:textColor="@android:color/white" />
 
             <GridView
                 android:id="@+id/grid_view"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:horizontalSpacing="2dp"
+                android:paddingLeft="4dp"
                 android:paddingStart="4dp"
                 android:verticalSpacing="2dp" />
         </LinearLayout>
     </HorizontalScrollView>
+
+    <TextView
+        android:id="@+id/text_view_seat_empty"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="Seat arrangement is empty,\nclick Add button (top right)\nto create a new seating arrangement." />
 </LinearLayout>

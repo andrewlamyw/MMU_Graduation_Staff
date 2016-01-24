@@ -16,14 +16,11 @@ import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 import com.lamyatweng.mmugraduationstaff.Constants;
 import com.lamyatweng.mmugraduationstaff.R;
-import com.lamyatweng.mmugraduationstaff.Seat.SeatDisplayArrangementActivity1;
+import com.lamyatweng.mmugraduationstaff.Seat.SeatDisplayArrangementActivity;
 
 public class SessionDisplayDetailActivity extends AppCompatActivity {
-    Bundle mBundle = new Bundle();
     int mSessionId;
-    int mRowSize;
     int mColumnSize;
-    int mConvocationYear;
     Boolean mDoneLoadSession;
 
     @Override
@@ -37,7 +34,6 @@ public class SessionDisplayDetailActivity extends AppCompatActivity {
         // Receive convocation key from the Intent
         Intent intent = getIntent();
         final String sessionKey = intent.getStringExtra(Constants.EXTRA_SESSION_KEY);
-        mBundle.putString(getString(R.string.key_session_key), intent.getStringExtra(Constants.EXTRA_SESSION_KEY));
 
         // Get references of views
         final TextInputLayout convocationYearWrapper = (TextInputLayout) findViewById(R.id.wrapper_convocation_year);
@@ -67,9 +63,7 @@ public class SessionDisplayDetailActivity extends AppCompatActivity {
                     columnSizeWrapper.getEditText().setText(Integer.toString(session.getColumnSize()));
 
                     mSessionId = session.getId();
-                    mRowSize = session.getRowSize();
                     mColumnSize = session.getColumnSize();
-                    mConvocationYear = session.getConvocationYear();
                     mDoneLoadSession = true;
                 }
             }
@@ -95,23 +89,14 @@ public class SessionDisplayDetailActivity extends AppCompatActivity {
         viewSeating.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*Intent intent = new Intent(getApplicationContext(), SeatDisplayArrangementActivity.class);
-                intent.putExtra(Constants.EXTRA_SESSION_KEY, sessionKey);
-                intent.putExtra(Constants.EXTRA_SESSION_ID, mSessionId);
-                intent.putExtra(Constants.EXTRA_SESSION_COLUMN_SIZE, mColumnSize);
-                intent.putExtra(Constants.EXTRA_SESSION_ROW_SIZE, mRowSize);
-                intent.putExtra(Constants.EXTRA_SESSION_CONVOCATION_YEAR, mConvocationYear);
-                startActivity(intent);*/
-
                 if (mDoneLoadSession) {
-                    Intent intent = new Intent(getApplicationContext(), SeatDisplayArrangementActivity1.class);
+                    Intent intent = new Intent(getApplicationContext(), SeatDisplayArrangementActivity.class);
                     intent.putExtra(Constants.EXTRA_SESSION_ID, mSessionId);
                     intent.putExtra(Constants.EXTRA_SESSION_COLUMN_SIZE, mColumnSize);
                     intent.putExtra(Constants.EXTRA_SESSION_KEY, sessionKey);
                     startActivity(intent);
                 } else
                     Toast.makeText(getApplicationContext(), "Connection failed, try again later.", Toast.LENGTH_SHORT).show();
-
             }
         });
 
@@ -134,7 +119,10 @@ public class SessionDisplayDetailActivity extends AppCompatActivity {
                 switch (item.getTitle().toString()) {
                     case Constants.MENU_DELETE:
                         SessionDeleteDialogFragment sessionDeleteDialogFragment = new SessionDeleteDialogFragment();
-                        sessionDeleteDialogFragment.setArguments(mBundle);
+                        Bundle bundle = new Bundle();
+                        bundle.putString(getString(R.string.key_session_key), sessionKey);
+                        bundle.putInt(getString(R.string.key_session_id), mSessionId);
+                        sessionDeleteDialogFragment.setArguments(bundle);
                         getFragmentManager().beginTransaction().add(sessionDeleteDialogFragment, null).addToBackStack(null).commit();
                         return true;
 

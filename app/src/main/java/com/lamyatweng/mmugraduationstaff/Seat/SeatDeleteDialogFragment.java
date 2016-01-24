@@ -1,5 +1,6 @@
 package com.lamyatweng.mmugraduationstaff.Seat;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
@@ -15,18 +16,32 @@ import com.lamyatweng.mmugraduationstaff.Constants;
 import com.lamyatweng.mmugraduationstaff.R;
 
 public class SeatDeleteDialogFragment extends DialogFragment {
+    OnDeleteSeatDialogButtonClicked mListener;
+
+    /**
+     * To ensure that the host activity implements the interface
+     */
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        try {
+            mListener = (OnDeleteSeatDialogButtonClicked) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString() + " must implement OnDeleteSeatDialogButtonClicked");
+        }
+    }
+
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         // Retrieve session id from previous activity
         Bundle bundle = getArguments();
-        final int sessionId = bundle.getInt(getString(R.string.key_session_id), 0);
+        final int sessionId = bundle.getInt(getString(R.string.key_session_id), -1);
+        final String sessionKey = bundle.getString(getString(R.string.key_session_key));
 
-        // Use the Builder class for convenient dialog construction
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setMessage("Delete seating arrangement?")
                 .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-//                        SeatDisplayArrangementActivity.removeEventListener();
                         Query seatQuery = Constants.FIREBASE_REF_SEATS.orderByChild("sessionID").equalTo(sessionId);
                         seatQuery.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
@@ -38,19 +53,30 @@ public class SeatDeleteDialogFragment extends DialogFragment {
 
                             @Override
                             public void onCancelled(FirebaseError firebaseError) {
-
                             }
                         });
+
+                        // Update session row and column size to zero
+                        Constants.FIREBASE_REF_SESSIONS.child(sessionKey).child(Constants.FIREBASE_ATTR_SESSIONS_ROWSIZE).setValue(0);
+                        Constants.FIREBASE_REF_SESSIONS.child(sessionKey).child(Constants.FIREBASE_ATTR_SESSIONS_COLUMNSIZE).setValue(0);
+
+                        // Send the event and zero number of column to the host activity
+                        mListener.onDeleteSeatDialogButtonClicked(0);
 
                         Toast.makeText(getActivity(), Constants.TITLE_SEAT + "s deleted", Toast.LENGTH_LONG).show();
                     }
                 })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        // User cancelled the dialog
                     }
                 });
-        // Create the AlertDialog object and return it
         return builder.create();
+    }
+
+    /**
+     * Communicating with the Activity
+     */
+    public interface OnDeleteSeatDialogButtonClicked {
+        void onDeleteSeatDialogButtonClicked(int numberOfColumns);
     }
 }

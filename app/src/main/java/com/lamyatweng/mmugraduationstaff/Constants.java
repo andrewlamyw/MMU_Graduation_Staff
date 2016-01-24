@@ -20,6 +20,7 @@ public interface Constants {
     Firebase FIREBASE_REF_SEATS = new Firebase("https://mmugraduation.firebaseio.com/seats");
 
     String FIREBASE_ATTR_SEATS_SESSIONID = "sessionID";
+    String FIREBASE_ATTR_SEATS_ID = "id";
     String FIREBASE_ATTR_SESSIONS_ID = "id";
     String FIREBASE_ATTR_SESSIONS_ROWSIZE = "rowSize";
     String FIREBASE_ATTR_SESSIONS_COLUMNSIZE = "columnSize";

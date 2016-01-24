@@ -20,7 +20,7 @@ public class SeatDisplayDetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_seat_display_arrangement_detail);
+        setContentView(R.layout.activity_seat_display_detail);
 
         // Receive seat key from the Intent
         Intent intent = getIntent();
