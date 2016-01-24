@@ -18,7 +18,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LoginActivity" />
+        <activity
+            android:name=".LoginActivity"
+            android:noHistory="true" />
         <activity android:name=".Convocation.ConvocationEditActivity" />
         <activity android:name=".Convocation.ConvocationAddActivity" />
         <activity android:name=".Convocation.ConvocationDisplayDetailActivity" />

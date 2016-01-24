@@ -39,7 +39,7 @@ public class SessionProgrammeListActivity extends AppCompatActivity {
 
         // Retrieve session details from Firebase and display
         Firebase sessionRef = new Firebase(Constants.FIREBASE_STRING_SESSIONS_REF);
-        sessionRef.child(sessionKey).addValueEventListener(new ValueEventListener() {
+        sessionRef.child(sessionKey).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 ConvocationSession session = dataSnapshot.getValue(ConvocationSession.class);

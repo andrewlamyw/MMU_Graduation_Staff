@@ -1,5 +1,6 @@
 package com.lamyatweng.mmugraduationstaff;
 
+import android.app.Activity;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -18,7 +19,7 @@ import com.lamyatweng.mmugraduationstaff.Programme.ProgrammeListFragment;
 import com.lamyatweng.mmugraduationstaff.Student.StudentListFragment;
 
 public class MainActivity extends AppCompatActivity {
-
+    public static Activity activity;
     SessionManager mSession;
     DrawerLayout mDrawerLayout;
     ActionBarDrawerToggle mDrawerToggle;
@@ -27,6 +28,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.navigation_view);
+
+        activity = this;
 
         // Set Firebase to prefetch data
         Firebase.setAndroidContext(this);
@@ -142,7 +145,9 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    /** Set toggling drawer with ActionBar Icon */
+    /**
+     * Set toggling drawer with ActionBar Icon
+     */
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
@@ -150,7 +155,9 @@ public class MainActivity extends AppCompatActivity {
         mDrawerToggle.syncState();
     }
 
-    /** Set toggling drawer with ActionBar Icon */
+    /**
+     * Set toggling drawer with ActionBar Icon
+     */
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);

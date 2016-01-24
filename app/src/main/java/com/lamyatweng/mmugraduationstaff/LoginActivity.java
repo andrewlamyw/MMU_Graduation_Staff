@@ -1,6 +1,5 @@
 package com.lamyatweng.mmugraduationstaff;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.firebase.client.AuthData;
@@ -24,19 +24,21 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        new Firebase(Constants.FIREBASE_STRING_STAFF_REF).keepSynced(true);
+        MainActivity.activity.finish();
 
-        final Activity activity = this;
         final SessionManager sessionManager = new SessionManager(getApplicationContext());
         final TextInputLayout usernameWrapper = (TextInputLayout) findViewById(R.id.wrapper_student_id);
         final TextInputLayout passwordWrapper = (TextInputLayout) findViewById(R.id.wrapper_login_password);
 
-        Firebase.setAndroidContext(this);
-        final Firebase staffRef = new Firebase(Constants.FIREBASE_STRING_STAFF_REF);
+        final ProgressBar spinner = (ProgressBar) findViewById(R.id.progressBar_login);
+
+
         Button loginButton = (Button) findViewById(R.id.button_login);
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
                 final String email = usernameWrapper.getEditText().getText().toString();
 
                 String password = "";
@@ -50,20 +52,22 @@ public class LoginActivity extends AppCompatActivity {
                 } else if (!validatePassword(password)) {
                     passwordWrapper.setError("Not a valid password!");
                 } else {
+                    spinner.setVisibility(View.VISIBLE);
                     usernameWrapper.setErrorEnabled(false);
                     passwordWrapper.setErrorEnabled(false);
-                    staffRef.authWithPassword(email, password, new Firebase.AuthResultHandler() {
+                    Constants.FIREBASE_REF_STAFF.authWithPassword(email, password, new Firebase.AuthResultHandler() {
                         @Override
                         public void onAuthenticated(AuthData authData) {
                             sessionManager.createLoginSession(email);
 
-                            Intent intent = new Intent(activity, MainActivity.class);
+                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                             startActivity(intent);
                         }
 
                         @Override
                         public void onAuthenticationError(FirebaseError firebaseError) {
-                            Toast.makeText(activity, "Wrong email or password.", Toast.LENGTH_SHORT).show();
+                            spinner.setVisibility(View.GONE);
+                            Toast.makeText(getApplicationContext(), "Wrong email or password.", Toast.LENGTH_SHORT).show();
                         }
                     });
                 }
