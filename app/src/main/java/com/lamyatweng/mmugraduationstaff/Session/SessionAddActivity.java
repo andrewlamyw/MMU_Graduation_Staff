@@ -29,7 +29,7 @@ public class SessionAddActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_session_add);
 
-        // Receive convocation year from previous activity
+        // Receive convocation year from previous sMainActivity
         Intent intent = getIntent();
         mConvocationYear = intent.getIntExtra(Constants.EXTRA_CONVOCATION_YEAR, -1);
 

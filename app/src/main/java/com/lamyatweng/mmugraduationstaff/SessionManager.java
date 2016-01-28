@@ -70,7 +70,7 @@ public class SessionManager {
     public void logoutUser() {
         // Clearing all data from SharedPreferences
         mEditor.clear().commit();
-        // Redirect user to login activity
+        // Redirect user to login sMainActivity
         Intent intent = new Intent(mContext, LoginActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

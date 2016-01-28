@@ -9,8 +9,8 @@ import android.widget.TextView;
 
 import com.lamyatweng.mmugraduationstaff.R;
 
-public class ConvocationCustomAdapter extends ArrayAdapter<Convocation> {
-    public ConvocationCustomAdapter(Context context) {
+public class ConvocationAdapter extends ArrayAdapter<Convocation> {
+    public ConvocationAdapter(Context context) {
         super(context, 0);
     }
 
@@ -24,14 +24,10 @@ public class ConvocationCustomAdapter extends ArrayAdapter<Convocation> {
         }
 
         // Get reference of views
-        TextView year = (TextView) convertView.findViewById(R.id.year);
-        TextView open = (TextView) convertView.findViewById(R.id.open);
-        TextView close = (TextView) convertView.findViewById(R.id.close);
+        TextView year = (TextView) convertView.findViewById(R.id.textView_convocation_year);
 
         // Set text value of views
         year.setText(Integer.toString(convocation.getYear()));
-        open.setText(convocation.getOpenRegistrationDate());
-        close.setText(convocation.getCloseRegistrationDate());
 
         return convertView;
     }

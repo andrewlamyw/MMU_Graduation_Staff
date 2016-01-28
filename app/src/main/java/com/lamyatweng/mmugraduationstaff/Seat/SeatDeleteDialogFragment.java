@@ -6,7 +6,6 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.widget.Toast;
 
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.FirebaseError;
@@ -19,7 +18,7 @@ public class SeatDeleteDialogFragment extends DialogFragment {
     OnDeleteSeatDialogButtonClicked mListener;
 
     /**
-     * To ensure that the host activity implements the interface
+     * To ensure that the host sMainActivity implements the interface
      */
     @Override
     public void onAttach(Activity activity) {
@@ -33,7 +32,7 @@ public class SeatDeleteDialogFragment extends DialogFragment {
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        // Retrieve session id from previous activity
+        // Retrieve session id from previous sMainActivity
         Bundle bundle = getArguments();
         final int sessionId = bundle.getInt(getString(R.string.key_session_id), -1);
         final String sessionKey = bundle.getString(getString(R.string.key_session_key));
@@ -60,10 +59,10 @@ public class SeatDeleteDialogFragment extends DialogFragment {
                         Constants.FIREBASE_REF_SESSIONS.child(sessionKey).child(Constants.FIREBASE_ATTR_SESSIONS_ROWSIZE).setValue(0);
                         Constants.FIREBASE_REF_SESSIONS.child(sessionKey).child(Constants.FIREBASE_ATTR_SESSIONS_COLUMNSIZE).setValue(0);
 
-                        // Send the event and zero number of column to the host activity
+                        // Send the event and zero number of column to the host sMainActivity
                         mListener.onDeleteSeatDialogButtonClicked(0);
 
-                        Toast.makeText(getActivity(), Constants.TITLE_SEAT + "s deleted", Toast.LENGTH_LONG).show();
+//                        Toast.makeText(getActivity(), Constants.TITLE_SEAT + "s deleted", Toast.LENGTH_LONG).show();
                     }
                 })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {

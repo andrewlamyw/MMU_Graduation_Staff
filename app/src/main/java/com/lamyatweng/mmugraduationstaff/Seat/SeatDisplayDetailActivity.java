@@ -60,7 +60,7 @@ public class SeatDisplayDetailActivity extends AppCompatActivity {
         // Set Toolbar back button
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(Constants.TITLE_SEAT + " Detail");
-        // Close activity
+        // Close sMainActivity
         toolbar.setNavigationIcon(R.mipmap.ic_arrow_back_white_24dp);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override

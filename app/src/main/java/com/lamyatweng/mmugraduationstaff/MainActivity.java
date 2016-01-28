@@ -9,17 +9,22 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.firebase.client.Firebase;
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
 import com.lamyatweng.mmugraduationstaff.Convocation.ConvocationListFragment;
 import com.lamyatweng.mmugraduationstaff.Programme.ProgrammeListFragment;
 import com.lamyatweng.mmugraduationstaff.Student.StudentListFragment;
 
 public class MainActivity extends AppCompatActivity {
-    public static Activity activity;
+    public static Activity sMainActivity;
+    public static Boolean sIsConnected;
     SessionManager mSession;
     DrawerLayout mDrawerLayout;
     ActionBarDrawerToggle mDrawerToggle;
@@ -29,13 +34,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.navigation_view);
 
-        activity = this;
+        // Destroy MainActivity so that MainActivity is removed from back stack
+        sMainActivity = this;
 
-        // Set Firebase to prefetch data
-        Firebase.setAndroidContext(this);
-
-        new Firebase(Constants.FIREBASE_STRING_ROOT_REF).keepSynced(true);
-
+        // Keep specific locations in sync.
+//        Constants.FIREBASE_REF_ROOT.keepSynced(true);
 
         // Redirects to LoginActivity if user is not logged in
         mSession = new SessionManager(getApplicationContext());
@@ -92,6 +95,28 @@ public class MainActivity extends AppCompatActivity {
         View view = navigationView.getHeaderView(0);
         TextView emailHeader = (TextView) view.findViewById(R.id.header_email);
         emailHeader.setText(mSession.getUserEmail());
+
+        // Detecting Connection State
+        Constants.FIREBASE_REF_CONNECTED.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                boolean connected = snapshot.getValue(Boolean.class);
+                if (connected) {
+                    Log.i(getClass().getName(), "connected");
+                    sIsConnected = true;
+                    Toast.makeText(getApplicationContext(), "Connected", Toast.LENGTH_SHORT).show();
+                } else {
+                    Log.i(getClass().getName(), "not connected");
+                    sIsConnected = false;
+                    Toast.makeText(getApplicationContext(), "Not connected", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError error) {
+                System.err.println("Listener was cancelled");
+            }
+        });
     }
 
     /**
@@ -137,7 +162,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            // if current activity is main/home activity, then clicking the menu/appbar icon will open drawer
+            // if current sMainActivity is main/home sMainActivity, then clicking the menu/appbar icon will open drawer
             case android.R.id.home:
                 mDrawerLayout.openDrawer(GravityCompat.START);
                 return true;

@@ -16,7 +16,7 @@ import com.firebase.client.FirebaseError;
 import com.firebase.client.Query;
 import com.firebase.client.ValueEventListener;
 import com.lamyatweng.mmugraduationstaff.Student.Student;
-import com.lamyatweng.mmugraduationstaff.Student.StudentCustomAdapter;
+import com.lamyatweng.mmugraduationstaff.Student.StudentAdapter;
 import com.lamyatweng.mmugraduationstaff.Student.StudentDisplayDetailDialogFragment;
 
 public class GraduationFragment extends Fragment {
@@ -28,7 +28,7 @@ public class GraduationFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_graduation, container, false);
 
         // Populate students from Firebase into ListView
-        final StudentCustomAdapter adapter = new StudentCustomAdapter(getActivity());
+        final StudentAdapter adapter = new StudentAdapter(getActivity());
         Firebase.setAndroidContext(getActivity());
         final Firebase studentRef = new Firebase(Constants.FIREBASE_STRING_STUDENTS_REF);
         Query query = studentRef.orderByChild("status").equalTo("Pending approval");

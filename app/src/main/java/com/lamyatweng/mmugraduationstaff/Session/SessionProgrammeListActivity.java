@@ -82,7 +82,7 @@ public class SessionProgrammeListActivity extends AppCompatActivity {
         // Set up Toolbar with back, edit and delete button
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(Constants.TITLE_SESSION + " " + Constants.TITLE_PROGRAMME + "s");
-        // Close activity
+        // Close sMainActivity
         toolbar.setNavigationIcon(R.mipmap.ic_arrow_back_white_24dp);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override

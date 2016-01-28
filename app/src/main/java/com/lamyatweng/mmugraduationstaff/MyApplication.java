@@ -9,6 +9,7 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         Firebase.setAndroidContext(this);
+        // Enabling disk persistence allows app to keep all of its state even after an app restart.
         Firebase.getDefaultConfig().setPersistenceEnabled(true);
     }
 }

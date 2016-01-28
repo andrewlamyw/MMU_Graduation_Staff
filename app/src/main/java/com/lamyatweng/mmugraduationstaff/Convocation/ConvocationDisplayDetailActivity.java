@@ -56,7 +56,7 @@ public class ConvocationDisplayDetailActivity extends AppCompatActivity {
             }
         });
 
-        // Launch a new activity when user click view sessions button
+        // Launch a new sMainActivity when user click view sessions button
         viewSessions.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,7 +69,7 @@ public class ConvocationDisplayDetailActivity extends AppCompatActivity {
         // Set Toolbar back button
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(Constants.TITLE_CONVOCATION + " Detail");
-        // Close activity
+        // Close sMainActivity
         toolbar.setNavigationIcon(R.mipmap.ic_arrow_back_white_24dp);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override

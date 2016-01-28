@@ -57,15 +57,16 @@ public class ProgrammeDisplayDetailDialogFragment extends DialogFragment {
 
         // Set up Toolbar with back, edit and delete button
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
-        toolbar.setNavigationIcon(R.mipmap.ic_arrow_back_white_24dp);
-        toolbar.inflateMenu(R.menu.programme_details);
+        toolbar.setTitle(Constants.TITLE_PROGRAMME + " Detail");
         // Close dialog
+        toolbar.setNavigationIcon(R.mipmap.ic_arrow_back_white_24dp);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ProgrammeDisplayDetailDialogFragment.this.getDialog().cancel();
             }
         });
+        toolbar.inflateMenu(R.menu.programme_details);
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {

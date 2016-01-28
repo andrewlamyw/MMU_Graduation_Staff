@@ -8,7 +8,6 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.view.LayoutInflater;
-import android.widget.Toast;
 
 import com.lamyatweng.mmugraduationstaff.Constants;
 import com.lamyatweng.mmugraduationstaff.R;
@@ -17,7 +16,7 @@ public class SeatAddDialogFragment extends DialogFragment {
     OnCreateSeatDialogButtonClicked mListener;
 
     /**
-     * To ensure that the host activity implements the interface
+     * To ensure that the host sMainActivity implements the interface
      */
     @Override
     public void onAttach(Activity activity) {
@@ -54,9 +53,9 @@ public class SeatAddDialogFragment extends DialogFragment {
                 Constants.FIREBASE_REF_SESSIONS.child(sessionKey).child(Constants.FIREBASE_ATTR_SESSIONS_COLUMNSIZE).setValue(column);
 
                 createNewSeats(row, column, sessionId);
-                // Send the event and number of column to the host activity
+                // Send the event and number of column to the host sMainActivity
                 mListener.onCreateSeatDialogButtonClicked(column);
-                Toast.makeText(getActivity(), "Seat arrangement is ready", Toast.LENGTH_LONG).show();
+//                Toast.makeText(getActivity(), "Seat arrangement is ready", Toast.LENGTH_LONG).show();
             }
         });
         builder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {

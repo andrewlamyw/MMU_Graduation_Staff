@@ -69,7 +69,7 @@ public class SeatEditActivity extends AppCompatActivity {
         // Set Toolbar close button
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Edit " + Constants.TITLE_SEAT);
-        // Close activity
+        // Close sMainActivity
         toolbar.setNavigationIcon(R.mipmap.ic_close_white_24dp);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override

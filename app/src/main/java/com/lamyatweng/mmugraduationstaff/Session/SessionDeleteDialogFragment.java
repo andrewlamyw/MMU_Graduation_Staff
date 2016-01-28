@@ -17,7 +17,7 @@ import com.lamyatweng.mmugraduationstaff.R;
 public class SessionDeleteDialogFragment extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        // Retrieve session key from previous activity
+        // Retrieve session key from previous sMainActivity
         Bundle bundle = getArguments();
         final String sessionKey = bundle.getString(getString(R.string.key_session_key));
         final int sessionId = bundle.getInt(getString(R.string.key_session_id));

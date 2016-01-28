@@ -73,7 +73,7 @@ public class SessionDisplayDetailActivity extends AppCompatActivity {
             }
         });
 
-        // Open a new activity to display list of programmes in the session
+        // Open a new sMainActivity to display list of programmes in the session
         Button viewProgrammes = (Button) findViewById(R.id.button_view_programmes);
         viewProgrammes.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,7 +103,7 @@ public class SessionDisplayDetailActivity extends AppCompatActivity {
         // Set up Toolbar with back, edit and delete button
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(Constants.TITLE_SESSION + " Detail");
-        // Close activity
+        // Close sMainActivity
         toolbar.setNavigationIcon(R.mipmap.ic_arrow_back_white_24dp);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override

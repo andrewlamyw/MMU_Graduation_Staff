@@ -36,7 +36,7 @@ public class SeatDisplayArrangementActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_seat_display_arrangement);
 
-        // Get sessionId & numOfCol from previous activity
+        // Get sessionId & numOfCol from previous sMainActivity
         Intent intent = getIntent();
         final int sessionId = intent.getIntExtra(Constants.EXTRA_SESSION_ID, -1);
         mSessionKey = intent.getStringExtra(Constants.EXTRA_SESSION_KEY);
@@ -223,10 +223,12 @@ public class SeatDisplayArrangementActivity extends AppCompatActivity
     @Override
     public void onCreateSeatDialogButtonClicked(int numberOfColumns) {
         updateGridViewWidth(mGridView, numberOfColumns);
+        Toast.makeText(this, "Seat arrangement is ready", Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void onDeleteSeatDialogButtonClicked(int numberOfColumns) {
         updateGridViewWidth(mGridView, numberOfColumns);
+        Toast.makeText(this, Constants.TITLE_SEAT + "s deleted", Toast.LENGTH_LONG).show();
     }
 }

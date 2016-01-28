@@ -72,9 +72,9 @@ public class ProgrammeEditDialogFragment extends DialogFragment {
 
         // Set up Toolbar with close and save button
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
-        toolbar.setNavigationIcon(R.mipmap.ic_close_white_24dp);
-        toolbar.inflateMenu(R.menu.programme_edit);
+        toolbar.setTitle("Edit " + Constants.TITLE_PROGRAMME);
         // Close dialog
+        toolbar.setNavigationIcon(R.mipmap.ic_close_white_24dp);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -82,6 +82,7 @@ public class ProgrammeEditDialogFragment extends DialogFragment {
             }
         });
         // Commit: update programme information into Firebase
+        toolbar.inflateMenu(R.menu.programme_edit);
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {

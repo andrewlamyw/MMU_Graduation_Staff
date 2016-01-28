@@ -16,7 +16,7 @@ public class EmptyProgrammeListDialogFragment extends DialogFragment {
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        // Retrieve SessionKey from previous activity
+        // Retrieve SessionKey from previous sMainActivity
         mBundle = getArguments();
         mSessionKey = mBundle.getString(getString(R.string.key_session_key));
 

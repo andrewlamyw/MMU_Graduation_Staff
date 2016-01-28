@@ -27,7 +27,7 @@ public class ConvocationListFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_convocation, container, false);
 
         // Populate convocations sort by year from Firebase into ListView
-        final ConvocationCustomAdapter adapter = new ConvocationCustomAdapter(getActivity());
+        final ConvocationAdapter adapter = new ConvocationAdapter(getActivity());
         Firebase.setAndroidContext(getActivity());
         final Firebase convocationRef = new Firebase(Constants.FIREBASE_STRING_CONVOCATIONS_REF);
         Query convocationQuery = convocationRef.orderByChild("year");

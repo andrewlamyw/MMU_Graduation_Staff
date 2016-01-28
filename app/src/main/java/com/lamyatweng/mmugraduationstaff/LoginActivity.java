@@ -12,33 +12,55 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.firebase.client.AuthData;
+import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class LoginActivity extends AppCompatActivity {
+    Boolean mIsConnected;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        MainActivity.activity.finish();
+        // Destroy MainActivity so that MainActivity is removed from back stack
+        MainActivity.sMainActivity.finish();
 
-        final SessionManager sessionManager = new SessionManager(getApplicationContext());
+        // Redirects to LoginActivity if user is not logged in
         final TextInputLayout usernameWrapper = (TextInputLayout) findViewById(R.id.wrapper_student_id);
         final TextInputLayout passwordWrapper = (TextInputLayout) findViewById(R.id.wrapper_login_password);
-
+        final SessionManager sessionManager = new SessionManager(getApplicationContext());
         final ProgressBar spinner = (ProgressBar) findViewById(R.id.progressBar_login);
 
+        // Detecting Firebase Connection State
+        Constants.FIREBASE_REF_CONNECTED_STAFF.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                boolean connected = snapshot.getValue(Boolean.class);
+                if (connected) {
+                    mIsConnected = true;
+                    Toast.makeText(getApplicationContext(), "Connected", Toast.LENGTH_SHORT).show();
+                } else {
+                    mIsConnected = false;
+                    Toast.makeText(getApplicationContext(), "Not connected", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError error) {
+                System.err.println("Listener was cancelled");
+            }
+        });
 
         Button loginButton = (Button) findViewById(R.id.button_login);
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
                 final String email = usernameWrapper.getEditText().getText().toString();
 
                 String password = "";
@@ -67,7 +89,10 @@ public class LoginActivity extends AppCompatActivity {
                         @Override
                         public void onAuthenticationError(FirebaseError firebaseError) {
                             spinner.setVisibility(View.GONE);
-                            Toast.makeText(getApplicationContext(), "Wrong email or password.", Toast.LENGTH_SHORT).show();
+                            if (mIsConnected)
+                                Toast.makeText(getApplicationContext(), "Wrong email or password", Toast.LENGTH_LONG).show();
+                            else
+                                Toast.makeText(getApplicationContext(), "Connection failed", Toast.LENGTH_LONG).show();
                         }
                     });
                 }
