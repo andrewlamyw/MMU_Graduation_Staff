@@ -18,7 +18,7 @@
             android:title="@string/title_programme" />
 
         <item
-            android:id="@+id/drawer_profile"
+            android:id="@+id/drawer_account"
             android:icon="@mipmap/ic_account_circle_black_24dp"
             android:title="@string/title_profile" />
 

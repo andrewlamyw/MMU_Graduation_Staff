@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,6 +23,8 @@ import com.lamyatweng.mmugraduationstaff.Constants;
 import com.lamyatweng.mmugraduationstaff.Programme.Programme;
 import com.lamyatweng.mmugraduationstaff.Programme.ProgrammeAdapter;
 import com.lamyatweng.mmugraduationstaff.R;
+
+import java.util.Map;
 
 public class StudentAddDialogFragment extends DialogFragment {
     @Nullable
@@ -94,7 +97,7 @@ public class StudentAddDialogFragment extends DialogFragment {
 
                         int balanceCreditHour = Integer.parseInt(balanceCreditHourWrapper.getEditText().getText().toString());
                         double cgpa = Double.parseDouble(cgpaWrapper.getEditText().getText().toString());
-                        String email = idWrapper.getEditText().getText().toString() + "student.mmu.edu.my";
+                        String email = idWrapper.getEditText().getText().toString() + "@student.mmu.edu.my";
                         String faculty = spinnerProgramme.getFaculty();
                         double financialDue = Double.parseDouble(financialDueWrapper.getEditText().getText().toString());
                         String id = idWrapper.getEditText().getText().toString();
@@ -108,6 +111,19 @@ public class StudentAddDialogFragment extends DialogFragment {
                         Student newStudent = new Student(balanceCreditHour, cgpa, email, faculty,
                                 financialDue, id, level, muet, name, programme, status);
                         studentRef.push().setValue(newStudent);
+
+                        // Create student login account
+                        Constants.FIREBASE_REF_ROOT.createUser(email, id, new Firebase.ValueResultHandler<Map<String, Object>>() {
+                            @Override
+                            public void onSuccess(Map<String, Object> stringObjectMap) {
+//                                Log.i(getClass().getName(), "Successfully created user account with uid: " + stringObjectMap.get("uid"));
+                            }
+
+                            @Override
+                            public void onError(FirebaseError firebaseError) {
+                                Log.e(getClass().getName(), firebaseError.toString());
+                            }
+                        });
 
                         // Display message and close dialog
                         Toast.makeText(getActivity(), Constants.TITLE_STUDENT + " added.", Toast.LENGTH_SHORT).show();

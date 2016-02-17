@@ -45,7 +45,8 @@ public class StudentEditDialogFragment extends DialogFragment {
         // Populate programmes from Firebase
         final Spinner programmeSpinner = (Spinner) view.findViewById(R.id.spinner_student_programme);
         final ProgrammeAdapter programmeAdapter = new ProgrammeAdapter(getActivity());
-        Constants.FIREBASE_REF_PROGRAMMES.addValueEventListener(new ValueEventListener() {
+        programmeSpinner.setAdapter(programmeAdapter);
+        Constants.FIREBASE_REF_PROGRAMMES.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 programmeAdapter.clear();
@@ -59,7 +60,6 @@ public class StudentEditDialogFragment extends DialogFragment {
             public void onCancelled(FirebaseError firebaseError) {
             }
         });
-        programmeSpinner.setAdapter(programmeAdapter);
 
         // Populate student statuses from array
         final Spinner statusSpinner = (Spinner) view.findViewById(R.id.status_spinner);
@@ -101,7 +101,6 @@ public class StudentEditDialogFragment extends DialogFragment {
 
             @Override
             public void onCancelled(FirebaseError firebaseError) {
-
             }
         });
 

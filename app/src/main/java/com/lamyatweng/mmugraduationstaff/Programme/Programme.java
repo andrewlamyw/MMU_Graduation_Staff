@@ -27,4 +27,11 @@ public class Programme {
     public String getFaculty() {
         return faculty;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        return o instanceof Programme && name.equals(((Programme) o).name)
+                && faculty.equals(((Programme) o).faculty)
+                && level.equals(((Programme) o).level);
+    }
 }

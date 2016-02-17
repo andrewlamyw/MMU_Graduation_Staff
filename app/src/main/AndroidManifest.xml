@@ -32,7 +32,8 @@
         <activity android:name=".Session.SessionProgrammeAddActivity" />
         <activity android:name=".Seat.SeatDisplayDetailActivity" />
         <activity android:name=".Seat.SeatEditActivity" />
-        <activity android:name=".Seat.SeatDisplayArrangementActivity"></activity>
+        <activity android:name=".Seat.SeatDisplayArrangementActivity" />
+        <activity android:name=".ResetPasswordActivity"></activity>
     </application>
 
 </manifest>

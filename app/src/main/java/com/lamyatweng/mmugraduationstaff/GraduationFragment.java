@@ -92,6 +92,6 @@ public class GraduationFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         android.support.v7.app.ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
         if (actionBar != null)
-            actionBar.setTitle(Constants.TITLE_GRADUATION);
+            actionBar.setTitle("Approve " + Constants.TITLE_GRADUATION);
     }
 }

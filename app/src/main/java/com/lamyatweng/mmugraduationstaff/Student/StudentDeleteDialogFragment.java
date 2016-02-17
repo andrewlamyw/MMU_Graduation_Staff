@@ -8,7 +8,6 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.widget.Toast;
 
-import com.firebase.client.Firebase;
 import com.lamyatweng.mmugraduationstaff.Constants;
 import com.lamyatweng.mmugraduationstaff.R;
 
@@ -26,9 +25,7 @@ public class StudentDeleteDialogFragment extends DialogFragment {
         builder.setMessage("Delete student?")
                 .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        Firebase.setAndroidContext(getActivity());
-                        Firebase studentRef = new Firebase(Constants.FIREBASE_STRING_STUDENTS_REF);
-                        studentRef.child(studentKey).setValue(null);
+                        Constants.FIREBASE_REF_STUDENTS.child(studentKey).setValue(null);
                         Toast.makeText(getActivity(), "Student deleted", Toast.LENGTH_SHORT).show();
                         // Close StudentDisplayDetailDialogFragment because item is removed
                         getFragmentManager().popBackStackImmediate(StudentDisplayDetailDialogFragment.class.getName(),
@@ -40,7 +37,6 @@ public class StudentDeleteDialogFragment extends DialogFragment {
                         // User cancelled the dialog
                     }
                 });
-        // Create the AlertDialog object and return it
         return builder.create();
     }
 }

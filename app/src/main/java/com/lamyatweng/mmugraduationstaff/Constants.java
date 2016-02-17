@@ -20,6 +20,7 @@ public interface Constants {
     Firebase FIREBASE_REF_CONVOCATIONS = new Firebase("https://mmugraduation.firebaseio.com/convocations");
     Firebase FIREBASE_REF_SESSIONS = new Firebase("https://mmugraduation.firebaseio.com/sessions");
     Firebase FIREBASE_REF_SEATS = new Firebase("https://mmugraduation.firebaseio.com/seats");
+    Firebase FIREBASE_REF_NEWS = new Firebase("https://mmugraduation.firebaseio.com/news");
     Firebase FIREBASE_REF_CONNECTED = new Firebase("https://mmugraduation.firebaseio.com/.info/connected");
 
     String FIREBASE_ATTR_SEATS_SESSIONID = "sessionID";
@@ -31,7 +32,7 @@ public interface Constants {
     String FIREBASE_ATTR_SESSIONS_COLUMNSIZE = "columnSize";
     String TITLE_NEWS = "News";
     String TITLE_PROGRAMME = "Programme";
-    String TITLE_PROFILE = "Profile";
+    String TITLE_ACCOUNT = "Account";
     String TITLE_STUDENT = "Student";
     String TITLE_GRADUATION = "Graduation";
     String TITLE_CONVOCATION = "Convocation";

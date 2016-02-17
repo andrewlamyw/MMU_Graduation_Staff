@@ -9,22 +9,16 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.firebase.client.DataSnapshot;
-import com.firebase.client.FirebaseError;
-import com.firebase.client.ValueEventListener;
 import com.lamyatweng.mmugraduationstaff.Convocation.ConvocationListFragment;
 import com.lamyatweng.mmugraduationstaff.Programme.ProgrammeListFragment;
 import com.lamyatweng.mmugraduationstaff.Student.StudentListFragment;
 
 public class MainActivity extends AppCompatActivity {
     public static Activity sMainActivity;
-    public static Boolean sIsConnected;
     SessionManager mSession;
     DrawerLayout mDrawerLayout;
     ActionBarDrawerToggle mDrawerToggle;
@@ -36,9 +30,6 @@ public class MainActivity extends AppCompatActivity {
 
         // Destroy MainActivity so that MainActivity is removed from back stack
         sMainActivity = this;
-
-        // Keep specific locations in sync.
-//        Constants.FIREBASE_REF_ROOT.keepSynced(true);
 
         // Redirects to LoginActivity if user is not logged in
         mSession = new SessionManager(getApplicationContext());
@@ -95,28 +86,6 @@ public class MainActivity extends AppCompatActivity {
         View view = navigationView.getHeaderView(0);
         TextView emailHeader = (TextView) view.findViewById(R.id.header_email);
         emailHeader.setText(mSession.getUserEmail());
-
-        // Detecting Connection State
-        Constants.FIREBASE_REF_CONNECTED.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot snapshot) {
-                boolean connected = snapshot.getValue(Boolean.class);
-                if (connected) {
-                    Log.i(getClass().getName(), "connected");
-                    sIsConnected = true;
-                    Toast.makeText(getApplicationContext(), "Connected", Toast.LENGTH_SHORT).show();
-                } else {
-                    Log.i(getClass().getName(), "not connected");
-                    sIsConnected = false;
-                    Toast.makeText(getApplicationContext(), "Not connected", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onCancelled(FirebaseError error) {
-                System.err.println("Listener was cancelled");
-            }
-        });
     }
 
     /**
@@ -134,9 +103,9 @@ public class MainActivity extends AppCompatActivity {
                 ProgrammeListFragment programmeListFragment = new ProgrammeListFragment();
                 getFragmentManager().beginTransaction().replace(R.id.fragment_container, programmeListFragment).commit();
                 break;
-            case Constants.TITLE_PROFILE:
-                ProfileFragment profileFragment = new ProfileFragment();
-                getFragmentManager().beginTransaction().replace(R.id.fragment_container, profileFragment).commit();
+            case Constants.TITLE_ACCOUNT:
+                AccountFragment accountFragment = new AccountFragment();
+                getFragmentManager().beginTransaction().replace(R.id.fragment_container, accountFragment).commit();
                 break;
             case Constants.TITLE_STUDENT:
                 StudentListFragment studentListFragment = new StudentListFragment();
@@ -170,9 +139,6 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    /**
-     * Set toggling drawer with ActionBar Icon
-     */
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
@@ -180,9 +146,6 @@ public class MainActivity extends AppCompatActivity {
         mDrawerToggle.syncState();
     }
 
-    /**
-     * Set toggling drawer with ActionBar Icon
-     */
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
