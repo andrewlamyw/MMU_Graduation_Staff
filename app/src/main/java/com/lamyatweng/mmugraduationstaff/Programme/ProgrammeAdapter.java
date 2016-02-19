@@ -10,47 +10,63 @@ import android.widget.TextView;
 import com.lamyatweng.mmugraduationstaff.R;
 
 public class ProgrammeAdapter extends ArrayAdapter<Programme> {
+    LayoutInflater mInflater;
+
     public ProgrammeAdapter(Context context) {
         super(context, 0);
+        mInflater = LayoutInflater.from(context);
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        Programme programme = getItem(position);
+        ViewHolder holder;
 
-        // Inflate view if view has not been created
+        // Create new view if no available view to reuse
         if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_programme, parent, false);
+            convertView = mInflater.inflate(R.layout.item_programme, parent, false);
+            holder = new ViewHolder();
+            holder.name = (TextView) convertView.findViewById(R.id.textView_programme_name);
+            holder.faculty = (TextView) convertView.findViewById(R.id.textView_programme_faculty);
+
+            convertView.setTag(holder);
+        } else {
+            holder = (ViewHolder) convertView.getTag();
         }
 
-        // Get reference of views
-        TextView name = (TextView) convertView.findViewById(R.id.textView_programme_name);
-        TextView faculty = (TextView) convertView.findViewById(R.id.textView_programme_faculty);
-
         // Set text value of views
-        name.setText(programme.getName());
-        faculty.setText(programme.getFaculty());
+        Programme programme = getItem(position);
+        holder.name.setText(programme.getName());
+        holder.faculty.setText(programme.getFaculty());
 
         return convertView;
     }
 
     @Override
     public View getDropDownView(int position, View convertView, ViewGroup parent) {
-        Programme programme = getItem(position);
+        ViewHolder holder;
 
-        // Inflate view if view has not been created
+        // Create new view if no available view to reuse
         if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_programme, parent, false);
+            convertView = mInflater.inflate(R.layout.item_programme, parent, false);
+            holder = new ViewHolder();
+            holder.name = (TextView) convertView.findViewById(R.id.textView_programme_name);
+            holder.faculty = (TextView) convertView.findViewById(R.id.textView_programme_faculty);
+
+            convertView.setTag(holder);
+        } else {
+            holder = (ViewHolder) convertView.getTag();
         }
 
-        // Get reference of views
-        TextView name = (TextView) convertView.findViewById(R.id.textView_programme_name);
-        TextView faculty = (TextView) convertView.findViewById(R.id.textView_programme_faculty);
-
         // Set text value of views
-        name.setText(programme.getName());
-        faculty.setText(programme.getFaculty());
+        Programme programme = getItem(position);
+        holder.name.setText(programme.getName());
+        holder.faculty.setText(programme.getFaculty());
 
         return convertView;
+    }
+
+    static class ViewHolder {
+        TextView name;
+        TextView faculty;
     }
 }

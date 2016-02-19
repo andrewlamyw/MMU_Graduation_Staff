@@ -35,6 +35,8 @@
     <string name="drawer_open">Open drawer</string>
     <string name="drawer_close">Close drawer</string>
     <string name="title_add">Add</string>
+    <string name="title_approve_all">APPROVE ALL</string>
+    <string name="title_approve">APPROVE</string>
 
     <!-- Array -->
     <string-array name="programme_array">

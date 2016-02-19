@@ -10,32 +10,43 @@ import android.widget.TextView;
 import com.lamyatweng.mmugraduationstaff.R;
 
 public class StudentAdapter extends ArrayAdapter<Student> {
+    LayoutInflater mInflater;
 
     public StudentAdapter(Context context) {
         super(context, 0);
+        mInflater = LayoutInflater.from(context);
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        Student student = getItem(position);
+        ViewHolder holder;
 
-        // Inflate view if view has not been created
+        // Create new view if no available view to reuse
         if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_student, parent, false);
+            convertView = mInflater.inflate(R.layout.item_student, parent, false);
+            holder = new ViewHolder();
+            holder.name = (TextView) convertView.findViewById(R.id.textView_student_name);
+            holder.id = (TextView) convertView.findViewById(R.id.textView_student_id);
+            holder.programme = (TextView) convertView.findViewById(R.id.textView_student_programme);
+            holder.status = (TextView) convertView.findViewById(R.id.textView_student_status);
+        } else {
+            holder = (ViewHolder) convertView.getTag();
         }
 
-        // Get reference of views
-        TextView name = (TextView) convertView.findViewById(R.id.textView_student_name);
-        TextView id = (TextView) convertView.findViewById(R.id.textView_student_id);
-        TextView programme = (TextView) convertView.findViewById(R.id.textView_student_programme);
-        TextView status = (TextView) convertView.findViewById(R.id.textView_student_status);
-
         // Set text value of views
-        name.setText(student.getName());
-        id.setText(student.getId());
-        programme.setText(student.getProgramme());
-        status.setText(student.getStatus());
+        Student student = getItem(position);
+        holder.name.setText(student.getName());
+        holder.id.setText(student.getId());
+        holder.programme.setText(student.getProgramme());
+        holder.status.setText(student.getStatus());
 
         return convertView;
+    }
+
+    static class ViewHolder {
+        TextView name;
+        TextView id;
+        TextView programme;
+        TextView status;
     }
 }

@@ -9,63 +9,58 @@ import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.lamyatweng.mmugraduationstaff.Constants;
 import com.lamyatweng.mmugraduationstaff.R;
 
 public class SeatAdapter extends ArrayAdapter<Seat> {
+    LayoutInflater mInflater;
 
-    Context mContext;
-
-    public SeatAdapter(Context mContext) {
-        super(mContext, 0);
+    public SeatAdapter(Context context) {
+        super(context, 0);
+        mInflater = LayoutInflater.from(context);
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        ViewHolder holder;
 
-        ViewHolderItem viewHolder;
-
+        // Create a new view if no available view to reuse
         if (convertView == null) {
-            // inflate layout
-            LayoutInflater layoutInflater = (LayoutInflater) getContext()
-                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = layoutInflater.inflate(R.layout.item_seat, parent, false);
-            // set up ViewHolder
-            viewHolder = new ViewHolderItem();
-            viewHolder.textViewRow = (TextView) convertView.findViewById(R.id.text_view_row);
-            viewHolder.textViewColumn = (TextView) convertView.findViewById(R.id.text_view_column);
-            viewHolder.itemSeatContainer = (LinearLayout) convertView.findViewById(R.id.item_seat_container);
+            convertView = mInflater.inflate(R.layout.item_seat, parent, false);
+            holder = new ViewHolder();
+            holder.textViewRow = (TextView) convertView.findViewById(R.id.text_view_row);
+            holder.textViewColumn = (TextView) convertView.findViewById(R.id.text_view_column);
+            holder.itemSeatContainer = (LinearLayout) convertView.findViewById(R.id.item_seat_container);
 
-            // store holder with view
-            convertView.setTag(viewHolder);
+            convertView.setTag(holder);
         } else {
-            viewHolder = (ViewHolderItem) convertView.getTag();
+            holder = (ViewHolder) convertView.getTag();
         }
 
         Seat seat = getItem(position);
+        holder.textViewRow.setText(seat.getRow());
+        holder.textViewColumn.setText(seat.getColumn());
 
-        if (seat != null) {
-            viewHolder.textViewRow.setText(seat.getRow());
-            viewHolder.textViewColumn.setText(seat.getColumn());
-
-            switch (seat.getStatus()) {
-                case "Available":
-                    viewHolder.itemSeatContainer.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.seatAvailable));
-                    break;
-                case "Occupied":
-                    viewHolder.itemSeatContainer.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.seatOccupied));
-                    break;
-                case "Disabled":
-                    viewHolder.itemSeatContainer.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.seatDisabled));
-                    break;
-            }
+        switch (seat.getStatus()) {
+            case Constants.SEAT_STATUS_AVAILABLE:
+                holder.itemSeatContainer.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.seatAvailable));
+                break;
+            case Constants.SEAT_STATUS_OCCUPIED:
+                holder.itemSeatContainer.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.seatOccupied));
+                break;
+            case Constants.SEAT_STATUS_DISABLED:
+                holder.itemSeatContainer.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.seatDisabled));
+                break;
         }
 
         return convertView;
     }
+
+    static class ViewHolder {
+        TextView textViewRow;
+        TextView textViewColumn;
+        LinearLayout itemSeatContainer;
+    }
 }
 
-class ViewHolderItem {
-    TextView textViewRow;
-    TextView textViewColumn;
-    LinearLayout itemSeatContainer;
-}
+

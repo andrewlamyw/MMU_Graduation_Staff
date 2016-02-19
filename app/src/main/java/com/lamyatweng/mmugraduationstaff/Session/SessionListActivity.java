@@ -29,7 +29,7 @@ public class SessionListActivity extends AppCompatActivity {
         final int convocationYear = intent.getIntExtra(Constants.EXTRA_CONVOCATION_YEAR, 0);
 
         // Populate sessions sort by session number from Firebase into ListView
-        final SessionCustomAdapter adapter = new SessionCustomAdapter(this);
+        final SessionAdapter adapter = new SessionAdapter(this);
         final Firebase sessionRef = new Firebase(Constants.FIREBASE_STRING_SESSIONS_REF);
         Query sessionQuery = sessionRef.orderByChild("convocationYear").equalTo(convocationYear);
         sessionQuery.addValueEventListener(new ValueEventListener() {
