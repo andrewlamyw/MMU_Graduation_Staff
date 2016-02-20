@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.lamyatweng.mmugraduationstaff.Convocation.ConvocationListFragment;
+import com.lamyatweng.mmugraduationstaff.News.NewsListFragment;
 import com.lamyatweng.mmugraduationstaff.Programme.ProgrammeListFragment;
 import com.lamyatweng.mmugraduationstaff.Student.StudentListFragment;
 
@@ -79,8 +80,8 @@ public class MainActivity extends AppCompatActivity {
         });
 
         // Set default fragment to display
-        NewsFragment newsFragment = new NewsFragment();
-        getFragmentManager().beginTransaction().replace(R.id.fragment_container, newsFragment).commit();
+        NewsListFragment newsListFragment = new NewsListFragment();
+        getFragmentManager().beginTransaction().replace(R.id.fragment_container, newsListFragment).commit();
 
         // Set navigation header email TextView
         View view = navigationView.getHeaderView(0);
@@ -96,8 +97,8 @@ public class MainActivity extends AppCompatActivity {
 
         switch (menuItem.getTitle().toString()) {
             case Constants.TITLE_NEWS:
-                NewsFragment newsFragment = new NewsFragment();
-                getFragmentManager().beginTransaction().replace(R.id.fragment_container, newsFragment).commit();
+                NewsListFragment newsListFragment = new NewsListFragment();
+                getFragmentManager().beginTransaction().replace(R.id.fragment_container, newsListFragment).commit();
                 break;
             case Constants.TITLE_PROGRAMME:
                 ProgrammeListFragment programmeListFragment = new ProgrammeListFragment();

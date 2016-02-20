@@ -15,7 +15,6 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.firebase.client.DataSnapshot;
-import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.Query;
 import com.firebase.client.ValueEventListener;
@@ -27,14 +26,14 @@ public class ProgrammeListFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        final ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_programme, container, false);
+        final ViewGroup view = (ViewGroup) inflater.inflate(R.layout.fragment_programme, container, false);
         this.setHasOptionsMenu(true);
 
         // Populate programmes sort by name from Firebase into ListView
-        Firebase.setAndroidContext(getActivity());
         final ProgrammeAdapter adapter = new ProgrammeAdapter(getActivity());
-        final Firebase programmeRef = new Firebase(Constants.FIREBASE_STRING_PROGRAMMES_REF);
-        Query programmeQuery = programmeRef.orderByChild("name");
+        ListView programmeListView = (ListView) view.findViewById(R.id.programme_list_view);
+        programmeListView.setAdapter(adapter);
+        Query programmeQuery = Constants.FIREBASE_REF_PROGRAMMES.orderByChild("name");
         programmeQuery.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -48,11 +47,10 @@ public class ProgrammeListFragment extends Fragment {
 
             @Override
             public void onCancelled(FirebaseError firebaseError) {
-                Snackbar.make(rootView, firebaseError.getMessage(), Snackbar.LENGTH_LONG).show();
+                Snackbar.make(view, firebaseError.getMessage(), Snackbar.LENGTH_LONG).show();
             }
         });
-        ListView programmeListView = (ListView) rootView.findViewById(R.id.programme_list_view);
-        programmeListView.setAdapter(adapter);
+
 
         // Launch a dialog to display programme details
         programmeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -61,7 +59,7 @@ public class ProgrammeListFragment extends Fragment {
                 final Programme selectedProgramme = (Programme) parent.getItemAtPosition(position);
 
                 // Retrieve selected programme key from Firebase and save in bundle
-                Query queryRef = programmeRef.orderByChild("name").equalTo(selectedProgramme.getName());
+                Query queryRef = Constants.FIREBASE_REF_PROGRAMMES.orderByChild("name").equalTo(selectedProgramme.getName());
                 queryRef.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
@@ -86,7 +84,7 @@ public class ProgrammeListFragment extends Fragment {
         });
 
         // Launch a dialog to add new programme
-        FloatingActionButton addProgrammeFab = (FloatingActionButton) rootView.findViewById(R.id.add_programme_fab);
+        FloatingActionButton addProgrammeFab = (FloatingActionButton) view.findViewById(R.id.add_programme_fab);
         addProgrammeFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -95,7 +93,7 @@ public class ProgrammeListFragment extends Fragment {
             }
         });
 
-        return rootView;
+        return view;
     }
 
     /**
@@ -115,7 +113,7 @@ public class ProgrammeListFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.programme_menu, menu);
+//        inflater.inflate(R.menu.programme_menu, menu);
     }
 
     /**

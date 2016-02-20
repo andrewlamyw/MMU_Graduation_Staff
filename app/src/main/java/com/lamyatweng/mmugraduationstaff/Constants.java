@@ -47,9 +47,18 @@ public interface Constants {
     String MENU_EDIT = "Edit";
     String MENU_DELETE = "Delete";
 
+    String STUDENT_STATUS_ACTIVE = "Active";
+    String STUDENT_STATUS_COMPLETED = "Completed";
+    String STUDENT_STATUS_PENDING_APPROVAL = "Pending approval";
+
     String SEAT_STATUS_AVAILABLE = "Available";
     String SEAT_STATUS_OCCUPIED = "Occupied";
     String SEAT_STATUS_DISABLED = "Disabled";
+
+    String PROGRAMME_LEVEL_DIPLOMA = "Diploma";
+    String PROGRAMME_LEVEL_BACHELOR = "Bachelor's Degree";
+    String PROGRAMME_LEVEL_MASTER = "Master's Degree";
+    String PROGRAMME_LEVEL_DOCTORATE = "Doctorate";
 
     String EXTRA_CONVOCATION_KEY = "com.lamyatweng.mmugraduationstaff.CONVOCATION_KEY";
     String EXTRA_CONVOCATION_YEAR = "com.lamyatweng.mmugraduationstaff.CONVOCATION_YEAR";
@@ -60,5 +69,4 @@ public interface Constants {
     String EXTRA_SESSION_CONVOCATION_YEAR = "com.lamyatweng.mmugraduationstaff.SESSION_CONVOCATION_YEAR";
     String EXTRA_SEAT_ID = "com.lamyatweng.mmugraduationstaff.SEAT_ID";
     String EXTRA_SEAT_KEY = "com.lamyatweng.mmugraduationstaff.SEAT_KEY";
-
 }

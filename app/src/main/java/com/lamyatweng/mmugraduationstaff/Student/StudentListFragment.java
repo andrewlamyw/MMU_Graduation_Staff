@@ -117,7 +117,7 @@ public class StudentListFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.student_menu, menu);
+//        inflater.inflate(R.menu.student_menu, menu);
     }
 
     /**

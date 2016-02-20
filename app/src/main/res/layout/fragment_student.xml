@@ -18,5 +18,4 @@
         app:fabSize="normal"
         app:layout_anchor="@id/student_list_view"
         app:layout_anchorGravity="bottom|end" />
-
 </android.support.design.widget.CoordinatorLayout>

@@ -10,7 +10,6 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.firebase.client.Firebase;
 import com.lamyatweng.mmugraduationstaff.Constants;
 import com.lamyatweng.mmugraduationstaff.DatePickerFragment;
 import com.lamyatweng.mmugraduationstaff.R;
@@ -63,7 +62,6 @@ public class ConvocationAddActivity extends AppCompatActivity {
         });
 
         // Commit: add new convocation into Firebase
-        final Firebase convocationRef = new Firebase(Constants.FIREBASE_STRING_CONVOCATIONS_REF);
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
@@ -74,9 +72,9 @@ public class ConvocationAddActivity extends AppCompatActivity {
                         String openDate = openDateTextView.getText().toString();
                         String closeDate = closeDateTextView.getText().toString();
 
-                        // Push into Firebase programme list
+                        // Push into Firebase convocation list
                         Convocation convocation = new Convocation(year, openDate, closeDate);
-                        convocationRef.push().setValue(convocation);
+                        Constants.FIREBASE_REF_CONVOCATIONS.push().setValue(convocation);
 
                         // Display message and close dialog
                         Toast.makeText(getApplicationContext(), Constants.TITLE_CONVOCATION + " added.", Toast.LENGTH_LONG).show();

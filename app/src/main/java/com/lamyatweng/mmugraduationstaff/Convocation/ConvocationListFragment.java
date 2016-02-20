@@ -13,7 +13,6 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.firebase.client.DataSnapshot;
-import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.Query;
 import com.firebase.client.ValueEventListener;
@@ -28,9 +27,7 @@ public class ConvocationListFragment extends Fragment {
 
         // Populate convocations sort by year from Firebase into ListView
         final ConvocationAdapter adapter = new ConvocationAdapter(getActivity());
-        Firebase.setAndroidContext(getActivity());
-        final Firebase convocationRef = new Firebase(Constants.FIREBASE_STRING_CONVOCATIONS_REF);
-        Query convocationQuery = convocationRef.orderByChild("year");
+        Query convocationQuery = Constants.FIREBASE_REF_CONVOCATIONS.orderByChild("year");
         convocationQuery.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -56,7 +53,7 @@ public class ConvocationListFragment extends Fragment {
                 final Convocation selectedConvocation = (Convocation) parent.getItemAtPosition(position);
 
                 // Retrieve selected programme key from Firebase and save in bundle
-                Query queryRef = convocationRef.orderByChild("year").equalTo(selectedConvocation.getYear());
+                Query queryRef = Constants.FIREBASE_REF_CONVOCATIONS.orderByChild("year").equalTo(selectedConvocation.getYear());
                 queryRef.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
