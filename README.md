@@ -1,2 +1,3 @@
 # Graduation Requirement Checking and Reservation System :mortar_board::mortar_board::mortar_board:
+This final year project contains two modules, the first module is an Android application for university staff to manage graduation event and approve student graduation application and another module is an Android application for student to apply for graduation and make seat reservation for their parents to attend their convocation. This page is the code for the university staff module, to see the code for student module please go to this [link](https://github.com/andrewlam-yw/MMUGraduationStudent).
 
